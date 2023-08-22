@@ -1,0 +1,20 @@
+.allManufacturersPage {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 1170px;
+  margin: 30px auto;
+  width: 100%;
+}
+
+.allManufacturers {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+@media screen and (max-width: 1240px) {
+  .allManufacturersPage {
+    padding: 0 20px;
+  }
+}
