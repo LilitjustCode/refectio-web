@@ -5,6 +5,7 @@ import { MyProfile } from './pages/myProfile'
 import { MyProducts } from './pages/myProducts'
 import { AddNewProduct } from './pages/addNewProduct'
 import { AllManufacturers } from './pages/allManufacturers'
+import { SingleManufacturer } from './pages/singleManufacturer'
 
 export const MyRouter = () => {
     return (
@@ -16,6 +17,7 @@ export const MyRouter = () => {
                     <Route path='/profile' element={<MyProfile />} />
                     <Route path='/myProducts' element={<MyProducts />} />
                     <Route path='/addNewProduct' element={<AddNewProduct />} />
+                    <Route path='/manufacturer/:id' element={<SingleManufacturer />} />
                 </Route>
             </Routes>
         </BrowserRouter>

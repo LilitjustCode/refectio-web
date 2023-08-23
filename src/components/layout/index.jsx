@@ -16,7 +16,7 @@ export const Layout = () => {
                 <div className='middleLayoutBlock'>
                     <p>Все производители</p>
                     <span onClick={() => window.location = '/auth/login'}>Вход/Регистрация</span>
-                    <span onClick={() => window.location = '/profile'}>Мой профиль</span>
+                    <h2 onClick={() => window.location = '/profile'}>Мой профиль</h2>
                 </div>
             </div>
             <div className='layoutSeparator' />
