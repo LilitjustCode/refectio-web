@@ -1,12 +1,12 @@
 import './style.css'
 import { BackButton, Search } from '../svg'
 
-export const PageNavigation = ({ title, backButton, navigation, search }) => {
+export const PageNavigation = ({ title, backButton, navigation, search, onClick }) => {
     return (
         <div className='pageTitle' style={navigation ? { justifyContent: 'flex-start' } : {}}>
             {title &&
                 <div className='pageNavTitle'>
-                    <div className='backBtn'>
+                    <div className='backBtn' onClick={onClick}>
                         {backButton && <BackButton />}
                     </div>
                     <h1>{title}</h1>

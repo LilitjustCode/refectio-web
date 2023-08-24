@@ -51,6 +51,7 @@ export const AddNewProduct = () => {
         <div className='newProductPage'>
             <PageNavigation
                 backButton={true}
+                onClick={() => window.location = '/myProducts'}
                 title={'Добавление продукции'}
                 navigation={false}
                 search={false}
