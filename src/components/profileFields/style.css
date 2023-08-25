@@ -25,7 +25,7 @@
   border-radius: 10px;
 }
 
-.profileNameBlock > button {
+.profileEditButton {
   padding: 7px 20px;
   border: none;
   border-radius: 5px;

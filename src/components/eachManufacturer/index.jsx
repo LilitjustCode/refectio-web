@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { EachProduct } from '../eachProduct'
 import { SingleProduct } from '../popup/singleProduct'
 
-export const EachManufacturer = ({ manufacturers }) => {
+export const EachManufacturer = ({ manufacturer }) => {
     const [openSingleProductPopuop, setOpenSingleProductPopup] = useState(false)
     const [selectedProduct, setSelectedProduct] = useState(null)
 
@@ -23,23 +23,23 @@ export const EachManufacturer = ({ manufacturers }) => {
             }
             <div className='eachManufacturer'>
                 <div className='eachManuTop'>
-                    <img alt='' src={require(`../../assets/${manufacturers?.avatar}`)} />
+                    <img alt='' src={`${process.env.REACT_APP_IMAGE}${manufacturer.logo}`} />
                     <div className='eachManuTopTitle'>
-                        <h2 onClick={() => window.location = `/manufacturer/${manufacturers?.id}`}>{manufacturers?.name}</h2>
-                        <span>{manufacturers?.location}</span>
+                        <h2 onClick={() => window.location = `/manufacturer/${manufacturer?.id}`}>{manufacturer?.company_name}</h2>
+                        <span>{manufacturer?.made_in}</span>
                     </div>
                 </div>
 
                 <div className='eachManuCats'>
-                    {manufacturers?.categories?.length && manufacturers?.categories?.map((e, i) => (
+                    {manufacturer?.user_category_product?.length && manufacturer?.user_category_product?.map((e, i) => (
                         <div className='eachManuCategory' key={i}>
-                            <span>{e?.name}</span>
+                            <span>{e?.category_name}</span>
                         </div>
                     ))}
                 </div>
                 <div className='eachManuProds'>
-                    {manufacturers?.products?.length && manufacturers?.products?.map((e, i) => (
-                        <EachProduct onClick={handleClick} product={e} key={i} />
+                    {manufacturer?.user_product_limit1?.length && manufacturer?.user_product_limit1?.map((e, i) => (
+                        <EachProduct onClick={() => handleClick(e)} product={e} key={i} />
                     ))}
                 </div>
             </div>

@@ -1,10 +1,17 @@
 import './style.css'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { PageNavigation } from '../../components/pageNavigation'
 import { EachManufacturer } from '../../components/eachManufacturer'
+import { useEffect } from 'react'
+import { GetAllManufacturers } from '../../Redux/action/manufacturer_ation'
 
 export const AllManufacturers = () => {
-    const manufacturers = useSelector(st => st.Product_reducer.manufacturers)
+    const dispatch = useDispatch()
+    const manufacturers = useSelector(st => st.Manufacturer_reducer.allManufacturers)
+
+    useEffect(() => {
+        dispatch(GetAllManufacturers())
+    }, [dispatch])
 
     return (
         <div className='allManufacturersPage'>
@@ -17,7 +24,7 @@ export const AllManufacturers = () => {
             <div className='allManufacturers'>
                 {manufacturers?.length > 0
                     ? manufacturers.map((e, i) => (
-                        <EachManufacturer manufacturers={e} key={i} />
+                        <EachManufacturer manufacturer={e} key={i} />
                     ))
                     : <span>Нет производителей</span>
                 }

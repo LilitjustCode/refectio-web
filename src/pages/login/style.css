@@ -1,5 +1,5 @@
 .loginPage {
-  min-height: calc(100vh - 338px);
+  min-height: calc(100vh - 335px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -146,4 +146,12 @@
   font-weight: 700;
   color: #2d9efb;
   cursor: pointer;
+}
+
+.loginError {
+  color: red;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }

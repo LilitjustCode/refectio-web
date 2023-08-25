@@ -50,16 +50,6 @@
   padding: 10px 0;
 }
 
-.middleLayoutBlock > h2 {
-  color: #333;
-  text-align: right;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  cursor: pointer;
-}
-
 .middleLayoutBlock > p {
   color: #333;
   font-size: 18px;
@@ -118,6 +108,28 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+
+.layoutUser {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.layoutUser > h2 {
+  color: #333;
+  text-align: right;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  cursor: pointer;
+}
+
+.layoutUser > img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
 }
 
 @media screen and (max-width: 1240px) {

@@ -1,4 +1,3 @@
-import { FetchGet, FetchPost } from './fetch'
+import { FetchPost } from './fetch'
 
-// export const GetForumCategories = (search) => { return FetchPost('/admin/get_forum_category', { search }, 'getForumCategories') }
-// export const GetForums = () => { return FetchGet('/admin/get_forums', 'getForums') }
+export const AuthUser = (login, password) => { return FetchPost('/loginuser', { login, password }, 'login', 'loginError') }

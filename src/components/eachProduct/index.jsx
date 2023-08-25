@@ -6,13 +6,13 @@ export const EachProduct = ({ product, onClick }) => {
             className='eachManuProduct cursor'
             onClick={onClick}
         >
-            <img alt='' src={require(`../../assets/${product?.image}`)} />
+            <img alt='' src={`${process.env.REACT_APP_IMAGE}${product.product_image[0].image}`} />
             <div className='eachManuProdDetails'>
                 <p>{product?.title}</p>
                 <span>Фасады : {product?.facades}</span>
-                <span>Корпус: {product?.body}</span>
-                <span>Столешница: {product?.top}</span>
-                <span>Длина: {product?.width}</span>
+                <span>Корпус: {product?.frame}</span>
+                <span>Столешница: {product?.tabletop}</span>
+                <span>Длина: {product?.length}</span>
                 <span>Цена: {product?.price}</span>
             </div>
         </div>

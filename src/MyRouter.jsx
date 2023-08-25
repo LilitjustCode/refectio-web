@@ -8,16 +8,26 @@ import { AllManufacturers } from './pages/allManufacturers'
 import { SingleManufacturer } from './pages/singleManufacturer'
 
 export const MyRouter = () => {
+    const auth = localStorage.getItem('token')
+
+    const PrivateRoute = ({ auth, children }) => {
+        return auth ? children : window.location = '/auth/login'
+    }
+
+    const AlreadyLoggedIn = ({ auth, children }) => {
+        return auth ? window.location = '/' : children
+    }
+
     return (
         <BrowserRouter>
             <Routes>
                 <Route path='/' element={<Layout />}>
-                    <Route path='/' element={<AllManufacturers />} />
-                    <Route path='/auth/login' element={<Login />} />
-                    <Route path='/profile' element={<MyProfile />} />
-                    <Route path='/myProducts' element={<MyProducts />} />
-                    <Route path='/addNewProduct' element={<AddNewProduct />} />
-                    <Route path='/manufacturer/:id' element={<SingleManufacturer />} />
+                    <Route path='/auth/login' element={<AlreadyLoggedIn auth={auth}><Login /></AlreadyLoggedIn>} />
+                    <Route path='/' element={<PrivateRoute auth={auth}><AllManufacturers /></PrivateRoute>} />
+                    <Route path='/profile' element={<PrivateRoute auth={auth}><MyProfile /></PrivateRoute>} />
+                    <Route path='/myProducts' element={<PrivateRoute auth={auth}><MyProducts /></PrivateRoute>} />
+                    <Route path='/addNewProduct' element={<PrivateRoute auth={auth}><AddNewProduct /></PrivateRoute>} />
+                    <Route path='/manufacturer/:id' element={<PrivateRoute auth={auth}><SingleManufacturer /></PrivateRoute>} />
                 </Route>
             </Routes>
         </BrowserRouter>

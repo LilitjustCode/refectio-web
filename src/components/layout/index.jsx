@@ -3,6 +3,8 @@ import { Outlet } from 'react-router-dom'
 import { Instagram, Mail, Telegram } from '../svg'
 
 export const Layout = () => {
+    const token = localStorage.getItem('token')
+
     return (
         <div className='mainLayout'>
             <div className='topLayout'>
@@ -15,8 +17,13 @@ export const Layout = () => {
             <div className='middleLayout'>
                 <div className='middleLayoutBlock'>
                     <p>Все производители</p>
-                    <span onClick={() => window.location = '/auth/login'}>Вход/Регистрация</span>
-                    <h2 onClick={() => window.location = '/profile'}>Мой профиль</h2>
+                    {token
+                        ? <div className='layoutUser'>
+                            <h2 onClick={() => window.location = '/profile'}>Мой профиль</h2>
+                            <img alt='' src={require('../../assets/avatar.png')} />
+                        </div>
+                        : <span onClick={() => window.location = '/auth/login'}>Вход/Регистрация</span>
+                    }
                 </div>
             </div>
             <div className='layoutSeparator' />
