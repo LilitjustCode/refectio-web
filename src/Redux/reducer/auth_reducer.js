@@ -16,6 +16,10 @@ export const Auth_reducer = (state = store, action) => {
                 }
             }
             break;
+        case 'logout':
+            localStorage.clear()
+            window.location.reload()
+            break;
         default:
             return temp;
     }

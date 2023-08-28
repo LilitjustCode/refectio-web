@@ -1,8 +1,11 @@
 import './style.css'
+import { useDispatch } from 'react-redux'
+import { Logout } from '../../Redux/action/auth_action'
 import { ProfileFields } from '../../components/profileFields'
 import { PageNavigation } from '../../components/pageNavigation'
 
 export const MyProfile = () => {
+    const dispatch = useDispatch()
     return (
         <div className='myProfilePage'>
             <PageNavigation
@@ -20,7 +23,7 @@ export const MyProfile = () => {
                 <ProfileFields />
                 <div className='profileButton'>
                     <button onClick={() => window.location = '/myProducts'}>Мои товары</button>
-                    <button>Выйти</button>
+                    <button onClick={() => dispatch(Logout())}>Выйти</button>
                 </div>
             </div>
         </div>

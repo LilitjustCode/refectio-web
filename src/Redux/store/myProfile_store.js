@@ -1,4 +1,9 @@
+/* eslint-disable */
 export default {
     user: {},
-    update: false
+    update: false,
+    cities: [],
+    categories: [],
+    passwordError: '',
+    openCode: false
 }

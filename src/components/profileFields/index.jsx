@@ -1,13 +1,20 @@
 import './style.css'
 import { EditIcon } from '../svg'
 import { useEffect, useState } from 'react'
+import { EditPassword } from '../popup/editPassword'
 import { useDispatch, useSelector } from 'react-redux'
-import { MyProfile, UpdateCode, UpdateCountry, UpdateName, UpdateSite, UpdateSuccessful, UpdateTelegram } from '../../Redux/action/myProfile_action'
+import { GetCategories, GetCities, MyProfile, UpdateAbout, UpdateCode, UpdateCountry, UpdateName, UpdatePhone, UpdateSite, UpdateSuccessful, UpdateTelegram } from '../../Redux/action/myProfile_action'
+import { EditPhone } from '../popup/editPhone'
 
 export const ProfileFields = () => {
     const dispatch = useDispatch()
     const updateSuccess = useSelector(st => st.MyProfile_reducer.update)
+    const cities = useSelector(st => st.MyProfile_reducer.cities)
+    const categories = useSelector(st => st.MyProfile_reducer.categories)
     const user = useSelector(st => st.MyProfile_reducer.user)
+    // const [selectedCities, setSelectedCities] = useState([]);
+    const [openPassword, setOpenPassword] = useState(false)
+    const [openPhone, setOpenPhone] = useState(false)
     const [file, setFile] = useState()
     const [edit, setEdit] = useState({
         country: false,
@@ -24,18 +31,20 @@ export const ProfileFields = () => {
     const [userDetails, setUserDetails] = useState({
         country: '',
         code: '',
-        // cities: '',
+        cities: '',
         description: '',
         name: '',
         telegram: '',
         site: '',
         phone: '',
         password: '',
-        // categories: ''
+        categories: ''
     })
 
     useEffect(() => {
         dispatch(MyProfile())
+        dispatch(GetCities())
+        dispatch(GetCategories())
     }, [dispatch])
 
     useEffect(() => {
@@ -44,14 +53,14 @@ export const ProfileFields = () => {
             setUserDetails({
                 country: user?.made_in,
                 code: user?.individual_number,
-                // cities: '',
-                // description: '',
+                cities: user?.city_of_sales_manufacturer,
+                description: user?.about_us,
                 name: user?.company_name,
                 telegram: user?.telegram,
                 site: user?.saite,
                 phone: user?.phone,
                 password: '',
-                // categories: ''
+                categories: user?.user_category_product
             })
         }
     }, [user])
@@ -94,7 +103,24 @@ export const ProfileFields = () => {
         }
     }
 
-    return (
+    // const handleSelectChange = (event) => {
+    //     setSelectedCities(Array.from(event.target.selectedOptions, (option) => option.value))
+    // };
+
+    return (<>
+        {openPassword &&
+            <EditPassword
+                open={openPassword}
+                setOpen={setOpenPassword}
+            />
+        }
+        {openPhone &&
+            <EditPhone
+                open={openPhone}
+                setOpen={setOpenPhone}
+                phone={userDetails?.phone}
+            />
+        }
         <div className='myProfileBlock'>
             <div className='profileMiddleBlocks'>
                 <div className='profileNameBlock'> {/* avatar */}
@@ -140,21 +166,20 @@ export const ProfileFields = () => {
                 </div>}
                 <div className='eachProfileField'> {/* Города */}
                     <div className='profileFieldName'>
-                        <span>Города (продажи продукции)(5)</span>
+                        <span>Города (продажи продукции)({userDetails?.cities?.length})</span>
                         <div className='cursor'>
                             <EditIcon />
                         </div>
                     </div>
                     <select
-                        disabled
-                    // multiple
+                        // value={selectedCities}
+                        // onChange={handleSelectChange}
+                        // disabled
+                        multiple
                     >
-                        {user?.city_of_sales_manufacturer?.map((e, i) => (
-                            <option
-                                key={i}
-                            // value={e?.city_name}
-                            >
-                                {e?.city_name ? e?.city_name : ''}
+                        {cities?.map((e, i) => (
+                            <option key={i}>
+                                {e?.name ? e?.name : ''}
                             </option>
                         ))}
                     </select>
@@ -162,15 +187,20 @@ export const ProfileFields = () => {
                 <div className='eachProfileField'> {/* Доп. информация */}
                     <div className='profileFieldName'>
                         <span>Доп. информация</span>
-                        <div className='cursor'>
+                        <div className='cursor' onClick={() => setEdit({ ...edit, description: true })}>
                             <EditIcon />
                         </div>
                     </div>
                     <textarea
-                        disabled
-                    // value={details?.description}
+                        disabled={!edit.description}
+                        value={userDetails?.description ? userDetails?.description : ''}
+                        style={edit.description ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
+                        onChange={(e) => setUserDetails({ ...userDetails, description: e.target.value })}
                     />
                 </div>
+                {edit?.description && <div>
+                    <button className='profileEditButton' onClick={() => dispatch(UpdateAbout(userDetails?.description))}>Обновить</button>
+                </div>}
             </div>
             <div className='profileMiddleBlocks'>
                 <div className='eachProfileField'> { /* Название */}
@@ -227,19 +257,22 @@ export const ProfileFields = () => {
                 <div className='eachProfileField'> {/* Номер телефона */}
                     <div className='profileFieldName'>
                         <span>Номер телефона</span>
-                        <div className='cursor'>
+                        <div className='cursor' onClick={() => setOpenPhone(true)}>
                             <EditIcon />
                         </div>
                     </div>
                     <input
                         disabled
-                        value={user?.phone ? user?.phone : ''}
+                        value={userDetails?.phone ? userDetails?.phone : ''}
                     />
                 </div>
+                {edit?.phone && <div>
+                    <button className='profileEditButton' onClick={() => dispatch(UpdatePhone(userDetails?.phone))}>Обновить</button>
+                </div>}
                 <div className='eachProfileField'> {/* Пароль */}
                     <div className='profileFieldName'>
                         <span>Пароль</span>
-                        <div className='cursor'>
+                        <div className='cursor' onClick={() => setOpenPassword(true)}>
                             <EditIcon />
                         </div>
                     </div>
@@ -250,25 +283,26 @@ export const ProfileFields = () => {
                 </div>
                 <div className='eachProfileField'> {/* Категории */}
                     <div className='profileFieldName'>
-                        <span>Категории (8)</span>
+                        <span>Категории ({userDetails?.categories?.length})</span>
                         <div className='cursor'>
                             <EditIcon />
                         </div>
                     </div>
                     <select
-                        disabled
+                        // disabled
+                        multiple
                     >
-                        {user?.user_category_product?.map((e, i) => (
+                        {categories?.map((e, i) => (
                             <option
                                 key={i}
-                                value={e?.category_name ? e?.category_name : ''}
+                            // value={e?.name ? e?.name : ''}
                             >
-                                {e?.category_name}
+                                {e?.name ? e?.name : ''}
                             </option>
                         ))}
                     </select>
                 </div>
             </div>
         </div>
-    )
+    </>)
 }

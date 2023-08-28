@@ -9,20 +9,32 @@ export const MyProfile_reducer = (state = store, action) => {
         case 'updateSuccessful':
             temp.update = false
             break;
-        case 'updateCountry':
+        case 'updateSuccess':
             if (action.payload.status) temp.update = true
             break;
-        case 'updateCode':
-            if (action.payload.status) temp.update = true
+        case 'getCities':
+            if (action.payload.status) temp.cities = action.payload.data.city
             break;
-        case 'updateName':
-            if (action.payload.status) temp.update = true
+        case 'getProducts':
+            if (action.payload.status) temp.categories = action.payload.data.city
             break;
-        case 'updateTelegram':
-            if (action.payload.status) temp.update = true
+        case 'updatePassword':
+            if (action.payload.status) {
+                if (action.payload.data.message.includes('password updated')) {
+                    temp.passwordError = ''
+                    temp.update = true
+                }
+            } else {
+                if (action.payload.data.message.includes('wrong password')) temp.passwordError = 'Неправильный пароль'
+            }
             break;
-        case 'updateSite':
-            if (action.payload.status) temp.update = true
+        case 'clearPasswordErrors':
+            temp.passwordError = ''
+            break;
+        case 'updatePhone':
+            if (action.payload.status) {
+                temp.openCode = true
+            }
             break;
         default:
             return temp;

@@ -40,7 +40,6 @@
 .eachManuCats {
   display: flex;
   flex-wrap: wrap;
-  max-width: 510px;
   align-items: center;
   gap: 15px;
 }

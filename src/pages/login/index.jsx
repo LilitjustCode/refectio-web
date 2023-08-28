@@ -17,7 +17,7 @@ export const Login = () => {
     })
 
     function login() {
-        if (phone.includes('_')) {
+        if (!phone || phone.includes('_')) {
             setErrors({ ...errors, phoneError: 'Обязательное поле' })
         } else if (!password.length) {
             setErrors({ ...errors, phoneError: '', passwordError: 'Обязательное поле' })
