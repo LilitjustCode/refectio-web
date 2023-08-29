@@ -1,14 +1,18 @@
 import './style.css'
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { EachProduct } from '../../components/eachProduct'
 import { PageNavigation } from '../../components/pageNavigation'
 import { SingleProduct } from '../../components/popup/singleProduct'
+import { GetSingleManufacturer } from '../../Redux/action/manufacturer_ation'
 import { CheckboxChecked, CheckboxNotChecked, CubicIcon, DocumentIcon, InfoIcon, InternetIcon, ReviewIcon, TelegramIcon, VerificationIcon, WhatsappIcon } from '../../components/svg'
 
 export const SingleManufacturer = () => {
+    const dispatch = useDispatch()
+    // const manufacturer = useSelector(st => st.Manufacturer_reducer.singleManufacturer)
     const products = useSelector(st => st.Product_reducer.products)
     const [openSingleProductPopup, setOpenSingleProductPopup] = useState(false)
+    const [userId] = useState(window.location.pathname.split('/')[2])
     const [selectedProduct, setSelectedProduct] = useState(null)
     const [checked, setChecked] = useState(false)
     const [categories, setCategories] = useState([
@@ -33,7 +37,12 @@ export const SingleManufacturer = () => {
             selected: false,
         },
     ])
-    const toggleCategorySelection = (categoryId) => {
+
+    useEffect(() => {
+        dispatch(GetSingleManufacturer(userId))
+    }, [userId, dispatch])
+
+    function toggleCategorySelection(categoryId) {
         const updatedCategories = categories.map((category) => {
             if (category.id === categoryId) {
                 return {

@@ -5,5 +5,7 @@ export default {
     cities: [],
     categories: [],
     passwordError: '',
-    openCode: false
+    phoneError: '',
+    codeError: '',
+    phoneToken: false,
 }

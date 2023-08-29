@@ -1,10 +1,10 @@
 import './style.css'
 import { EditIcon } from '../svg'
 import { useEffect, useState } from 'react'
+import { EditPhone } from '../popup/editPhone'
 import { EditPassword } from '../popup/editPassword'
 import { useDispatch, useSelector } from 'react-redux'
-import { GetCategories, GetCities, MyProfile, UpdateAbout, UpdateCode, UpdateCountry, UpdateName, UpdatePhone, UpdateSite, UpdateSuccessful, UpdateTelegram } from '../../Redux/action/myProfile_action'
-import { EditPhone } from '../popup/editPhone'
+import { GetCategories, GetCities, MyProfile, UpdateAbout, UpdateCities, UpdateCode, UpdateCountry, UpdateName, UpdatePhone, UpdateSite, UpdateSuccessful, UpdateTelegram } from '../../Redux/action/myProfile_action'
 
 export const ProfileFields = () => {
     const dispatch = useDispatch()
@@ -12,10 +12,10 @@ export const ProfileFields = () => {
     const cities = useSelector(st => st.MyProfile_reducer.cities)
     const categories = useSelector(st => st.MyProfile_reducer.categories)
     const user = useSelector(st => st.MyProfile_reducer.user)
-    // const [selectedCities, setSelectedCities] = useState([]);
     const [openPassword, setOpenPassword] = useState(false)
     const [openPhone, setOpenPhone] = useState(false)
     const [file, setFile] = useState()
+    const [cityId, setCityId] = useState([])
     const [edit, setEdit] = useState({
         country: false,
         code: false,
@@ -31,7 +31,7 @@ export const ProfileFields = () => {
     const [userDetails, setUserDetails] = useState({
         country: '',
         code: '',
-        cities: '',
+        cities: [],
         description: '',
         name: '',
         telegram: '',
@@ -50,10 +50,14 @@ export const ProfileFields = () => {
     useEffect(() => {
         if (user) {
             setFile(`${process.env.REACT_APP_IMAGE}${user?.logo}`)
+            const city = []
+            user?.city_of_sales_manufacturer?.forEach(elm => {
+                city.push(elm?.city_name)
+            })
             setUserDetails({
                 country: user?.made_in,
                 code: user?.individual_number,
-                cities: user?.city_of_sales_manufacturer,
+                cities: city,
                 description: user?.about_us,
                 name: user?.company_name,
                 telegram: user?.telegram,
@@ -63,7 +67,7 @@ export const ProfileFields = () => {
                 categories: user?.user_category_product
             })
         }
-    }, [user])
+    }, [user, openPhone])
 
     useEffect(() => {
         if (updateSuccess) {
@@ -103,9 +107,19 @@ export const ProfileFields = () => {
         }
     }
 
-    // const handleSelectChange = (event) => {
-    //     setSelectedCities(Array.from(event.target.selectedOptions, (option) => option.value))
-    // };
+    function handleCityChange(event) {
+        var options = event.target.options;
+        let current = []
+        var value = []
+        for (var i = 0, l = options.length; i < l; i++) {
+            if (options[i].selected) {
+                value.push(`${options[i].getAttribute('data-id')}^${options[i].value}`)
+                current.push(options[i].value)
+            }
+        }
+        setCityId(value)
+        setUserDetails({ ...userDetails, cities: current })
+    }
 
     return (<>
         {openPassword &&
@@ -118,7 +132,6 @@ export const ProfileFields = () => {
             <EditPhone
                 open={openPhone}
                 setOpen={setOpenPhone}
-                phone={userDetails?.phone}
             />
         }
         <div className='myProfileBlock'>
@@ -167,23 +180,27 @@ export const ProfileFields = () => {
                 <div className='eachProfileField'> {/* Города */}
                     <div className='profileFieldName'>
                         <span>Города (продажи продукции)({userDetails?.cities?.length})</span>
-                        <div className='cursor'>
+                        <div className='cursor' onClick={() => setEdit({ ...edit, cities: true })}>
                             <EditIcon />
                         </div>
                     </div>
                     <select
-                        // value={selectedCities}
-                        // onChange={handleSelectChange}
-                        // disabled
+                        value={userDetails?.cities}
+                        onChange={handleCityChange}
+                        disabled={!edit.cities}
+                        style={edit.cities ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
                         multiple
                     >
                         {cities?.map((e, i) => (
-                            <option key={i}>
+                            <option key={i} data-id={e?.id}>
                                 {e?.name ? e?.name : ''}
                             </option>
                         ))}
                     </select>
                 </div>
+                {edit?.cities && <div>
+                    <button className='profileEditButton' onClick={() => dispatch(UpdateCities(cityId))}>Обновить</button>
+                </div>}
                 <div className='eachProfileField'> {/* Доп. информация */}
                     <div className='profileFieldName'>
                         <span>Доп. информация</span>
@@ -289,7 +306,7 @@ export const ProfileFields = () => {
                         </div>
                     </div>
                     <select
-                        // disabled
+                        disabled
                         multiple
                     >
                         {categories?.map((e, i) => (

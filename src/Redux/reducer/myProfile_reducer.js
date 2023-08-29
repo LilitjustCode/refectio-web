@@ -31,9 +31,25 @@ export const MyProfile_reducer = (state = store, action) => {
         case 'clearPasswordErrors':
             temp.passwordError = ''
             break;
+        case 'clearPhoneError':
+            temp.phoneError = ''
+            break;
         case 'updatePhone':
+            console.log(action.payload);
             if (action.payload.status) {
-                temp.openCode = true
+                temp.phoneToken = true
+                temp.update = true
+            } else {
+                temp.phoneError = 'Этот номер телефона уже зарегистрирован'
+            }
+            break;
+        case 'phoneCode':
+            console.log(action.payload);
+            if (action.payload.status) {
+                temp.update = true
+                temp.codeError = ''
+            } else {
+                temp.codeError = 'Неправильный код подтверждения'
             }
             break;
         default:
