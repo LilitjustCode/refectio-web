@@ -298,7 +298,7 @@ export const ProfileFields = () => {
                         value={''}
                     />
                 </div>
-                <div className='eachProfileField'> {/* Категории */}
+                {/* <div className='eachProfileField'>
                     <div className='profileFieldName'>
                         <span>Категории ({userDetails?.categories?.length})</span>
                         <div className='cursor'>
@@ -318,7 +318,7 @@ export const ProfileFields = () => {
                             </option>
                         ))}
                     </select>
-                </div>
+                </div> */}
             </div>
         </div>
     </>)

@@ -1,7 +1,7 @@
 import './style.css'
 import { RublIcon } from '../svg'
 
-export const NewProductFields = ({ details, setDetails }) => {
+export const NewProductFields = ({ details, setDetails, nameError }) => {
     return (
         <div className='myProfileBlock'>
             <div className='addProductEachBlock'>
@@ -13,6 +13,7 @@ export const NewProductFields = ({ details, setDetails }) => {
                         value={details.name}
                         onChange={(e) => setDetails({ ...details, name: e.target.value })}
                         placeholder='Имя продукции'
+                        style={nameError ? { border: '1px solid red' } : {}}
                     />
                 </div>
                 <div className='eachProfileField'>
@@ -20,8 +21,8 @@ export const NewProductFields = ({ details, setDetails }) => {
                         <span>Корпус</span>
                     </div>
                     <input
-                        value={details.body}
-                        onChange={(e) => setDetails({ ...details, body: e.target.value })}
+                        value={details.frame}
+                        onChange={(e) => setDetails({ ...details, frame: e.target.value })}
                         placeholder='Корпус'
                     />
                 </div>
@@ -30,8 +31,8 @@ export const NewProductFields = ({ details, setDetails }) => {
                         <span>Длина</span>
                     </div>
                     <input
-                        value={details.width}
-                        onChange={(e) => setDetails({ ...details, width: e.target.value })}
+                        value={details.length}
+                        onChange={(e) => setDetails({ ...details, length: e.target.value })}
                         placeholder='Длина'
                     />
                 </div>
@@ -65,7 +66,8 @@ export const NewProductFields = ({ details, setDetails }) => {
                     <div className='profileFieldName'>
                         <span>Категория</span>
                     </div>
-                    <select >
+                    <select
+                    >
                         {details?.categories?.map((e, i) => (
                             <option
                                 key={i}
@@ -82,8 +84,8 @@ export const NewProductFields = ({ details, setDetails }) => {
                         <span>Столешница</span>
                     </div>
                     <input
-                        value={details?.top}
-                        onChange={(e) => setDetails({ ...details, top: e.target.value })}
+                        value={details?.tabletop}
+                        onChange={(e) => setDetails({ ...details, tabletop: e.target.value })}
                         placeholder='Столешница'
                     />
                 </div>

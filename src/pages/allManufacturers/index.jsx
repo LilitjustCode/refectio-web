@@ -1,8 +1,8 @@
 import './style.css'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { PageNavigation } from '../../components/pageNavigation'
 import { EachManufacturer } from '../../components/eachManufacturer'
-import { useEffect } from 'react'
 import { GetAllManufacturers } from '../../Redux/action/manufacturer_ation'
 
 export const AllManufacturers = () => {

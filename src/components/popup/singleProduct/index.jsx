@@ -36,7 +36,7 @@ export const SingleProduct = ({ open, setOpen, product }) => {
                             <span>Фасады : {product?.facades}</span>
                             <span>Корпус: {product?.frame}</span>
                             <span>Столешница: {product?.tabletop}</span>
-                            <span>Длина: {product?.length}</span>
+                            <span>Длина: {product?.length} м.</span>
                             <span>Цена: {product?.price}</span>
                             <span>{product?.description}</span>
                         </div>

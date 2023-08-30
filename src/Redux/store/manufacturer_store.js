@@ -1,5 +1,8 @@
 /* eslint-disable */
 export default {
     allManufacturers: [],
-    singleManufacturer: {},
+    singleManufacturerUser: {},
+    singleManufacturerCategories: [],
+    singleManufacturerCities: [],
+    singleManufacturerProducts: [],
 }

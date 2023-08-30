@@ -160,42 +160,6 @@ export default {
             ]
         }
     ],
-    products: [
-        {
-            image: 'product1.png',
-            title: 'Кухня ЛРАЙ145 МДФ ПВХ Сатин Бежевый/СИСТЕМА',
-            facades: 'эмаль',
-            body: 'ДСП',
-            top: 'Камень',
-            width: '8 метров*',
-            price: '1.200.000 руб.',
-        },
-        {
-            image: 'product2.png',
-            title: 'Кухня ЛРАЙ145 МДФ ПВХ Сатин Бежевый/СИСТЕМА',
-            facades: 'эмаль',
-            body: 'ДСП',
-            top: 'Камень',
-            width: '8 метров*',
-            price: '1.200.000 руб.',
-        },
-        {
-            image: 'product2.png',
-            title: 'Кухня ЛРАЙ145 МДФ ПВХ Сатин Бежевый/СИСТЕМА',
-            facades: 'эмаль',
-            body: 'ДСП',
-            top: 'Камень',
-            width: '8 метров*',
-            price: '1.200.000 руб.',
-        },
-        {
-            image: 'product1.png',
-            title: 'Кухня ЛРАЙ145 МДФ ПВХ Сатин Бежевый/СИСТЕМА',
-            facades: 'эмаль',
-            body: 'ДСП',
-            top: 'Камень',
-            width: '8 метров*',
-            price: '1.200.000 руб.',
-        },
-    ],
+    myProducts: [],
+    update: false,
 }

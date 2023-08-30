@@ -8,7 +8,10 @@ export const Manufacturer_reducer = (state = store, action) => {
             break;
         case 'singleManufacturer':
             if (action.payload.status) {
-                temp.singleManufacturer = action.payload.data
+                temp.singleManufacturerUser = action.payload.data.user[0]
+                temp.singleManufacturerCategories = action.payload.data?.user_category_for_product
+                temp.singleManufacturerCities = action.payload.data?.city_for_sales_user
+                temp.singleManufacturerProducts = action.payload.data?.products
             } else {
                 window.location = '/'
             }

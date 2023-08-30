@@ -1,18 +1,21 @@
 import './style.css'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { CloseIconBlue } from '../../components/svg'
 import { PageNavigation } from '../../components/pageNavigation'
 import { NewProductFields } from '../../components/newProductFields'
+import { CreateProduct } from '../../Redux/action/product_action'
 
 export const AddNewProduct = () => {
+    const token = localStorage.getItem('token')
     const [details, setDetails] = useState({
         name: '',
-        body: '',
-        width: '',
-        description: '',
-        price: '',
-        top: '',
+        frame: '',
         facades: '',
+        length: '',
+        price: '',
+        description: '',
+        tabletop: '',
         categories: [
             {
                 id: 1,
@@ -33,6 +36,7 @@ export const AddNewProduct = () => {
         ],
         selectedCategory: ''
     })
+    const [nameError, setNameError] = useState('')
     const [files, setFiles] = useState([])
 
     function uploadSingleFile(e) {
@@ -47,6 +51,34 @@ export const AddNewProduct = () => {
         setFiles(newFileList)
     }
 
+    function create() {
+        if (!details.name.length) {
+            setNameError(' ')
+        } else {
+            setNameError('')
+            const myHeaders = new Headers()
+            myHeaders.append("Authorization", `Bearer ${token}`)
+            const formdata = new FormData()
+            formdata.append("name", details.name)
+            // formdata.append("frame", details.frame)
+            // formdata.append("facades", details.facades)
+            // formdata.append("length", details.length)
+            // formdata.append("price", details.price)
+            // formdata.append("tabletop", details.tabletop)
+            formdata.append("photo[]", files)
+            const requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: formdata,
+                redirect: 'follow'
+            }
+            fetch(`${process.env.REACT_APP_HOSTNAME}/createnewproductProizvoditel`, requestOptions)
+                .then(response => response.json())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
+        }
+    }
+
     return (
         <div className='newProductPage'>
             <PageNavigation
@@ -57,7 +89,7 @@ export const AddNewProduct = () => {
                 search={false}
             />
             <div className='newProductBlock'>
-                <NewProductFields details={details} setDetails={setDetails} />
+                <NewProductFields details={details} setDetails={setDetails} nameError={nameError} />
                 <div className='newProductPhotoBlock'>
                     <label>Фотографии продукта</label>
                     <button>
@@ -76,7 +108,7 @@ export const AddNewProduct = () => {
                     </div>
                 </div>
                 <div className='addProductButton'>
-                    <button>Добавить</button>
+                    <button onClick={create}>Добавить</button>
                 </div>
             </div>
         </div>

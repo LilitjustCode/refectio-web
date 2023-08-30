@@ -1,4 +1,5 @@
 import './style.css'
+import { Tooltip } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { EachProduct } from '../../components/eachProduct'
@@ -9,55 +10,54 @@ import { CheckboxChecked, CheckboxNotChecked, CubicIcon, DocumentIcon, InfoIcon,
 
 export const SingleManufacturer = () => {
     const dispatch = useDispatch()
-    // const manufacturer = useSelector(st => st.Manufacturer_reducer.singleManufacturer)
-    const products = useSelector(st => st.Product_reducer.products)
+    const manufacturer = useSelector(st => st.Manufacturer_reducer.singleManufacturerUser)
+    const categories = useSelector(st => st.Manufacturer_reducer.singleManufacturerCategories)
+    const cities = useSelector(st => st.Manufacturer_reducer.singleManufacturerCities)
+    const products = useSelector(st => st.Manufacturer_reducer.singleManufacturerProducts)
     const [openSingleProductPopup, setOpenSingleProductPopup] = useState(false)
     const [userId] = useState(window.location.pathname.split('/')[2])
     const [selectedProduct, setSelectedProduct] = useState(null)
     const [checked, setChecked] = useState(false)
-    const [categories, setCategories] = useState([
-        {
-            id: 1,
-            title: 'Кухни',
-            selected: true,
-        },
-        {
-            id: 2,
-            title: 'Прихожые',
-            selected: false,
-        },
-        {
-            id: 3,
-            title: 'Гостиные',
-            selected: false,
-        },
-        {
-            id: 4,
-            title: 'Детские',
-            selected: false,
-        },
-    ])
 
     useEffect(() => {
         dispatch(GetSingleManufacturer(userId))
     }, [userId, dispatch])
 
-    function toggleCategorySelection(categoryId) {
-        const updatedCategories = categories.map((category) => {
-            if (category.id === categoryId) {
-                return {
-                    ...category,
-                    selected: !category.selected,
-                }
+    useEffect(() => {
+        if (manufacturer) {
+            if (manufacturer?.show_room?.includes('Да') || manufacturer?.show_room?.includes('да')) {
+                setChecked(true)
+            } else {
+                setChecked(false)
             }
-            return category;
-        })
-        setCategories(updatedCategories)
-    }
+        }
+    }, [manufacturer])
+
+    // function toggleCategorySelection(categoryId) {
+    //     const updatedCategories = categories.map((category) => {
+    //         if (category.id === categoryId) {
+    //             return {
+    //                 ...category,
+    //                 selected: !category.selected,
+    //             }
+    //         }
+    //         return category;
+    //     })
+    //     setCategories(updatedCategories)
+    // }
 
     function handleClick(e) {
         setSelectedProduct(e)
         setOpenSingleProductPopup(true)
+    }
+
+    function handleProtocol(url) {
+        const protocolRegex = /^https?:\/\//i;
+        if (protocolRegex.test(url)) {
+            return url
+        } else {
+            return 'http://' + url
+        }
     }
 
     return (<>
@@ -78,16 +78,36 @@ export const SingleManufacturer = () => {
             <div className='singleManuBlock'>
                 <div className='singleManuDetails'>
                     <div className='singleManuDetailsLeft'>
-                        <img alt='' src={require('../../assets/manufacturer.png')} />
+                        <img alt='' src={`${process.env.REACT_APP_IMAGE}${manufacturer?.logo}`} />
                         <div className='singleManuDetailsLeftRight'>
-                            <h1>Лайт Кухни</h1>
-                            <span>Италия</span>
+                            <h1>{manufacturer?.company_name}</h1>
+                            <span>{manufacturer?.made_in}</span>
                             <div className='singleManuDeailsIcons'>
-                                <div className='cursor'><InternetIcon /></div>
-                                <div className='cursor'><TelegramIcon /></div>
-                                <div className='cursor'><DocumentIcon /></div>
-                                <div className='cursor'><VerificationIcon /></div>
-                                <div className='cursor'><CubicIcon /></div>
+                                {manufacturer?.saite && manufacturer.saite !== 'null' &&
+                                    <Tooltip title='Перейти на сайт'>
+                                        <div onClick={() => window.open(handleProtocol(manufacturer?.saite), '_blank')} className='cursor'><InternetIcon /></div>
+                                    </Tooltip>
+                                }
+                                {manufacturer?.telegram && manufacturer.telegram !== 'null' &&
+                                    <Tooltip title='Перейти на телеграм'>
+                                        <div className='cursor' onClick={() => window.open(`https://t.me/${manufacturer?.telegram}`, '_blank')}><TelegramIcon /></div>
+                                    </Tooltip>
+                                }
+                                {manufacturer?.extract && manufacturer.extract !== 'null' &&
+                                    <Tooltip title='Скачать выписку'>
+                                        <div className='cursor'><DocumentIcon /></div>
+                                    </Tooltip>
+                                }
+                                {(manufacturer?.job_with_designer?.includes('Да') || manufacturer?.job_with_designer?.includes('да')) &&
+                                    <Tooltip title='Этот производитель сотрудничает с дизайнерами'>
+                                        <div className='cursor'><VerificationIcon /></div>
+                                    </Tooltip>
+                                }
+                                {(manufacturer?.dmodel?.includes('Да') || manufacturer?.dmodel?.includes('да')) &&
+                                    <Tooltip title='Этот производитель предоставляет 3d модели'>
+                                        <div className='cursor'><CubicIcon /></div>
+                                    </Tooltip>
+                                }
                             </div>
                         </div>
                     </div>
@@ -103,7 +123,7 @@ export const SingleManufacturer = () => {
                                 <InfoIcon />
                                 <span>Доп. информация</span>
                             </div>
-                            <div className='eachSingleManuDetailsRightIcon'>
+                            <div className='eachSingleManuDetailsRightIcon' onClick={() => window.open(`https://wa.me/${manufacturer?.watsap_phone}`, '_blank')}>
                                 <WhatsappIcon />
                                 <span>Написать в Whatsapp</span>
                             </div>
@@ -112,7 +132,6 @@ export const SingleManufacturer = () => {
                                 <span>Отзывы</span>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div className='myProductCategories'>
@@ -120,10 +139,10 @@ export const SingleManufacturer = () => {
                         <button
                             key={i}
                             className='eachProductCategory'
-                            style={e?.selected ? { background: 'var(--2-d-9-efb, #2D9EFB)', color: '#fff' } : {}}
-                            onClick={() => toggleCategorySelection(e.id)}
+                        // style={e?.selected ? { background: 'var(--2-d-9-efb, #2D9EFB)', color: '#fff' } : {}}
+                        // onClick={() => toggleCategorySelection(e.category_id)}
                         >
-                            {e?.title}
+                            {e?.category_name}
                         </button>
                     ))}
                 </div>
@@ -131,18 +150,15 @@ export const SingleManufacturer = () => {
             <div className='singleManuBlock'>
                 <div className='singleManuFilter'>
                     <select>
-                        <option>Москва</option>
-                        <option>Ереван</option>
-                        <option>Гюмри</option>
-                        <option>Москва</option>
-                        <option>Ереван</option>
-                        <option>Гюмри</option>
+                        {cities?.map((e, i) => (
+                            <option key={i}>{e?.city_name}</option>
+                        ))}
                     </select>
                 </div>
                 <div className='singleManuProducts'>
                     {products.length > 0
                         ? products.map((e, i) => (
-                            <EachProduct onClick={handleClick} product={e} key={i} />
+                            <EachProduct onClick={() => handleClick(e)} product={e} key={i} />
                         ))
                         : <span>Нет товаров</span>
                     }
