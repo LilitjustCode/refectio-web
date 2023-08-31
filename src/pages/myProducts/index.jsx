@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react'
 import { PlusSign } from '../../components/svg'
 import { useDispatch, useSelector } from 'react-redux'
 import { PageNavigation } from '../../components/pageNavigation'
-import { AllMyProducts, DeleteProduct, UpdateSuccess } from '../../Redux/action/product_action'
+import { AllMyProducts, DeleteProduct } from '../../Redux/action/product_action'
 
 export const MyProducts = () => {
     const dispatch = useDispatch()
     const products = useSelector(st => st.Product_reducer.myProducts)
-    // const update = useSelector(st => st.Product_reducer.update)
+    const update = useSelector(st => st.Product_reducer.update)
     const [categories, setCategories] = useState([
         {
             id: 1,
@@ -36,12 +36,9 @@ export const MyProducts = () => {
         dispatch(AllMyProducts())
     }, [dispatch])
 
-    // useEffect(() => {
-    //     if (update) {
-    //         dispatch(AllMyProducts())
-    //     }
-    //     dispatch(UpdateSuccess())
-    // }, [update, dispatch])
+    useEffect(() => {
+        update && dispatch(AllMyProducts())
+    }, [update, dispatch])
 
     const toggleCategorySelection = (categoryId) => {
         const updatedCategories = categories.map((category) => {

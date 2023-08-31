@@ -161,5 +161,5 @@ export default {
         }
     ],
     myProducts: [],
-    update: false,
+    update: new Date(),
 }

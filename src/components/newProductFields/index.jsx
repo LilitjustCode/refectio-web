@@ -1,7 +1,16 @@
 import './style.css'
 import { RublIcon } from '../svg'
 
-export const NewProductFields = ({ details, setDetails, nameError }) => {
+export const NewProductFields = ({ details, setDetails, errors, categories, selectedCategory, setSelectedCategory, setSelectedSubcategory, setCategoryHasSubcategory }) => {
+    function handleCategoryChange(event) {
+        const category = categories.filter(elm => elm.id == event.target.value)[0]
+        setSelectedCategory(category)
+        category.childrens.length > 0 ? setCategoryHasSubcategory(true) : setCategoryHasSubcategory(false)
+    }
+    function handleSubcategoryChange(event) {
+        setSelectedSubcategory(selectedCategory?.childrens?.filter(elm => elm.id == event.target.value)[0])
+    }
+
     return (
         <div className='myProfileBlock'>
             <div className='addProductEachBlock'>
@@ -13,7 +22,7 @@ export const NewProductFields = ({ details, setDetails, nameError }) => {
                         value={details.name}
                         onChange={(e) => setDetails({ ...details, name: e.target.value })}
                         placeholder='Имя продукции'
-                        style={nameError ? { border: '1px solid red' } : {}}
+                        style={errors.name ? { border: '1px solid red' } : {}}
                     />
                 </div>
                 <div className='eachProfileField'>
@@ -31,6 +40,7 @@ export const NewProductFields = ({ details, setDetails, nameError }) => {
                         <span>Длина</span>
                     </div>
                     <input
+                        type='number'
                         value={details.length}
                         onChange={(e) => setDetails({ ...details, length: e.target.value })}
                         placeholder='Длина'
@@ -66,19 +76,30 @@ export const NewProductFields = ({ details, setDetails, nameError }) => {
                     <div className='profileFieldName'>
                         <span>Категория</span>
                     </div>
-                    <select
-                    >
-                        {details?.categories?.map((e, i) => (
-                            <option
-                                key={i}
-                                value={e?.title}
-                                onChange={(e) => setDetails({ ...details, selectedCategory: e.target.value })}
-                            >
-                                {e?.title}
+                    <select onChange={handleCategoryChange} style={errors.category ? { border: '1px solid red' } : {}}>
+                        <option value=''></option>
+                        {categories?.map(category => (
+                            <option key={category.id} value={category?.id}>
+                                {category?.name}
                             </option>
                         ))}
                     </select>
                 </div>
+                {selectedCategory?.childrens.length > 0 &&
+                    <div className='eachProfileField'>
+                        <div className='profileFieldName'>
+                            <span>Подкатегория</span>
+                        </div>
+                        <select onChange={handleSubcategoryChange} style={errors.subcategory ? { border: '1px solid red' } : {}}>
+                            <option value=''></option>
+                            {selectedCategory?.childrens?.map(subcategory => (
+                                <option key={subcategory?.id} value={subcategory?.id}>
+                                    {subcategory?.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                }
                 <div className='eachProfileField'>
                     <div className='profileFieldName'>
                         <span>Столешница</span>
