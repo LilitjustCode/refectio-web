@@ -1,7 +1,17 @@
 import './style.css'
+import { useDispatch } from 'react-redux'
+import { useState, useEffect } from 'react'
 import { BackButton, Search } from '../svg'
+import { SearchManufacturers } from '../../Redux/action/manufacturer_ation'
 
 export const PageNavigation = ({ title, backButton, navigation, search, onClick }) => {
+    const [searchText, setSearchText] = useState('')
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(SearchManufacturers(searchText))
+    }, [searchText, dispatch])
+
     return (
         <div className='pageTitle' style={navigation ? { justifyContent: 'flex-start' } : {}}>
             {title &&
@@ -26,7 +36,7 @@ export const PageNavigation = ({ title, backButton, navigation, search, onClick 
             </div>
             {search &&
                 <div className='pageSearch'>
-                    <input placeholder='Поиск...' />
+                    <input placeholder='Поиск...' value={searchText} onChange={(e) => setSearchText(e.target.value)} />
                     <div className='pageSearchBg'>
                         <Search />
                     </div>

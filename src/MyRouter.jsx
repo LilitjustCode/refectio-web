@@ -3,6 +3,7 @@ import { Login } from './pages/login'
 import { Layout } from './components/layout'
 import { MyProfile } from './pages/myProfile'
 import { MyProducts } from './pages/myProducts'
+import { EditProduct } from './pages/EditProduct'
 import { AddNewProduct } from './pages/addNewProduct'
 import { AllManufacturers } from './pages/allManufacturers'
 import { SingleManufacturer } from './pages/singleManufacturer'
@@ -28,6 +29,7 @@ export const MyRouter = () => {
                     <Route path='/myProducts' element={<PrivateRoute auth={auth}><MyProducts /></PrivateRoute>} />
                     <Route path='/addNewProduct' element={<PrivateRoute auth={auth}><AddNewProduct /></PrivateRoute>} />
                     <Route path='/manufacturer/:id' element={<PrivateRoute auth={auth}><SingleManufacturer /></PrivateRoute>} />
+                    <Route path='/edit/:id' element={<PrivateRoute auth={auth}><EditProduct /></PrivateRoute>} />
                 </Route>
             </Routes>
         </BrowserRouter>

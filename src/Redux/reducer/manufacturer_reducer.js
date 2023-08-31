@@ -4,6 +4,7 @@ export const Manufacturer_reducer = (state = store, action) => {
     let temp = { ...state }
     switch (action.type) {
         case 'getAllManufacturers':
+            console.log(action.payload);
             temp.allManufacturers = action.payload.data.data.data
             break;
         case 'singleManufacturer':
@@ -15,6 +16,9 @@ export const Manufacturer_reducer = (state = store, action) => {
             } else {
                 window.location = '/'
             }
+            break;
+        case 'search':
+            // console.log(action.payload.data)
             break;
         default:
             return temp;

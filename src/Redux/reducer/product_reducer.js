@@ -9,6 +9,11 @@ export const Product_reducer = (state = store, action) => {
         case 'deleteProduct':
             if (action.payload?.status) temp.update = new Date()
             break;
+        case 'singleProduct':
+            if (action.payload.status) {
+                temp.singleProduct = action.payload.data[0  ]
+            }
+            break;
         default:
             return temp;
     }

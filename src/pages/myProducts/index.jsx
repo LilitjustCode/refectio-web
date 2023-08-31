@@ -102,7 +102,7 @@ export const MyProducts = () => {
                                 <span>Цена: {e?.price}</span>
                                 {e?.about && <div className='about' dangerouslySetInnerHTML={{ __html: `about: ${e?.about}` }} />}
                                 <div className='eachProductButtons'>
-                                    <button>Редактировать</button>
+                                    <button onClick={() => window.location = `/edit/${e?.id}`}>Редактировать</button>
                                     <button onClick={() => deleteProduct(e?.id)}>Удалить</button>
                                 </div>
                             </div>

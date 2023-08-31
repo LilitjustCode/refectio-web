@@ -85,7 +85,7 @@ export const NewProductFields = ({ details, setDetails, errors, categories, sele
                         ))}
                     </select>
                 </div>
-                {selectedCategory?.childrens.length > 0 &&
+                {selectedCategory?.childrens?.length > 0 &&
                     <div className='eachProfileField'>
                         <div className='profileFieldName'>
                             <span>Подкатегория</span>
