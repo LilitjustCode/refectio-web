@@ -5,6 +5,14 @@ export const Manufacturer_reducer = (state = store, action) => {
     switch (action.type) {
         case 'getAllManufacturers':
             temp.allManufacturers = action.payload.data.data.data
+            temp.pagination = {
+                page_count: action.payload.data.data.last_page,
+                next_page_url: action.payload.data.data.next_page_url,
+                prev_page_url: action.payload.data.data.prev_page_url,
+                first_page_url: action.payload.data.data.first_page_url,
+                last_page_url: action.payload.data.data.last_page_url,
+                current_page: action.payload.data.data.current_page,
+            }
             break;
         case 'singleManufacturer':
             if (action.payload.status) {
@@ -20,7 +28,7 @@ export const Manufacturer_reducer = (state = store, action) => {
             temp.search = action.payload.data.user
             break;
         case 'searchError':
-            temp.search = [{company_name: 'noUser'}]
+            temp.search = []
             break;
         default:
             return temp;
