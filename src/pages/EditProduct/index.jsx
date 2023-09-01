@@ -1,11 +1,10 @@
-import './style.css'
 import { useEffect, useState } from 'react'
 import { CloseIconBlue } from '../../components/svg'
 import { useDispatch, useSelector } from 'react-redux'
 import { PageNavigation } from '../../components/pageNavigation'
 import { SingleProduct } from '../../Redux/action/product_action'
 import { GetCategories } from '../../Redux/action/myProfile_action'
-import { NewProductFields } from '../../components/newProductFields'
+import { EditProductFields } from '../../components/editProductFields'
 
 export const EditProduct = () => {
     const dispatch = useDispatch()
@@ -13,8 +12,12 @@ export const EditProduct = () => {
     const categories = useSelector(st => st.MyProfile_reducer.categories)
     const [productId] = useState(window.location.pathname.split('/')[2])
     const [productPhotos, setProductPhotos] = useState([])
-
-    const token = localStorage.getItem('token')
+    const [deletedPhotos, setDeletedPhotos] = useState([])
+    const [newPhotos, setNewPhotos] = useState([])
+    const [files, setFiles] = useState([])
+    const [selectedCategory, setSelectedCategory] = useState()
+    const [selectedSubcategory, setSelectedSubcategory] = useState()
+    const [categoryHasSubcategory, setCategoryHasSubcategory] = useState(false)
     const [details, setDetails] = useState({
         name: '',
         frame: '',
@@ -30,11 +33,6 @@ export const EditProduct = () => {
         subcategory: '',
         photo: ''
     })
-    const [files, setFiles] = useState([])
-    const [photos, setPhotos] = useState([])
-    const [selectedCategory, setSelectedCategory] = useState()
-    const [selectedSubcategory, setSelectedSubcategory] = useState()
-    const [categoryHasSubcategory, setCategoryHasSubcategory] = useState(false)
 
     useEffect(() => {
         dispatch(GetCategories())
@@ -42,8 +40,8 @@ export const EditProduct = () => {
     }, [dispatch, productId])
 
     useEffect(() => {
-        photos && setErrors({ ...errors, photo: '' })
-    }, [photos])
+        (productPhotos || newPhotos || files) && setErrors({ ...errors, photo: '' })
+    }, [productPhotos, newPhotos, files])
 
     useEffect(() => {
         if (product) {
@@ -56,64 +54,85 @@ export const EditProduct = () => {
                 description: product?.about ? product?.about : '',
                 tabletop: product?.tabletop ? product?.tabletop : '',
             })
-            setSelectedCategory(categories.filter(elm => elm.id == product.parent_category_id)[0])
             setProductPhotos(product?.product_image)
+            const category = categories.filter(elm => +elm.id === +product?.parent_category_id)[0]
+            setSelectedCategory(category)
+            if (product?.category_id) {
+                setCategoryHasSubcategory(true)
+                setSelectedSubcategory(category?.childrens?.filter(elm => +elm.id === +product.category_id)[0])
+            } else {
+                setCategoryHasSubcategory(false)
+            }
         }
-    }, [product])
+    }, [product, categories])
 
     function uploadSingleFile(e) {
-        // let ImagesArray = Object.entries(e.target.files).map(e => URL.createObjectURL(e[1]))
-        // setPhotos([...photos, ...ImagesArray])
-        // const filesArray = Object.values(e.target.files)
-        // setFiles([...files, ...filesArray])
+        let ImagesArray = Object.entries(e.target.files).map(e => URL.createObjectURL(e[1]))
+        setNewPhotos([...newPhotos, ...ImagesArray])
+        const filesArray = Object.values(e.target.files)
+        setFiles([...files, ...filesArray])
     }
 
-    function deleteFile(e) {
-        // setPhotos(photos.filter((item, index) => index !== e))
-        // setFiles(files.filter((item, index) => index !== e))
+    function deleteFile(elm, i) {
+        const oldPhoto = productPhotos.filter(e => +e.id === +elm.id)[0]
+        if (oldPhoto) {
+            setDeletedPhotos([...deletedPhotos, oldPhoto?.id])
+            setProductPhotos(productPhotos.filter(e => +e.id !== +elm.id))
+        } else {
+            setNewPhotos(newPhotos.filter((item, index) => index !== i))
+            setFiles(files.filter((item, index) => index !== i))
+        }
     }
 
-    function create() {
+    function update() {
         if (!details.name.length) {
             setErrors({ ...errors, name: ' ' })
         } else if (!selectedCategory) {
             setErrors({ ...errors, name: '', category: ' ' })
         } else if (selectedCategory && categoryHasSubcategory && !selectedSubcategory) {
             setErrors({ ...errors, name: '', category: '', subcategory: ' ' })
-        } else if (!files.length) {
+        } else if (!files.length && !productPhotos.length && !newPhotos.length) {
             setErrors({ ...errors, name: '', category: '', subcategory: '', photo: 'Обязательное поле' })
         } else {
             setErrors({ ...errors, name: '', category: '', subcategory: '', photo: '' })
-            // const myHeaders = new Headers()
-            // myHeaders.append("Authorization", `Bearer ${token}`)
-            // const formdata = new FormData()
-            // formdata.append("name", details.name)
-            // formdata.append("frame", details.frame)
-            // formdata.append("facades", details.facades)
-            // formdata.append("length", details.length)
-            // formdata.append("price", details.price)
-            // formdata.append("tabletop", details.tabletop)
-            // files.forEach(elm => {
-            //     formdata.append("photo[]", elm)
-            // })
-            // formdata.append("parent_category_id", selectedCategory.id)
-            // formdata.append("parent_category_name", selectedCategory.name)
-            // if (selectedSubcategory) {
-            //     formdata.append("category_name", selectedSubcategory?.name)
-            //     formdata.append("category_id", selectedSubcategory.id)
-            // }
-            // const requestOptions = {
-            //     method: 'POST',
-            //     headers: myHeaders,
-            //     body: formdata,
-            //     redirect: 'follow'
-            // }
-            // fetch(`${process.env.REACT_APP_HOSTNAME}/createnewproductProizvoditel`, requestOptions)
-            //     .then(response => response.json())
-            //     .then(result => {
-            //         if (result.status) window.location = '/myProducts'
-            //     })
-            //     .catch(error => console.log('error', error));
+            const token = localStorage.getItem('token')
+            const myHeaders = new Headers()
+            myHeaders.append("Authorization", `Bearer ${token}`)
+            const formdata = new FormData()
+            formdata.append("product_id", product?.id)
+            formdata.append("parent_category_id", selectedCategory?.id)
+            formdata.append("parent_category_name", selectedCategory?.name)
+            if (selectedSubcategory) {
+                formdata.append("category_id", selectedSubcategory?.id)
+                formdata.append("category_name", selectedSubcategory?.name)
+            }
+            formdata.append("name", details?.name)
+            formdata.append("frame", details?.frame)
+            formdata.append("facades", details?.facades)
+            formdata.append("length", details?.length)
+            formdata.append("price", details?.price)
+            formdata.append("tabletop", details?.tabletop)
+            formdata.append("about", details?.description)
+            deletedPhotos.length && deletedPhotos.forEach(elm => {
+                formdata.append("Deletephoto[]", elm)
+            })
+            files.length && files.forEach(elm => {
+                formdata.append("photo[]", elm)
+            })
+            const requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: formdata,
+                redirect: 'follow'
+            }
+            fetch(`${process.env.REACT_APP_HOSTNAME}/UpdateProduct`, requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    if (result.status) {
+                        window.location = '/myProducts'
+                    }
+                })
+                .catch(error => console.log('error', error))
         }
     }
 
@@ -127,13 +146,15 @@ export const EditProduct = () => {
                 search={false}
             />
             <div className='newProductBlock'>
-                <NewProductFields
+                <EditProductFields
                     details={details}
                     setDetails={setDetails}
                     errors={errors}
+                    setErrors={setErrors}
                     categories={categories}
                     selectedCategory={selectedCategory}
                     setSelectedCategory={setSelectedCategory}
+                    selectedSubcategory={selectedSubcategory}
                     setSelectedSubcategory={setSelectedSubcategory}
                     setCategoryHasSubcategory={setCategoryHasSubcategory}
                 />
@@ -147,7 +168,15 @@ export const EditProduct = () => {
                         {productPhotos?.length > 0 && productPhotos?.map((e, i) => (
                             <div className='eachProductPhoto' key={i}>
                                 <img alt='' src={`${process.env.REACT_APP_IMAGE}${e?.image}`} />
-                                <div className='deletePhoto' onClick={() => deleteFile(i)}>
+                                <div className='deletePhoto' onClick={() => deleteFile(e, i)}>
+                                    <CloseIconBlue />
+                                </div>
+                            </div>
+                        ))}
+                        {newPhotos?.length > 0 && newPhotos?.map((e, i) => (
+                            <div className='eachProductPhoto' key={i}>
+                                <img alt='' src={e} />
+                                <div className='deletePhoto' onClick={() => deleteFile(e, i)}>
                                     <CloseIconBlue />
                                 </div>
                             </div>
@@ -156,7 +185,7 @@ export const EditProduct = () => {
                     </div>
                 </div>
                 <div className='addProductButton'>
-                    <button onClick={create}>Добавить</button>
+                    <button onClick={update}>Сохранить</button>
                 </div>
             </div>
         </div>
