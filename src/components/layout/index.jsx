@@ -33,8 +33,8 @@ export const Layout = () => {
                 <div className='bottomLayoutBlock'>
                     <div className='socialMedias'>
                         <div><Instagram /></div>
-                        <div> <Telegram /> </div>
-                        <div> <Mail /> </div>
+                        <div><Telegram /></div>
+                        <div><Mail /></div>
                     </div>
                     <span>Refectio © 2023. <br />Все права защищены.</span>
                 </div>

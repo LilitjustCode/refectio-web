@@ -1,15 +1,14 @@
 import './style.css'
+import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { useState, useEffect } from 'react'
 import { BackButton, Search } from '../svg'
 import { SearchManufacturers } from '../../Redux/action/manufacturer_ation'
 
-export const PageNavigation = ({ title, backButton, navigation, search, onClick }) => {
-    const [searchText, setSearchText] = useState('')
+export const PageNavigation = ({ title, backButton, navigation, search, onClick, searchText, setSearchText }) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(SearchManufacturers(searchText))
+        searchText.length > 0 && dispatch(SearchManufacturers(searchText))
     }, [searchText, dispatch])
 
     return (

@@ -5,6 +5,7 @@ import { PageNavigation } from '../../components/pageNavigation'
 import { SingleProduct } from '../../Redux/action/product_action'
 import { GetCategories } from '../../Redux/action/myProfile_action'
 import { EditProductFields } from '../../components/editProductFields'
+import { EditProductSkeleton } from '../../components/skeletons/editProduct'
 
 export const EditProduct = () => {
     const dispatch = useDispatch()
@@ -144,6 +145,8 @@ export const EditProduct = () => {
                 title={'Редактирование продукта'}
                 navigation={false}
                 search={false}
+                searchText={''}
+                setSearchText={''}
             />
             <div className='newProductBlock'>
                 <EditProductFields
@@ -165,14 +168,17 @@ export const EditProduct = () => {
                         <input type='file' id='fileInput' onChange={uploadSingleFile} multiple />
                     </button>
                     <div className='newProductPhotos'>
-                        {productPhotos?.length > 0 && productPhotos?.map((e, i) => (
-                            <div className='eachProductPhoto' key={i}>
-                                <img alt='' src={`${process.env.REACT_APP_IMAGE}${e?.image}`} />
-                                <div className='deletePhoto' onClick={() => deleteFile(e, i)}>
-                                    <CloseIconBlue />
+                        {productPhotos?.length
+                            ? productPhotos?.map((e, i) => (
+                                <div className='eachProductPhoto' key={i}>
+                                    <img alt='' src={`${process.env.REACT_APP_IMAGE}${e?.image}`} />
+                                    <div className='deletePhoto' onClick={() => deleteFile(e, i)}>
+                                        <CloseIconBlue />
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))
+                            : <EditProductSkeleton />
+                        }
                         {newPhotos?.length > 0 && newPhotos?.map((e, i) => (
                             <div className='eachProductPhoto' key={i}>
                                 <img alt='' src={e} />

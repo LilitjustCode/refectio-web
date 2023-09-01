@@ -4,13 +4,14 @@ import { useEffect, useState } from 'react'
 import { EditPhone } from '../popup/editPhone'
 import { EditPassword } from '../popup/editPassword'
 import { useDispatch, useSelector } from 'react-redux'
+import { MyProfileSkeleton } from '../skeletons/myProfile'
 import { GetCategories, GetCities, MyProfile, UpdateAbout, UpdateCities, UpdateCode, UpdateCountry, UpdateName, UpdatePhone, UpdateSite, UpdateSuccessful, UpdateTelegram } from '../../Redux/action/myProfile_action'
 
 export const ProfileFields = () => {
     const dispatch = useDispatch()
     const updateSuccess = useSelector(st => st.MyProfile_reducer.update)
     const cities = useSelector(st => st.MyProfile_reducer.cities)
-    const categories = useSelector(st => st.MyProfile_reducer.categories)
+    // const categories = useSelector(st => st.MyProfile_reducer.categories)
     const user = useSelector(st => st.MyProfile_reducer.user)
     const [openPassword, setOpenPassword] = useState(false)
     const [openPhone, setOpenPhone] = useState(false)
@@ -134,171 +135,172 @@ export const ProfileFields = () => {
                 setOpen={setOpenPhone}
             />
         }
-        <div className='myProfileBlock'>
-            <div className='profileMiddleBlocks'>
-                <div className='profileNameBlock'> {/* avatar */}
-                    <img alt='' src={file} />
-                    <button className='profileEditButton'>
-                        Изменить
-                        <input type='file' id='fileInput' onChange={uploadSingleFile} />
-                    </button>
-                </div>
-                <div className='eachProfileField'> {/* Страна производства */}
-                    <div className='profileFieldName'>
-                        <span>Страна производства</span>
-                        <div className='cursor' onClick={() => setEdit({ ...edit, country: true })}>
-                            <EditIcon />
-                        </div>
+        {Object.keys(user).length
+            ? <div className='myProfileBlock'>
+                <div className='profileMiddleBlocks'>
+                    <div className='profileNameBlock'> {/* avatar */}
+                        <img alt='' src={file} />
+                        <button className='profileEditButton'>
+                            Изменить
+                            <input type='file' id='fileInput' onChange={uploadSingleFile} />
+                        </button>
                     </div>
-                    <input
-                        disabled={!edit.country}
-                        value={userDetails?.country ? userDetails?.country : ''}
-                        style={edit.country ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
-                        onChange={(e) => setUserDetails({ ...userDetails, country: e.target.value })}
-                    />
-                </div>
-                {edit?.country && <div>
-                    <button className='profileEditButton' onClick={() => dispatch(UpdateCountry(userDetails?.country))}>Обновить</button>
-                </div>}
-                <div className='eachProfileField'> {/* ИНН */}
-                    <div className='profileFieldName'>
-                        <span>ИНН</span>
-                        <div className='cursor' onClick={() => setEdit({ ...edit, code: true })}>
-                            <EditIcon />
+                    <div className='eachProfileField'> {/* Страна производства */}
+                        <div className='profileFieldName'>
+                            <span>Страна производства</span>
+                            <div className='cursor' onClick={() => setEdit({ ...edit, country: true })}>
+                                <EditIcon />
+                            </div>
                         </div>
+                        <input
+                            disabled={!edit.country}
+                            value={userDetails?.country ? userDetails?.country : ''}
+                            style={edit.country ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
+                            onChange={(e) => setUserDetails({ ...userDetails, country: e.target.value })}
+                        />
                     </div>
-                    <input
-                        disabled={!edit.code}
-                        value={userDetails?.code ? userDetails?.code : ''}
-                        style={edit.code ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
-                        onChange={(e) => setUserDetails({ ...userDetails, code: e.target.value })}
-                    />
-                </div>
-                {edit?.code && <div>
-                    <button className='profileEditButton' onClick={() => dispatch(UpdateCode(userDetails?.code))}>Обновить</button>
-                </div>}
-                <div className='eachProfileField'> {/* Города */}
-                    <div className='profileFieldName'>
-                        <span>Города (продажи продукции)({userDetails?.cities?.length})</span>
-                        <div className='cursor' onClick={() => setEdit({ ...edit, cities: true })}>
-                            <EditIcon />
+                    {edit?.country && <div>
+                        <button className='profileEditButton' onClick={() => dispatch(UpdateCountry(userDetails?.country))}>Обновить</button>
+                    </div>}
+                    <div className='eachProfileField'> {/* ИНН */}
+                        <div className='profileFieldName'>
+                            <span>ИНН</span>
+                            <div className='cursor' onClick={() => setEdit({ ...edit, code: true })}>
+                                <EditIcon />
+                            </div>
                         </div>
+                        <input
+                            disabled={!edit.code}
+                            value={userDetails?.code ? userDetails?.code : ''}
+                            style={edit.code ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
+                            onChange={(e) => setUserDetails({ ...userDetails, code: e.target.value })}
+                        />
                     </div>
-                    <select
-                        value={userDetails?.cities}
-                        onChange={handleCityChange}
-                        disabled={!edit.cities}
-                        style={edit.cities ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
-                        multiple
-                    >
-                        {cities?.map((e, i) => (
-                            <option key={i} data-id={e?.id}>
-                                {e?.name ? e?.name : ''}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                {edit?.cities && <div>
-                    <button className='profileEditButton' onClick={() => dispatch(UpdateCities(cityId))}>Обновить</button>
-                </div>}
-                <div className='eachProfileField'> {/* Доп. информация */}
-                    <div className='profileFieldName'>
-                        <span>Доп. информация</span>
-                        <div className='cursor' onClick={() => setEdit({ ...edit, description: true })}>
-                            <EditIcon />
+                    {edit?.code && <div>
+                        <button className='profileEditButton' onClick={() => dispatch(UpdateCode(userDetails?.code))}>Обновить</button>
+                    </div>}
+                    <div className='eachProfileField'> {/* Города */}
+                        <div className='profileFieldName'>
+                            <span>Города (продажи продукции)({userDetails?.cities?.length})</span>
+                            <div className='cursor' onClick={() => setEdit({ ...edit, cities: true })}>
+                                <EditIcon />
+                            </div>
                         </div>
+                        <select
+                            value={userDetails?.cities}
+                            onChange={handleCityChange}
+                            disabled={!edit.cities}
+                            style={edit.cities ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
+                            multiple
+                        >
+                            {cities?.map((e, i) => (
+                                <option key={i} data-id={e?.id}>
+                                    {e?.name ? e?.name : ''}
+                                </option>
+                            ))}
+                        </select>
                     </div>
-                    <textarea
-                        disabled={!edit.description}
-                        value={userDetails?.description ? userDetails?.description : ''}
-                        style={edit.description ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
-                        onChange={(e) => setUserDetails({ ...userDetails, description: e.target.value })}
-                    />
-                </div>
-                {edit?.description && <div>
-                    <button className='profileEditButton' onClick={() => dispatch(UpdateAbout(userDetails?.description))}>Обновить</button>
-                </div>}
-            </div>
-            <div className='profileMiddleBlocks'>
-                <div className='eachProfileField'> { /* Название */}
-                    <div className='profileFieldName'>
-                        <span>Название</span>
-                        <div className='cursor' onClick={() => setEdit({ ...edit, name: true })}>
-                            <EditIcon />
+                    {edit?.cities && <div>
+                        <button className='profileEditButton' onClick={() => dispatch(UpdateCities(cityId))}>Обновить</button>
+                    </div>}
+                    <div className='eachProfileField'> {/* Доп. информация */}
+                        <div className='profileFieldName'>
+                            <span>Доп. информация</span>
+                            <div className='cursor' onClick={() => setEdit({ ...edit, description: true })}>
+                                <EditIcon />
+                            </div>
                         </div>
+                        <textarea
+                            disabled={!edit.description}
+                            value={userDetails?.description ? userDetails?.description : ''}
+                            style={edit.description ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
+                            onChange={(e) => setUserDetails({ ...userDetails, description: e.target.value })}
+                        />
                     </div>
-                    <input
-                        disabled={!edit.name}
-                        value={userDetails?.name ? userDetails?.name : ''}
-                        style={edit.name ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
-                        onChange={(e) => setUserDetails({ ...userDetails, name: e.target.value })}
-                    />
+                    {edit?.description && <div>
+                        <button className='profileEditButton' onClick={() => dispatch(UpdateAbout(userDetails?.description))}>Обновить</button>
+                    </div>}
                 </div>
-                {edit?.name && <div>
-                    <button className='profileEditButton' onClick={() => dispatch(UpdateName(userDetails?.name))}>Обновить</button>
-                </div>}
-                <div className='eachProfileField'> {/* Телеграм Канал */}
-                    <div className='profileFieldName'>
-                        <span>Телеграм Канал</span>
-                        <div className='cursor' onClick={() => setEdit({ ...edit, telegram: true })}>
-                            <EditIcon />
+                <div className='profileMiddleBlocks'>
+                    <div className='eachProfileField'> { /* Название */}
+                        <div className='profileFieldName'>
+                            <span>Название</span>
+                            <div className='cursor' onClick={() => setEdit({ ...edit, name: true })}>
+                                <EditIcon />
+                            </div>
                         </div>
+                        <input
+                            disabled={!edit.name}
+                            value={userDetails?.name ? userDetails?.name : ''}
+                            style={edit.name ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
+                            onChange={(e) => setUserDetails({ ...userDetails, name: e.target.value })}
+                        />
                     </div>
-                    <input
-                        disabled={!edit.telegram}
-                        value={userDetails?.telegram ? userDetails?.telegram : ''}
-                        style={edit.telegram ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
-                        onChange={(e) => setUserDetails({ ...userDetails, telegram: e.target.value })}
-                    />
-                </div>
-                {edit?.telegram && <div>
-                    <button className='profileEditButton' onClick={() => dispatch(UpdateTelegram(userDetails?.telegram))}>Обновить</button>
-                </div>}
-                <div className='eachProfileField'> {/* Сайт */}
-                    <div className='profileFieldName'>
-                        <span>Сайт</span>
-                        <div className='cursor' onClick={() => setEdit({ ...edit, site: true })}>
-                            <EditIcon />
+                    {edit?.name && <div>
+                        <button className='profileEditButton' onClick={() => dispatch(UpdateName(userDetails?.name))}>Обновить</button>
+                    </div>}
+                    <div className='eachProfileField'> {/* Телеграм Канал */}
+                        <div className='profileFieldName'>
+                            <span>Телеграм Канал</span>
+                            <div className='cursor' onClick={() => setEdit({ ...edit, telegram: true })}>
+                                <EditIcon />
+                            </div>
                         </div>
+                        <input
+                            disabled={!edit.telegram}
+                            value={userDetails?.telegram ? userDetails?.telegram : ''}
+                            style={edit.telegram ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
+                            onChange={(e) => setUserDetails({ ...userDetails, telegram: e.target.value })}
+                        />
                     </div>
-                    <input
-                        disabled={!edit.site}
-                        value={userDetails?.site ? userDetails?.site : ''}
-                        style={edit.site ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
-                        onChange={(e) => setUserDetails({ ...userDetails, site: e.target.value })}
-                    />
-                </div>
-                {edit?.site && <div>
-                    <button className='profileEditButton' onClick={() => dispatch(UpdateSite(userDetails?.site))}>Обновить</button>
-                </div>}
-                <div className='eachProfileField'> {/* Номер телефона */}
-                    <div className='profileFieldName'>
-                        <span>Номер телефона</span>
-                        <div className='cursor' onClick={() => setOpenPhone(true)}>
-                            <EditIcon />
+                    {edit?.telegram && <div>
+                        <button className='profileEditButton' onClick={() => dispatch(UpdateTelegram(userDetails?.telegram))}>Обновить</button>
+                    </div>}
+                    <div className='eachProfileField'> {/* Сайт */}
+                        <div className='profileFieldName'>
+                            <span>Сайт</span>
+                            <div className='cursor' onClick={() => setEdit({ ...edit, site: true })}>
+                                <EditIcon />
+                            </div>
                         </div>
+                        <input
+                            disabled={!edit.site}
+                            value={userDetails?.site ? userDetails?.site : ''}
+                            style={edit.site ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
+                            onChange={(e) => setUserDetails({ ...userDetails, site: e.target.value })}
+                        />
                     </div>
-                    <input
-                        disabled
-                        value={userDetails?.phone ? userDetails?.phone : ''}
-                    />
-                </div>
-                {edit?.phone && <div>
-                    <button className='profileEditButton' onClick={() => dispatch(UpdatePhone(userDetails?.phone))}>Обновить</button>
-                </div>}
-                <div className='eachProfileField'> {/* Пароль */}
-                    <div className='profileFieldName'>
-                        <span>Пароль</span>
-                        <div className='cursor' onClick={() => setOpenPassword(true)}>
-                            <EditIcon />
+                    {edit?.site && <div>
+                        <button className='profileEditButton' onClick={() => dispatch(UpdateSite(userDetails?.site))}>Обновить</button>
+                    </div>}
+                    <div className='eachProfileField'> {/* Номер телефона */}
+                        <div className='profileFieldName'>
+                            <span>Номер телефона</span>
+                            <div className='cursor' onClick={() => setOpenPhone(true)}>
+                                <EditIcon />
+                            </div>
                         </div>
+                        <input
+                            disabled
+                            value={userDetails?.phone ? userDetails?.phone : ''}
+                        />
                     </div>
-                    <input
-                        disabled
-                        value={''}
-                    />
-                </div>
-                {/* <div className='eachProfileField'>
+                    {edit?.phone && <div>
+                        <button className='profileEditButton' onClick={() => dispatch(UpdatePhone(userDetails?.phone))}>Обновить</button>
+                    </div>}
+                    <div className='eachProfileField'> {/* Пароль */}
+                        <div className='profileFieldName'>
+                            <span>Пароль</span>
+                            <div className='cursor' onClick={() => setOpenPassword(true)}>
+                                <EditIcon />
+                            </div>
+                        </div>
+                        <input
+                            disabled
+                            value={''}
+                        />
+                    </div>
+                    {/* <div className='eachProfileField'>
                     <div className='profileFieldName'>
                         <span>Категории ({userDetails?.categories?.length})</span>
                         <div className='cursor'>
@@ -319,7 +321,11 @@ export const ProfileFields = () => {
                         ))}
                     </select>
                 </div> */}
+                </div>
             </div>
-        </div>
+            : <div className='myProfileBlock'>
+                <MyProfileSkeleton />
+            </div>
+        }
     </>)
 }

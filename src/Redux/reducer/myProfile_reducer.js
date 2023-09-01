@@ -35,7 +35,6 @@ export const MyProfile_reducer = (state = store, action) => {
             temp.phoneError = ''
             break;
         case 'updatePhone':
-            console.log(action.payload);
             if (action.payload.status) {
                 temp.phoneToken = true
                 temp.update = true
@@ -44,7 +43,6 @@ export const MyProfile_reducer = (state = store, action) => {
             }
             break;
         case 'phoneCode':
-            console.log(action.payload);
             if (action.payload.status) {
                 temp.update = true
                 temp.codeError = ''

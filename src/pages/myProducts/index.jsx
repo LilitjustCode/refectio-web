@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { PlusSign } from '../../components/svg'
 import { useDispatch, useSelector } from 'react-redux'
 import { PageNavigation } from '../../components/pageNavigation'
+import { MyProductsSkeleton } from '../../components/skeletons/myProducts'
 import { AllMyProducts, DeleteProduct } from '../../Redux/action/product_action'
 
 export const MyProducts = () => {
@@ -64,6 +65,8 @@ export const MyProducts = () => {
                 backButton={false}
                 title={false}
                 search={false}
+                searchText={''}
+                setSearchText={''}
                 navigation={[
                     {
                         title: 'Профиль',
@@ -75,45 +78,49 @@ export const MyProducts = () => {
                     }
                 ]}
             />
-            <div className='myProductsBlock'>
-                <div className='myProductCategories'>
-                    {categories?.map((e, i) => (
-                        <button
-                            key={i}
-                            className='eachProductCategory'
-                            style={e?.selected ? { background: 'var(--2-d-9-efb, #2D9EFB)', color: '#fff' } : {}}
-                            onClick={() => toggleCategorySelection(e.id)}
-                        >
-                            {e?.title}
-                        </button>
-                    ))}
-                    <button className='eachProductCategory'><PlusSign /></button>
-                </div>
-                <div className='myProducts'>
-                    {products.length > 0
-                        ? products?.map((e, i) => (
-                            <div key={i} className='eachProduct'>
-                                <img alt='' src={`${process.env.REACT_APP_IMAGE}${e?.product_image[0]?.image}`} />
-                                <h2>{e?.name}</h2>
-                                <span>Фасады: {e?.facades}</span>
-                                <span>Корпус: {e?.frame}</span>
-                                <span>Столешница: {e?.tabletop}</span>
-                                <span>Длина: {e?.length} м.</span>
-                                <span>Цена: {e?.price}</span>
-                                {e?.about && <div className='about' dangerouslySetInnerHTML={{ __html: `about: ${e?.about}` }} />}
-                                <div className='eachProductButtons'>
-                                    <button onClick={() => window.location = `/edit/${e?.id}`}>Редактировать</button>
-                                    <button onClick={() => deleteProduct(e?.id)}>Удалить</button>
+            {products.length && categories
+                ? <div className='myProductsBlock'>
+                    <div className='myProductCategories'>
+                        {categories?.map((e, i) => (
+                            <button
+                                key={i}
+                                className='eachProductCategory'
+                                style={e?.selected ? { background: 'var(--2-d-9-efb, #2D9EFB)', color: '#fff' } : {}}
+                                onClick={() => toggleCategorySelection(e.id)}
+                            >
+                                {e?.title}
+                            </button>
+                        ))}
+                        <button className='eachProductCategory'><PlusSign /></button>
+                    </div>
+                    <div className='myProducts'>
+                        {products.length > 0
+                            ? products?.map((e, i) => (
+                                <div key={i} className='eachProduct'>
+                                    <img alt='' src={`${process.env.REACT_APP_IMAGE}${e?.product_image[0]?.image}`} />
+                                    <h2>{e?.name}</h2>
+                                    <span>Фасады: {e?.facades}</span>
+                                    <span>Корпус: {e?.frame}</span>
+                                    <span>Столешница: {e?.tabletop}</span>
+                                    <span>Длина: {e?.length} м.</span>
+                                    <span>Цена: {e?.price}</span>
+                                    {e?.about && <div className='about' dangerouslySetInnerHTML={{ __html: `about: ${e?.about}` }} />}
+                                    <div className='eachProductButtons'>
+                                        <button onClick={() => window.location = `/edit/${e?.id}`}>Редактировать</button>
+                                        <button onClick={() => deleteProduct(e?.id)}>Удалить</button>
+                                    </div>
                                 </div>
-                            </div>
-                        ))
-                        : <span>Нет товаров</span>
-                    }
+                            ))
+                            : <span>Нет товаров</span>
+                        }
+                    </div>
+                    <div className='myProductsButton'>
+                        <button onClick={() => window.location = '/addNewProduct'}>Добавить</button>
+                    </div>
                 </div>
-                <div className='myProductsButton'>
-                    <button onClick={() => window.location = '/addNewProduct'}>Добавить</button>
-                </div>
-            </div>
+                : <MyProductsSkeleton />
+            }
+
         </div>
     )
 }

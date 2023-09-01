@@ -5,7 +5,6 @@ export const Auth_reducer = (state = store, action) => {
     switch (action.type) {
         case 'login':
             if (action.payload.status) {
-                console.log(action.payload);
                 if (action.payload?.message?.message?.includes('login succsesfuli')) {
                     localStorage.setItem('token', action.payload?.message?.token)
                     temp.user = action.payload.message.user

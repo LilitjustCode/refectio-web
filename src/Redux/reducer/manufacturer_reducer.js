@@ -4,7 +4,6 @@ export const Manufacturer_reducer = (state = store, action) => {
     let temp = { ...state }
     switch (action.type) {
         case 'getAllManufacturers':
-            console.log(action.payload);
             temp.allManufacturers = action.payload.data.data.data
             break;
         case 'singleManufacturer':
@@ -18,7 +17,10 @@ export const Manufacturer_reducer = (state = store, action) => {
             }
             break;
         case 'search':
-            // console.log(action.payload.data)
+            temp.search = action.payload.data.user
+            break;
+        case 'searchError':
+            temp.search = [{company_name: 'noUser'}]
             break;
         default:
             return temp;

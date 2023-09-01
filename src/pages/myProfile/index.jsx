@@ -12,6 +12,8 @@ export const MyProfile = () => {
                 backButton={false}
                 title={false}
                 search={false}
+                searchText={''}
+                setSearchText={''}
                 navigation={[
                     {
                         title: 'Профиль',

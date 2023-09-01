@@ -6,6 +6,7 @@ import { EachProduct } from '../../components/eachProduct'
 import { PageNavigation } from '../../components/pageNavigation'
 import { SingleProduct } from '../../components/popup/singleProduct'
 import { GetSingleManufacturer } from '../../Redux/action/manufacturer_ation'
+import { SingleManufacturerSkeleton } from '../../components/skeletons/singleManufacturer'
 import { CheckboxChecked, CheckboxNotChecked, CubicIcon, DocumentIcon, InfoIcon, InternetIcon, ReviewIcon, TelegramIcon, VerificationIcon, WhatsappIcon } from '../../components/svg'
 
 export const SingleManufacturer = () => {
@@ -74,96 +75,102 @@ export const SingleManufacturer = () => {
                 onClick={() => window.location = '/'}
                 title={'Все производители'}
                 search={false}
+                searchText={''}
+                setSearchText={''}
             />
-            <div className='singleManuBlock'>
-                <div className='singleManuDetails'>
-                    <div className='singleManuDetailsLeft'>
-                        <img alt='' src={`${process.env.REACT_APP_IMAGE}${manufacturer?.logo}`} />
-                        <div className='singleManuDetailsLeftRight'>
-                            <h1>{manufacturer?.company_name}</h1>
-                            <span>{manufacturer?.made_in}</span>
-                            <div className='singleManuDeailsIcons'>
-                                {manufacturer?.saite && manufacturer.saite !== 'null' &&
-                                    <Tooltip title='Перейти на сайт'>
-                                        <div onClick={() => window.open(handleProtocol(manufacturer?.saite), '_blank')} className='cursor'><InternetIcon /></div>
-                                    </Tooltip>
-                                }
-                                {manufacturer?.telegram && manufacturer.telegram !== 'null' &&
-                                    <Tooltip title='Перейти на телеграм'>
-                                        <div className='cursor' onClick={() => window.open(`https://t.me/${manufacturer?.telegram}`, '_blank')}><TelegramIcon /></div>
-                                    </Tooltip>
-                                }
-                                {manufacturer?.extract && manufacturer.extract !== 'null' &&
-                                    <Tooltip title='Скачать выписку'>
-                                        <div className='cursor'><DocumentIcon /></div>
-                                    </Tooltip>
-                                }
-                                {(manufacturer?.job_with_designer?.includes('Да') || manufacturer?.job_with_designer?.includes('да')) &&
-                                    <Tooltip title='Этот производитель сотрудничает с дизайнерами'>
-                                        <div className='cursor'><VerificationIcon /></div>
-                                    </Tooltip>
-                                }
-                                {(manufacturer?.dmodel?.includes('Да') || manufacturer?.dmodel?.includes('да')) &&
-                                    <Tooltip title='Этот производитель предоставляет 3d модели'>
-                                        <div className='cursor'><CubicIcon /></div>
-                                    </Tooltip>
-                                }
+            {Object.keys(manufacturer) && categories.length && cities.length
+                ? <>
+                    <div className='singleManuBlock'>
+                        <div className='singleManuDetails'>
+                            <div className='singleManuDetailsLeft'>
+                                <img alt='' src={`${process.env.REACT_APP_IMAGE}${manufacturer?.logo}`} />
+                                <div className='singleManuDetailsLeftRight'>
+                                    <h1>{manufacturer?.company_name}</h1>
+                                    <span>{manufacturer?.made_in}</span>
+                                    <div className='singleManuDeailsIcons'>
+                                        {manufacturer?.saite && manufacturer.saite !== 'null' &&
+                                            <Tooltip title='Перейти на сайт'>
+                                                <div onClick={() => window.open(handleProtocol(manufacturer?.saite), '_blank')} className='cursor'><InternetIcon /></div>
+                                            </Tooltip>
+                                        }
+                                        {manufacturer?.telegram && manufacturer.telegram !== 'null' &&
+                                            <Tooltip title='Перейти на телеграм'>
+                                                <div className='cursor' onClick={() => window.open(`https://t.me/${manufacturer?.telegram}`, '_blank')}><TelegramIcon /></div>
+                                            </Tooltip>
+                                        }
+                                        {manufacturer?.extract && manufacturer.extract !== 'null' &&
+                                            <Tooltip title='Скачать выписку'>
+                                                <div className='cursor'><DocumentIcon /></div>
+                                            </Tooltip>
+                                        }
+                                        {(manufacturer?.job_with_designer?.includes('Да') || manufacturer?.job_with_designer?.includes('да')) &&
+                                            <Tooltip title='Этот производитель сотрудничает с дизайнерами'>
+                                                <div className='cursor'><VerificationIcon /></div>
+                                            </Tooltip>
+                                        }
+                                        {(manufacturer?.dmodel?.includes('Да') || manufacturer?.dmodel?.includes('да')) &&
+                                            <Tooltip title='Этот производитель предоставляет 3d модели'>
+                                                <div className='cursor'><CubicIcon /></div>
+                                            </Tooltip>
+                                        }
+                                    </div>
+                                </div>
                             </div>
+                            <div className='singleManuDetailsRight'>
+                                <div className='singleManuDetailsRightCheckbox'>
+                                    <span>Шоурум</span>
+                                    <div onClick={() => setChecked(!checked)} className='cursor'>
+                                        {checked ? <CheckboxChecked /> : <CheckboxNotChecked />}
+                                    </div>
+                                </div>
+                                <div className='singleManuDetailsRightIcons'>
+                                    <div className='eachSingleManuDetailsRightIcon'>
+                                        <InfoIcon />
+                                        <span>Доп. информация</span>
+                                    </div>
+                                    <div className='eachSingleManuDetailsRightIcon' onClick={() => window.open(`https://wa.me/${manufacturer?.watsap_phone}`, '_blank')}>
+                                        <WhatsappIcon />
+                                        <span>Написать в Whatsapp</span>
+                                    </div>
+                                    <div className='eachSingleManuDetailsRightIcon'>
+                                        <ReviewIcon />
+                                        <span>Отзывы</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='myProductCategories'>
+                            {categories?.map((e, i) => (
+                                <button
+                                    key={i}
+                                    className='eachProductCategory'
+                                // style={e?.selected ? { background: 'var(--2-d-9-efb, #2D9EFB)', color: '#fff' } : {}}
+                                // onClick={() => toggleCategorySelection(e.category_id)}
+                                >
+                                    {e?.category_name}
+                                </button>
+                            ))}
                         </div>
                     </div>
-                    <div className='singleManuDetailsRight'>
-                        <div className='singleManuDetailsRightCheckbox'>
-                            <span>Шоурум</span>
-                            <div onClick={() => setChecked(!checked)} className='cursor'>
-                                {checked ? <CheckboxChecked /> : <CheckboxNotChecked />}
-                            </div>
+                    <div className='singleManuBlock'>
+                        <div className='singleManuFilter'>
+                            <select>
+                                {cities?.map((e, i) => (
+                                    <option key={i}>{e?.city_name}</option>
+                                ))}
+                            </select>
                         </div>
-                        <div className='singleManuDetailsRightIcons'>
-                            <div className='eachSingleManuDetailsRightIcon'>
-                                <InfoIcon />
-                                <span>Доп. информация</span>
-                            </div>
-                            <div className='eachSingleManuDetailsRightIcon' onClick={() => window.open(`https://wa.me/${manufacturer?.watsap_phone}`, '_blank')}>
-                                <WhatsappIcon />
-                                <span>Написать в Whatsapp</span>
-                            </div>
-                            <div className='eachSingleManuDetailsRightIcon'>
-                                <ReviewIcon />
-                                <span>Отзывы</span>
-                            </div>
+                        <div className='singleManuProducts'>
+                            {products.length > 0
+                                ? products.map((e, i) => (
+                                    <EachProduct onClick={() => handleClick(e)} product={e} key={i} />
+                                ))
+                                : <span>Нет товаров</span>
+                            }
                         </div>
-                    </div>
-                </div>
-                <div className='myProductCategories'>
-                    {categories?.map((e, i) => (
-                        <button
-                            key={i}
-                            className='eachProductCategory'
-                        // style={e?.selected ? { background: 'var(--2-d-9-efb, #2D9EFB)', color: '#fff' } : {}}
-                        // onClick={() => toggleCategorySelection(e.category_id)}
-                        >
-                            {e?.category_name}
-                        </button>
-                    ))}
-                </div>
-            </div>
-            <div className='singleManuBlock'>
-                <div className='singleManuFilter'>
-                    <select>
-                        {cities?.map((e, i) => (
-                            <option key={i}>{e?.city_name}</option>
-                        ))}
-                    </select>
-                </div>
-                <div className='singleManuProducts'>
-                    {products.length > 0
-                        ? products.map((e, i) => (
-                            <EachProduct onClick={() => handleClick(e)} product={e} key={i} />
-                        ))
-                        : <span>Нет товаров</span>
-                    }
-                </div>
-            </div>
+                    </div></>
+                : <SingleManufacturerSkeleton />
+            }
         </div>
     </>)
 }

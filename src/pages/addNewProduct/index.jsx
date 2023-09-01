@@ -103,6 +103,8 @@ export const AddNewProduct = () => {
                 title={'Добавление продукции'}
                 navigation={false}
                 search={false}
+                searchText={''}
+                setSearchText={''}
             />
             <div className='newProductBlock'>
                 <NewProductFields

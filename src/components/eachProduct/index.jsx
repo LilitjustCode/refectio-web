@@ -2,10 +2,7 @@ import './style.css'
 
 export const EachProduct = ({ product, onClick }) => {
     return (
-        <div
-            className='eachManuProduct cursor'
-            onClick={onClick}
-        >
+        <div className='eachManuProduct cursor' onClick={onClick}>
             <img alt='' src={`${process.env.REACT_APP_IMAGE}${product?.product_image[0]?.image}`} />
             <div className='eachManuProdDetails'>
                 <p>{product?.title ? product?.title : product?.name}</p>
