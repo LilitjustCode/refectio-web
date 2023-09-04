@@ -1,29 +1,41 @@
+import './style.css'
 import { CloseIcon } from '../../svg'
 import { useState, useEffect } from 'react'
 import ReactInputMask from 'react-input-mask'
 import { useDispatch, useSelector } from 'react-redux'
-import { ClearPhoneError, CloseCode, PhoneCode, UpdatePhone, UpdatePhoneCode, UpdateSuccessful } from '../../../Redux/action/myProfile_action'
+import { ClearPhoneError, PhoneCode, UpdatePhone } from '../../../Redux/action/myProfile_action'
 
 export const EditPhone = ({ open, setOpen }) => {
-    const token = localStorage.getItem('token')
     const dispatch = useDispatch()
     const phoneToken = useSelector(st => st.MyProfile_reducer.phoneToken)
     const phoneError = useSelector(st => st.MyProfile_reducer.phoneError)
-    // const codeError = useSelector(st => st.MyProfile_reducer.codeError)
+    const codeError = useSelector(st => st.MyProfile_reducer.codeError)
     const update = useSelector(st => st.MyProfile_reducer.update)
     const [phoneNumber, setPhoneNumber] = useState('')
     const [error, setError] = useState('')
     const [openCodePage, setOpenCodePage] = useState(false)
     const [code, setCode] = useState('')
 
+    const [counter, setCounter] = useState(0);
+    useEffect(() => {
+        if (counter > 0) {
+            setTimeout(() => setCounter(counter - 1), 1000)
+        } else {
+            console.log('end');
+        }
+    }, [counter]);
+
     useEffect(() => {
         if (phoneToken) {
+            console.log('useEffect');
+            const token = localStorage.getItem('token')
             const myHeaders = new Headers();
             myHeaders.append("Authorization", `Bearer ${token}`)
             const requestOptions = {
                 method: 'POST',
                 headers: myHeaders,
-                redirect: 'follow'
+                redirect: 'follow',
+                body: JSON.stringify({})
             }
             fetch(`${process.env.REACT_APP_HOSTNAME}/updateCodeIntestTable`, requestOptions)
                 .then(response => response.json())
@@ -32,16 +44,17 @@ export const EditPhone = ({ open, setOpen }) => {
                     if (result.status) {
                         setError('')
                         setOpenCodePage(true)
-                        dispatch(PhoneCode())
+                        setCounter(59)
+                        // Timer
                     } else {
                         setError('Этот номер телефона уже зарегистрирован')
                     }
                 })
-                .catch(() => {
-                    setError('Что-то пошло не так. Пожалуйста, повторите попытку позже')
+                .catch((error) => {
+                    setError('Что-то пошло не так. Пожалуйста, повторите попытку позже', error)
                 })
         }
-    }, [phoneToken, update, token, dispatch])
+    }, [phoneToken, dispatch])
 
     useEffect(() => {
         if (phoneError) {
@@ -52,19 +65,19 @@ export const EditPhone = ({ open, setOpen }) => {
         }
     }, [phoneError, dispatch])
 
-    // useEffect(() => {
-    //     if (codeError) {
-    //         setError(codeError)
-    //     } else {
-    //         setError('')
-    //     }
-    // }, [codeError])
+    useEffect(() => {
+        if (codeError) {
+            setError(codeError)
+        } else {
+            setError('')
+        }
+    }, [codeError])
 
-    // useEffect(() => {
-    //     if (update) {
-    //         window.location.reload()
-    //     }
-    // }, [update])
+    useEffect(() => {
+        if (update) {
+            window.location.reload()
+        }
+    }, [update])
 
     function close() {
         setOpenCodePage(false)
@@ -109,8 +122,20 @@ export const EditPhone = ({ open, setOpen }) => {
                                 onKeyDown={(e) => e.key === 'Enter' && saveCode()}
                             />
                             {error.length > 0 && <span className='loginError'>{error}</span>}
+                            <div className='timer'>
+                                <span onClick={(e) => {
+                                    if (counter > 0) {
+                                        e.preventDefault()
+                                        e.stopPropagation()
+                                    } else {
+                                        setCounter(59)
+                                        savePhone()
+                                    }
+                                }} style={counter > 0 ? { color: '#a6a6a6', cursor: 'wait' } : { color: '#333', cursor: 'pointer' }}>Отправить код повторно</span>
+                                {counter > 0 && <p>Вы можете отправить код повторно через 00 : {counter}</p>}
+                            </div>
                         </div>
-                        <div className='loginButton'>
+                        <div className='loginButton' style={{ margin: 0 }}>
                             <button onClick={saveCode}>Отправить</button>
                         </div>
                     </>
@@ -127,7 +152,7 @@ export const EditPhone = ({ open, setOpen }) => {
                             />
                             {error.length > 0 && <span className='loginError'>{error}</span>}
                         </div>
-                        <div className='loginButton'>
+                        <div className='loginButton' style={{ margin: 0 }}>
                             <button onClick={savePhone}>Изменить</button>
                         </div>
                     </>

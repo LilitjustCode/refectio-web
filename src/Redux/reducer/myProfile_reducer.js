@@ -36,16 +36,16 @@ export const MyProfile_reducer = (state = store, action) => {
             break;
         case 'updatePhone':
             if (action.payload.status) {
-                temp.phoneToken = true
-                temp.update = true
+                temp.phoneError = ''
+                temp.phoneToken = new Date()
             } else {
                 temp.phoneError = 'Этот номер телефона уже зарегистрирован'
             }
             break;
         case 'phoneCode':
             if (action.payload.status) {
-                temp.update = true
                 temp.codeError = ''
+                temp.update = true
             } else {
                 temp.codeError = 'Неправильный код подтверждения'
             }

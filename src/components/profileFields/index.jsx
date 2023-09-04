@@ -1,5 +1,6 @@
 import './style.css'
 import { EditIcon } from '../svg'
+import RichTextEditor from '../editor'
 import { useEffect, useState } from 'react'
 import { EditPhone } from '../popup/editPhone'
 import { EditPassword } from '../popup/editPassword'
@@ -41,7 +42,8 @@ export const ProfileFields = () => {
         password: '',
         categories: ''
     })
-
+    const [editorHtml, setEditorHtml] = useState('')
+console.log(userDetails);
     useEffect(() => {
         dispatch(MyProfile())
         dispatch(GetCities())
@@ -121,6 +123,8 @@ export const ProfileFields = () => {
         setCityId(value)
         setUserDetails({ ...userDetails, cities: current })
     }
+
+    console.log(editorHtml);
 
     return (<>
         {openPassword &&
@@ -210,12 +214,15 @@ export const ProfileFields = () => {
                                 <EditIcon />
                             </div>
                         </div>
-                        <textarea
+                        {/* <textarea
                             disabled={!edit.description}
                             value={userDetails?.description ? userDetails?.description : ''}
                             style={edit.description ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
                             onChange={(e) => setUserDetails({ ...userDetails, description: e.target.value })}
-                        />
+                        /> */}
+
+                        <RichTextEditor userDetails={userDetails} setUserDetails={setUserDetails} />
+
                     </div>
                     {edit?.description && <div>
                         <button className='profileEditButton' onClick={() => dispatch(UpdateAbout(userDetails?.description))}>Обновить</button>
