@@ -49,6 +49,15 @@ export const SingleManufacturer = () => {
     //     setCategories(updatedCategories)
     // }
 
+    // import fileDownload from 'js-file-download'
+    // function download(url, filename) {
+    //     axios.get(url, {
+    //         responseType: 'blob',
+    //     }).then(res => {
+    //         fileDownload(res.data, filename);
+    //     });
+    // }
+
     function handleClick(e) {
         setSelectedProduct(e)
         setOpenSingleProductPopup(true)
@@ -109,7 +118,7 @@ export const SingleManufacturer = () => {
                                         }
                                         {manufacturer?.extract && manufacturer.extract !== 'null' &&
                                             <Tooltip title='Скачать выписку'>
-                                                <div className='cursor'><DocumentIcon /></div>
+                                                <div className='cursor' onClick={() => window.open(`${process.env.REACT_APP_IMAGE}${manufacturer?.extract}`, '_blank')}><DocumentIcon /></div>
                                             </Tooltip>
                                         }
                                         {(manufacturer?.job_with_designer?.includes('Да') || manufacturer?.job_with_designer?.includes('да')) &&

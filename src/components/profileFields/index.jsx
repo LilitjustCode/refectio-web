@@ -97,7 +97,7 @@ export const ProfileFields = () => {
             const formdata = new FormData();
             formdata.append("logo", e.target.files[0]);
 
-            fetch("http://194.58.119.203/Refectio/public/api/updateLogoProizvoditel", {
+            fetch(`${process.env.REACT_APP_HOSTNAME}/updateLogoProizvoditel`, {
                 method: 'POST',
                 headers: myHeaders,
                 body: formdata,

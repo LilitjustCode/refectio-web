@@ -91,7 +91,7 @@ export const MyProducts = () => {
                                 {e?.title}
                             </button>
                         ))}
-                        <button className='eachProductCategory'><PlusSign /></button>
+                        {/* <button className='eachProductCategory'><PlusSign /></button> */}
                     </div>
                     <div className='myProducts'>
                         {products.length > 0
