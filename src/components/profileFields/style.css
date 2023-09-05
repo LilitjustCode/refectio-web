@@ -39,3 +39,13 @@
   line-height: normal;
   position: relative;
 }
+
+.aboutBlock {
+  padding: 15px;
+  outline: none;
+  border-radius: 8px;
+  border: 1px solid #bebebe;
+  background: #fff;
+  max-height: 110px;
+  overflow-y: auto;
+}

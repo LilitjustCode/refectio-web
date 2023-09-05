@@ -6,6 +6,7 @@ import { EachProduct } from '../../components/eachProduct'
 import { PageNavigation } from '../../components/pageNavigation'
 import { SingleProduct } from '../../components/popup/singleProduct'
 import { GetSingleManufacturer } from '../../Redux/action/manufacturer_ation'
+import { ManufacturerDescription } from '../../components/popup/manufacturerDescription'
 import { SingleManufacturerSkeleton } from '../../components/skeletons/singleManufacturer'
 import { CheckboxChecked, CheckboxNotChecked, CubicIcon, DocumentIcon, InfoIcon, InternetIcon, ReviewIcon, TelegramIcon, VerificationIcon, WhatsappIcon } from '../../components/svg'
 
@@ -19,6 +20,7 @@ export const SingleManufacturer = () => {
     const [userId] = useState(window.location.pathname.split('/')[2])
     const [selectedProduct, setSelectedProduct] = useState(null)
     const [checked, setChecked] = useState(false)
+    const [openDescription, setOpenDescription] = useState(false)
 
     useEffect(() => {
         dispatch(GetSingleManufacturer(userId))
@@ -67,6 +69,13 @@ export const SingleManufacturer = () => {
                 open={openSingleProductPopup}
                 setOpen={setOpenSingleProductPopup}
                 product={selectedProduct}
+            />
+        }
+        {openDescription &&
+            <ManufacturerDescription
+                open={openDescription}
+                setOpen={setOpenDescription}
+                description={manufacturer?.about_us}
             />
         }
         <div className='singleManuPage'>
@@ -124,7 +133,7 @@ export const SingleManufacturer = () => {
                                     </div>
                                 </div>
                                 <div className='singleManuDetailsRightIcons'>
-                                    <div className='eachSingleManuDetailsRightIcon'>
+                                    <div className='eachSingleManuDetailsRightIcon' onClick={() => setOpenDescription(true)}>
                                         <InfoIcon />
                                         <span>Доп. информация</span>
                                     </div>

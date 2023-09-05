@@ -42,8 +42,7 @@ export const ProfileFields = () => {
         password: '',
         categories: ''
     })
-    const [editorHtml, setEditorHtml] = useState('')
-console.log(userDetails);
+
     useEffect(() => {
         dispatch(MyProfile())
         dispatch(GetCities())
@@ -123,8 +122,6 @@ console.log(userDetails);
         setCityId(value)
         setUserDetails({ ...userDetails, cities: current })
     }
-
-    console.log(editorHtml);
 
     return (<>
         {openPassword &&
@@ -214,22 +211,17 @@ console.log(userDetails);
                                 <EditIcon />
                             </div>
                         </div>
-                        {/* <textarea
-                            disabled={!edit.description}
-                            value={userDetails?.description ? userDetails?.description : ''}
-                            style={edit.description ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
-                            onChange={(e) => setUserDetails({ ...userDetails, description: e.target.value })}
-                        /> */}
-
-                        <RichTextEditor userDetails={userDetails} setUserDetails={setUserDetails} />
-
+                        {edit?.description
+                            ? <RichTextEditor userDetails={userDetails} setUserDetails={setUserDetails} />
+                            : <div className='aboutBlock' dangerouslySetInnerHTML={{ __html: userDetails?.description }} />
+                        }
                     </div>
                     {edit?.description && <div>
                         <button className='profileEditButton' onClick={() => dispatch(UpdateAbout(userDetails?.description))}>Обновить</button>
                     </div>}
                 </div>
                 <div className='profileMiddleBlocks'>
-                    <div className='eachProfileField'> { /* Название */}
+                    <div className='eachProfileField'> {/* Название */}
                         <div className='profileFieldName'>
                             <span>Название</span>
                             <div className='cursor' onClick={() => setEdit({ ...edit, name: true })}>

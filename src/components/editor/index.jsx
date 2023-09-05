@@ -2,23 +2,19 @@ import './style.css'
 import '../../../node_modules/draft-js/dist/Draft.css'
 import React from "react"
 import { stateToHTML } from 'draft-js-export-html'
-import { Editor, EditorState, getDefaultKeyBinding, RichUtils, ContentState, convertFromHTML, convertToRaw } from 'draft-js'
+import { Editor, EditorState, getDefaultKeyBinding, RichUtils, ContentState, convertFromHTML } from 'draft-js'
 
 class RichTextEditor extends React.Component {
     constructor(props) {
         super(props);
-        // this.state = {
-        //     editorState: EditorState.createWithContent(
-        //         ContentState.createFromText(props.userDetails?.description || '')
-        //     ),
-        // };
+        const overview = props?.userDetails?.description;
 
-        const initialContent = props.userDetails?.description || ''; 
+        const contentDataState = ContentState.createFromBlockArray(convertFromHTML(overview));
+        const editorDataState = EditorState.createWithContent(contentDataState);
 
         this.state = {
-            editorState: this.createEditorStateFromHTML(initialContent),
+            editorState: editorDataState,
         };
-
 
         this.focus = () => this.refs.editor.focus();
         this.onChange = (editorState) => {
@@ -34,14 +30,9 @@ class RichTextEditor extends React.Component {
         this.toggleInlineStyle = this._toggleInlineStyle.bind(this);
     }
 
-    createEditorStateFromHTML(html) {
-        const blocksFromHTML = convertFromHTML(html);
-        const contentState = ContentState.createFromBlockArray(
-            blocksFromHTML.contentBlocks,
-            blocksFromHTML.entityMap
-        );
-        return EditorState.createWithContent(contentState);
-    }
+    onEditorStateChange = (editorStateData) => {
+        this.setState({ editorState: editorStateData });
+    };
 
     _handleKeyCommand(command, editorState) {
         const newState = RichUtils.handleKeyCommand(editorState, command);
@@ -112,10 +103,11 @@ class RichTextEditor extends React.Component {
                         blockStyleFn={getBlockStyle}
                         customStyleMap={styleMap}
                         editorState={editorState}
+                        onEditorStateChange={this.onEditorStateChange}
                         handleKeyCommand={this.handleKeyCommand}
                         keyBindingFn={this.mapKeyToEditorCommand}
                         onChange={this.onChange}
-                        placeholder="Tell a story..."
+                        placeholder="Доп. информация"
                         ref="editor"
                         spellCheck={true}
                     />
