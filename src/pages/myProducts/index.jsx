@@ -1,57 +1,52 @@
 import './style.css'
 import { useEffect, useState } from 'react'
-import { PlusSign } from '../../components/svg'
+import { RemoveIcon } from '../../components/svg'
 import { useDispatch, useSelector } from 'react-redux'
 import { PageNavigation } from '../../components/pageNavigation'
 import { MyProductsSkeleton } from '../../components/skeletons/myProducts'
-import { AllMyProducts, DeleteProduct } from '../../Redux/action/product_action'
+import { AllMyProducts, DeleteProduct, FilterCategories } from '../../Redux/action/product_action'
 
 export const MyProducts = () => {
     const dispatch = useDispatch()
     const products = useSelector(st => st.Product_reducer.myProducts)
+    const categories = useSelector(st => st.Product_reducer.myCategories)
     const update = useSelector(st => st.Product_reducer.update)
-    const [categories, setCategories] = useState([
-        {
-            id: 1,
-            title: 'Кухни',
-            selected: true,
-        },
-        {
-            id: 2,
-            title: 'Прихожые',
-            selected: false,
-        },
-        {
-            id: 3,
-            title: 'Гостиные',
-            selected: false,
-        },
-        {
-            id: 4,
-            title: 'Детские',
-            selected: false,
-        },
-    ])
+    const [myCategories, setMyCategories] = useState([])
 
     useEffect(() => {
         dispatch(AllMyProducts())
     }, [dispatch])
 
     useEffect(() => {
+        if (categories) {
+            let category = []
+            categories.forEach(element => {
+                category.push({ selected: false, name: element.parent_category_name, id: element.parent_category_id })
+            })
+            setMyCategories(category)
+        }
+    }, [categories])
+
+    useEffect(() => {
+        if (myCategories) {
+            myCategories.forEach(element => {
+                if (element.selected) {
+                    dispatch(FilterCategories(element.name, localStorage.getItem('userId')))
+                }
+            })
+        }
+    }, [myCategories, dispatch])
+
+    useEffect(() => {
         update && dispatch(AllMyProducts())
     }, [update, dispatch])
 
     const toggleCategorySelection = (categoryId) => {
-        const updatedCategories = categories.map((category) => {
-            if (category.id === categoryId) {
-                return {
-                    ...category,
-                    selected: !category.selected,
-                }
-            }
-            return category;
+        const updatedCategories = myCategories.map(category => {
+            if (category.id === categoryId) return { ...category, selected: true }
+            else return { ...category, selected: false }
         })
-        setCategories(updatedCategories)
+        setMyCategories(updatedCategories)
     }
 
     function deleteProduct(id) {
@@ -81,17 +76,17 @@ export const MyProducts = () => {
             {products.length && categories
                 ? <div className='myProductsBlock'>
                     <div className='myProductCategories'>
-                        {categories?.map((e, i) => (
+                        {myCategories?.map((e, i) => (
                             <button
                                 key={i}
                                 className='eachProductCategory'
                                 style={e?.selected ? { background: 'var(--2-d-9-efb, #2D9EFB)', color: '#fff' } : {}}
                                 onClick={() => toggleCategorySelection(e.id)}
                             >
-                                {e?.title}
+                                {e?.name}
                             </button>
                         ))}
-                        {/* <button className='eachProductCategory'><PlusSign /></button> */}
+                        <button className='eachProductCategory' onClick={() => dispatch(AllMyProducts())}><RemoveIcon /></button>
                     </div>
                     <div className='myProducts'>
                         {products.length > 0
@@ -120,7 +115,6 @@ export const MyProducts = () => {
                 </div>
                 : <MyProductsSkeleton />
             }
-
         </div>
     )
 }

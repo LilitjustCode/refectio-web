@@ -161,6 +161,7 @@ export default {
         }
     ],
     myProducts: [],
+    myCategories: [],
     update: new Date(),
     singleProduct: {},
 }

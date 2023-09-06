@@ -5,10 +5,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import { EachProduct } from '../../components/eachProduct'
 import { PageNavigation } from '../../components/pageNavigation'
 import { SingleProduct } from '../../components/popup/singleProduct'
+import { FilterCategories } from '../../Redux/action/product_action'
 import { GetSingleManufacturer } from '../../Redux/action/manufacturer_ation'
 import { ManufacturerDescription } from '../../components/popup/manufacturerDescription'
 import { SingleManufacturerSkeleton } from '../../components/skeletons/singleManufacturer'
-import { CheckboxChecked, CheckboxNotChecked, CubicIcon, DocumentIcon, InfoIcon, InternetIcon, ReviewIcon, TelegramIcon, VerificationIcon, WhatsappIcon } from '../../components/svg'
+import { CheckboxChecked, CheckboxNotChecked, CubicIcon, DocumentIcon, InfoIcon, InternetIcon, RemoveIcon, ReviewIcon, TelegramIcon, VerificationIcon, WhatsappIcon } from '../../components/svg'
 
 export const SingleManufacturer = () => {
     const dispatch = useDispatch()
@@ -21,6 +22,7 @@ export const SingleManufacturer = () => {
     const [selectedProduct, setSelectedProduct] = useState(null)
     const [checked, setChecked] = useState(false)
     const [openDescription, setOpenDescription] = useState(false)
+    const [myCategories, setMyCategories] = useState([])
 
     useEffect(() => {
         dispatch(GetSingleManufacturer(userId))
@@ -36,18 +38,25 @@ export const SingleManufacturer = () => {
         }
     }, [manufacturer])
 
-    // function toggleCategorySelection(categoryId) {
-    //     const updatedCategories = categories.map((category) => {
-    //         if (category.id === categoryId) {
-    //             return {
-    //                 ...category,
-    //                 selected: !category.selected,
-    //             }
-    //         }
-    //         return category;
-    //     })
-    //     setCategories(updatedCategories)
-    // }
+    useEffect(() => {
+        if (categories) {
+            let category = []
+            categories.forEach(element => {
+                category.push({ selected: false, name: element.parent_category_name, id: element.parent_category_id })
+            })
+            setMyCategories(category)
+        }
+    }, [categories])
+
+    useEffect(() => {
+        if (myCategories) {
+            myCategories.forEach(element => {
+                if (element.selected) {
+                    dispatch(FilterCategories(element.name, manufacturer?.id))
+                }
+            })
+        }
+    }, [myCategories, dispatch])
 
     // import fileDownload from 'js-file-download'
     // function download(url, filename) {
@@ -57,6 +66,15 @@ export const SingleManufacturer = () => {
     //         fileDownload(res.data, filename);
     //     });
     // }
+
+    const toggleCategorySelection = (categoryId) => {
+        const updatedCategories = myCategories.map(category => {
+            if (category.id === categoryId) return { ...category, selected: true }
+            else return { ...category, selected: false }
+        })
+        setMyCategories(updatedCategories)
+    }
+
 
     function handleClick(e) {
         setSelectedProduct(e)
@@ -158,16 +176,17 @@ export const SingleManufacturer = () => {
                             </div>
                         </div>
                         <div className='myProductCategories'>
-                            {categories?.map((e, i) => (
+                            {myCategories?.map((e, i) => (
                                 <button
                                     key={i}
                                     className='eachProductCategory'
-                                // style={e?.selected ? { background: 'var(--2-d-9-efb, #2D9EFB)', color: '#fff' } : {}}
-                                // onClick={() => toggleCategorySelection(e.category_id)}
+                                    style={e?.selected ? { background: 'var(--2-d-9-efb, #2D9EFB)', color: '#fff' } : {}}
+                                    onClick={() => toggleCategorySelection(e.id)}
                                 >
-                                    {e?.category_name}
+                                    {e?.name}
                                 </button>
                             ))}
+                            <button className='eachProductCategory' onClick={() => dispatch(GetSingleManufacturer(userId))}><RemoveIcon /></button>
                         </div>
                     </div>
                     <div className='singleManuBlock'>
