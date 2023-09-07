@@ -42,8 +42,8 @@ export const SingleManufacturer = () => {
         if (categories) {
             let category = []
             categories.user_category_product
-                .filter(e => e.parent_category_name)
-                .forEach(element => {
+                ?.filter(e => e.parent_category_name)
+                ?.forEach(element => {
                     category.push({ selected: false, name: element.parent_category_name, id: element.parent_category_id })
                 })
             setMyCategories(category)
