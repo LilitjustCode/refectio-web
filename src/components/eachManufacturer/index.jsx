@@ -1,11 +1,19 @@
 import './style.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { EachProduct } from '../eachProduct'
 import { SingleProduct } from '../popup/singleProduct'
 
 export const EachManufacturer = ({ manufacturer }) => {
     const [openSingleProductPopuop, setOpenSingleProductPopup] = useState(false)
     const [selectedProduct, setSelectedProduct] = useState(null)
+    const [categories, setCategories] = useState([])
+
+    useEffect(() => {
+        if (manufacturer) {
+            const userCategories = manufacturer.user_category_product.filter(e => e.parent_category_name)
+            userCategories.length && setCategories(userCategories)
+        }
+    }, [manufacturer])
 
     function handleClick(e) {
         setSelectedProduct(e)
@@ -30,13 +38,14 @@ export const EachManufacturer = ({ manufacturer }) => {
                     </div>
                 </div>
 
-                <div className='eachManuCats'>
-                    {manufacturer?.user_category_product?.length && manufacturer?.user_category_product?.map((e, i) => (
+                {categories.length > 0 && <div className='eachManuCats'>
+                    {categories?.map((e, i) => (
                         <div className='eachManuCategory' key={i}>
-                            <span>{e?.category_name}</span>
+                            {e.parent_category_name && <span>{e?.parent_category_name}</span>}
                         </div>
                     ))}
-                </div>
+                </div>}
+
                 <div className='eachManuProds'>
                     {manufacturer?.user_product_limit1?.length && manufacturer?.user_product_limit1?.map((e, i) => (
                         <EachProduct onClick={() => handleClick(e)} product={e} key={i} />
