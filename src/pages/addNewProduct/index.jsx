@@ -15,6 +15,7 @@ export const AddNewProduct = () => {
         frame: '',
         facades: '',
         length: '',
+        height: '',
         price: '',
         description: '',
         tabletop: '',
@@ -69,6 +70,7 @@ export const AddNewProduct = () => {
             formdata.append("frame", details.frame)
             formdata.append("facades", details.facades)
             formdata.append("length", details.length)
+            formdata.append("height", details.height)
             formdata.append("price", details.price)
             formdata.append("tabletop", details.tabletop)
             files.forEach(elm => {
@@ -114,6 +116,7 @@ export const AddNewProduct = () => {
                     categories={categories}
                     selectedCategory={selectedCategory}
                     setSelectedCategory={setSelectedCategory}
+                    selectedSubcategory={selectedSubcategory}
                     setSelectedSubcategory={setSelectedSubcategory}
                     setCategoryHasSubcategory={setCategoryHasSubcategory}
                 />

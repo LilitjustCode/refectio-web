@@ -20,14 +20,11 @@ export const EditPhone = ({ open, setOpen }) => {
     useEffect(() => {
         if (counter > 0) {
             setTimeout(() => setCounter(counter - 1), 1000)
-        } else {
-            console.log('end');
         }
     }, [counter]);
 
     useEffect(() => {
         if (phoneToken) {
-            console.log('useEffect');
             const token = localStorage.getItem('token')
             const myHeaders = new Headers();
             myHeaders.append("Authorization", `Bearer ${token}`)
