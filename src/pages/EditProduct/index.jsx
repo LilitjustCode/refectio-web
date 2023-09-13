@@ -24,6 +24,7 @@ export const EditProduct = () => {
         frame: '',
         facades: '',
         length: '',
+        height: '',
         price: '',
         description: '',
         tabletop: '',
@@ -111,6 +112,7 @@ export const EditProduct = () => {
             formdata.append("frame", details?.frame)
             formdata.append("facades", details?.facades)
             formdata.append("length", details?.length)
+            formdata.append("height", details?.height)
             formdata.append("price", details?.price)
             formdata.append("tabletop", details?.tabletop)
             formdata.append("about", details?.description)
