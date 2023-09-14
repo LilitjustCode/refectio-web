@@ -4,7 +4,7 @@ import { EachProduct } from '../eachProduct'
 import { SingleProduct } from '../popup/singleProduct'
 
 export const EachManufacturer = ({ manufacturer }) => {
-    const [openSingleProductPopuop, setOpenSingleProductPopup] = useState(false)
+    const [openSingleProductPopup, setOpenSingleProductPopup] = useState(false)
     const [selectedProduct, setSelectedProduct] = useState(null)
     const [categories, setCategories] = useState([])
 
@@ -22,9 +22,9 @@ export const EachManufacturer = ({ manufacturer }) => {
 
     return (
         <>
-            {openSingleProductPopuop &&
+            {openSingleProductPopup &&
                 <SingleProduct
-                    open={openSingleProductPopuop}
+                    open={openSingleProductPopup}
                     setOpen={setOpenSingleProductPopup}
                     product={selectedProduct}
                 />
@@ -48,7 +48,7 @@ export const EachManufacturer = ({ manufacturer }) => {
 
                 <div className='eachManuProds'>
                     {manufacturer?.user_product_limit1?.length && manufacturer?.user_product_limit1?.map((e, i) => (
-                        <EachProduct onClick={() => handleClick(e)} product={e} key={i} />
+                        <EachProduct onClick={() => handleClick(e)} product={e} key={i} width={'345px'}/>
                     ))}
                 </div>
             </div>

@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { PageNavigation } from '../../components/pageNavigation'
 import { MyProductsSkeleton } from '../../components/skeletons/myProducts'
 import { AllMyProducts, DeleteProduct, FilterCategories } from '../../Redux/action/product_action'
+import { EachProduct } from '../../components/eachProduct'
+import { SingleProduct } from '../../components/popup/singleProduct'
 
 export const MyProducts = () => {
     const dispatch = useDispatch()
@@ -12,6 +14,8 @@ export const MyProducts = () => {
     const categories = useSelector(st => st.Product_reducer.myCategories)
     const update = useSelector(st => st.Product_reducer.update)
     const [myCategories, setMyCategories] = useState([])
+    const [openSingleProductPopup, setOpenSingleProductPopup] = useState(false)
+    const [selectedProduct, setSelectedProduct] = useState(null)
 
     useEffect(() => {
         dispatch(AllMyProducts())
@@ -54,6 +58,11 @@ export const MyProducts = () => {
         agree && dispatch(DeleteProduct([id]))
     }
 
+    function handleClick(e) {
+        setSelectedProduct(e)
+        setOpenSingleProductPopup(true)
+    }
+
     return (
         <div className='myProductsPage'>
             <PageNavigation
@@ -73,6 +82,13 @@ export const MyProducts = () => {
                     }
                 ]}
             />
+            {openSingleProductPopup &&
+                <SingleProduct
+                    open={openSingleProductPopup}
+                    setOpen={setOpenSingleProductPopup}
+                    product={selectedProduct}
+                />
+            }
             {products.length && categories
                 ? <div className='myProductsBlock'>
                     <div className='myProductCategories'>
@@ -92,15 +108,7 @@ export const MyProducts = () => {
                         {products.length > 0
                             ? products?.map((e, i) => (
                                 <div key={i} className='eachProduct'>
-                                    <img alt='' src={`${process.env.REACT_APP_IMAGE}${e?.product_image[0]?.image}`} />
-                                    <h2>{e?.name}</h2>
-                                    {e?.facades && <span>Фасады: {e?.facades}</span>}
-                                    {e?.frame && <span>Корпус: {e?.frame}</span>}
-                                    {e?.tabletop && <span>Столешница: {e?.tabletop}</span>}
-                                    {e?.length && <span>Длина: {e?.length} м.</span>}
-                                    {e?.height && <span>Высота: {e?.height} м.</span>}
-                                    {e?.price && <span>Цена: {e?.price}</span>}
-                                    {e?.about && <div className='about' dangerouslySetInnerHTML={{ __html: `about: ${e?.about}` }} />}
+                                    <EachProduct product={e} onClick={() => handleClick(e)} width={'100%'} divWidth={'100%'}/>
                                     <div className='eachProductButtons'>
                                         <button onClick={() => window.location = `/edit/${e?.id}`}>Редактировать</button>
                                         <button onClick={() => deleteProduct(e?.id)}>Удалить</button>

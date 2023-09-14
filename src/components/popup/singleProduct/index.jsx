@@ -33,12 +33,13 @@ export const SingleProduct = ({ open, setOpen, product }) => {
                     <div className='eachManuProduct'>
                         <div className='eachManuProdDetails'>
                             <p>{product?.name}</p>
-                            <span>Фасады : {product?.facades}</span>
-                            <span>Корпус: {product?.frame}</span>
-                            <span>Столешница: {product?.tabletop}</span>
-                            <span>Длина: {product?.length} м.</span>
-                            <span>Цена: {product?.price}</span>
-                            <span>{product?.description}</span>
+                            {product?.facades && <span>Фасады: {product?.facades}</span>}
+                            {product?.frame && <span>Корпус: {product?.frame}</span>}
+                            {product?.tabletop && <span>Столешница: {product?.tabletop}</span>}
+                            {product?.length && <span>Длина: {product?.length} м.</span>}
+                            {product?.height && <span>Высота: {product?.height} м.</span>}
+                            {product?.price && <span>Цена: {product?.price}</span>}
+                            {product?.about && <span className='about' dangerouslySetInnerHTML={{ __html: `Доп. информация: ${product?.about}` }} />}
                         </div>
                     </div>
                 </div>
