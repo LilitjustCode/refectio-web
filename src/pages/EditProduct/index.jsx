@@ -171,8 +171,8 @@ export const EditProduct = () => {
                         <input type='file' id='fileInput' onChange={uploadSingleFile} multiple />
                     </button>
                     <div className='newProductPhotos'>
-                        {productPhotos?.length
-                            ? productPhotos?.map((e, i) => (
+                        {productPhotos?.length > 0
+                            && productPhotos?.map((e, i) => (
                                 <div className='eachProductPhoto' key={i}>
                                     <img alt='' src={`${process.env.REACT_APP_IMAGE}${e?.image}`} />
                                     <div className='deletePhoto' onClick={() => deleteFile(e, i)}>
@@ -180,7 +180,7 @@ export const EditProduct = () => {
                                     </div>
                                 </div>
                             ))
-                            : <EditProductSkeleton />
+                            // : <EditProductSkeleton />
                         }
                         {newPhotos?.length > 0 && newPhotos?.map((e, i) => (
                             <div className='eachProductPhoto' key={i}>
