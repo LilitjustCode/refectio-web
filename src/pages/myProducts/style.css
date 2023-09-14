@@ -69,7 +69,7 @@
 }
 
 .eachProduct {
-  width: 520px;
+  width: 450px;
   display: flex;
   flex-direction: column;
   gap: 5px;

@@ -46,3 +46,8 @@
 .eachSingleProdDetails {
   width: 100%;
 }
+
+.carouselImages {
+  width: 100%;
+  height: 500px;
+}
