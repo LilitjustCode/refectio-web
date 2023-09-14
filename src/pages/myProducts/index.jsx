@@ -94,11 +94,12 @@ export const MyProducts = () => {
                                 <div key={i} className='eachProduct'>
                                     <img alt='' src={`${process.env.REACT_APP_IMAGE}${e?.product_image[0]?.image}`} />
                                     <h2>{e?.name}</h2>
-                                    <span>Фасады: {e?.facades}</span>
-                                    <span>Корпус: {e?.frame}</span>
-                                    <span>Столешница: {e?.tabletop}</span>
-                                    <span>Длина: {e?.length} м.</span>
-                                    <span>Цена: {e?.price}</span>
+                                    {e?.facades && <span>Фасады: {e?.facades}</span>}
+                                    {e?.frame && <span>Корпус: {e?.frame}</span>}
+                                    {e?.tabletop && <span>Столешница: {e?.tabletop}</span>}
+                                    {e?.length && <span>Длина: {e?.length} м.</span>}
+                                    {e?.height && <span>Высота: {e?.height} м.</span>}
+                                    {e?.price && <span>Цена: {e?.price}</span>}
                                     {e?.about && <div className='about' dangerouslySetInnerHTML={{ __html: `about: ${e?.about}` }} />}
                                     <div className='eachProductButtons'>
                                         <button onClick={() => window.location = `/edit/${e?.id}`}>Редактировать</button>

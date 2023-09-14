@@ -52,6 +52,7 @@ export const EditProduct = () => {
                 frame: product?.frame ? product?.frame : '',
                 facades: product?.facades ? product?.facades : '',
                 length: product?.length ? product?.length : '',
+                height: product?.height ? product?.height : '',
                 price: product?.price ? product?.price : '',
                 description: product?.about ? product?.about : '',
                 tabletop: product?.tabletop ? product?.tabletop : '',

@@ -22,7 +22,6 @@ export const EditProductFields = ({ details, setDetails, errors, setErrors, cate
     const [showLength, setShowLength] = useState(false)
     const [showHeight, setShowHeight] = useState(false)
 
-
     useEffect(() => {
         if (selectedSubcategory) {
             if (selectedSubcategory?.id === 28
