@@ -10,7 +10,7 @@ export const EachManufacturer = ({ manufacturer }) => {
 
     useEffect(() => {
         if (manufacturer) {
-            const userCategories = manufacturer?.user_category_product?.filter(e => e.parent_category_name)
+            const userCategories = manufacturer?.parent_category?.filter(e => e.parent_category_name)
             userCategories.length && setCategories(userCategories)
         }
     }, [manufacturer])

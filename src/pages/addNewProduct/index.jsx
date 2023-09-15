@@ -52,6 +52,10 @@ export const AddNewProduct = () => {
         setFiles(files.filter((item, index) => index !== e))
     }
 
+    useEffect(() => {
+        errors && window.scrollTo({ top: 0, behavior: 'smooth' })
+    }, [errors])
+
     function create() {
         if (!details.name.length) {
             setErrors({ ...errors, name: ' ' })

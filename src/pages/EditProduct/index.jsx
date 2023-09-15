@@ -46,6 +46,10 @@ export const EditProduct = () => {
     }, [productPhotos, newPhotos, files])
 
     useEffect(() => {
+        errors && window.scrollTo({ top: 0, behavior: 'smooth' })
+    }, [errors])
+
+    useEffect(() => {
         if (product) {
             setDetails({
                 name: product?.name ? product?.name : '',
@@ -86,7 +90,6 @@ export const EditProduct = () => {
             setFiles(files.filter((item, index) => index !== i))
         }
     }
-
     function update() {
         if (!details.name.length) {
             setErrors({ ...errors, name: ' ' })
