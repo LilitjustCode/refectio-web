@@ -16,6 +16,8 @@
 .eachManuProduct > img {
   width: 100%;
   height: 225px;
+  object-fit: cover;
+  object-position: bottom;
 }
 
 .eachManuProdDetails {
