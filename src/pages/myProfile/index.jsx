@@ -24,7 +24,7 @@ export const MyProfile = () => {
             <div className='profileBlock'>
                 <ProfileFields />
                 <div className='profileButton'>
-                    <button onClick={() => window.location = '/myProducts'}>Мои товары</button>
+                    <button onClick={() => window.location = '/my-products'}>Мои товары</button>
                     <button onClick={() => dispatch(Logout())}>Выйти</button>
                 </div>
             </div>

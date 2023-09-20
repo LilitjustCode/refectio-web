@@ -49,3 +49,7 @@
   max-height: 110px;
   overflow-y: auto;
 }
+
+.clear-selected-button {
+  display: none !important;
+}

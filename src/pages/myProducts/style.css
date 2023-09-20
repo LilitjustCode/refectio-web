@@ -19,6 +19,7 @@
 
 .myProductCategories {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 15px;
 }
@@ -64,12 +65,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 40px;
+  gap: 40px 20px;
   flex-wrap: wrap;
 }
 
 .eachProduct {
-  width: 450px;
+  width: 345px;
   display: flex;
   flex-direction: column;
   gap: 5px;

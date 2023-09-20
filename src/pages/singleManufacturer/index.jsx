@@ -41,7 +41,7 @@ export const SingleManufacturer = () => {
     useEffect(() => {
         if (categories) {
             let category = []
-            categories.user_category_product
+            categories
                 ?.filter(e => e.parent_category_name)
                 ?.forEach(element => {
                     category.push({ selected: false, name: element.parent_category_name, id: element.parent_category_id })
@@ -76,7 +76,6 @@ export const SingleManufacturer = () => {
         })
         setMyCategories(updatedCategories)
     }
-
 
     function handleClick(e) {
         setSelectedProduct(e)
@@ -177,30 +176,33 @@ export const SingleManufacturer = () => {
                                 </div>
                             </div>
                         </div>
-                        {myCategories.length > 0 &&
-                            <div className='myProductCategories'>
-                                {myCategories?.map((e, i) => (
-                                    <button
-                                        key={i}
-                                        className='eachProductCategory'
-                                        style={e?.selected ? { background: 'var(--2-d-9-efb, #2D9EFB)', color: '#fff' } : {}}
-                                        onClick={() => toggleCategorySelection(e.id)}
-                                    >
-                                        {e?.name}
-                                    </button>
-                                ))}
-                                <button className='eachProductCategory' onClick={() => dispatch(GetSingleManufacturer(userId))}><RemoveIcon /></button>
+                        <div className='manuTopFilter'>
+                            {myCategories.length > 0 &&
+                                <div className='myProductCategories'>
+                                    {myCategories?.map((e, i) => (
+                                        <button
+                                            key={i}
+                                            className='eachProductCategory'
+                                            style={e?.selected ? { background: 'var(--2-d-9-efb, #2D9EFB)', color: '#fff' } : {}}
+                                            onClick={() => toggleCategorySelection(e.id)}
+                                        >
+                                            {e?.name}
+                                        </button>
+                                    ))}
+                                    <button className='eachProductCategory' onClick={() => dispatch(GetSingleManufacturer(userId))}><RemoveIcon /></button>
+                                </div>
+                            }
+
+                            <div className='singleManuFilter'>
+                                <select>
+                                    {cities.length > 0 && cities?.map((e, i) => (
+                                        <option key={i}>{e?.city_name}</option>
+                                    ))}
+                                </select>
                             </div>
-                        }
-                    </div>
-                    <div className='singleManuBlock'>
-                        <div className='singleManuFilter'>
-                            <select>
-                                {cities?.map((e, i) => (
-                                    <option key={i}>{e?.city_name}</option>
-                                ))}
-                            </select>
                         </div>
+                        {/* </div> */}
+                        {/* <div className='singleManuBlock'> */}
                         <div className='singleManuProducts'>
                             {products.length > 0
                                 ? products.map((e, i) => (

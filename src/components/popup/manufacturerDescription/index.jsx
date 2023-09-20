@@ -8,7 +8,7 @@ export const ManufacturerDescription = ({ open, setOpen, description }) => {
 
     return (
         <div className={open ? 'activePopup' : 'inactive'}>
-            <div className='pop' style={window.matchMedia("(max-width: 1240px)").matches ? { width: '670px' } : { width: '970px' }}>
+            <div className='pop'>
                 <div className='close' onClick={close}>
                     <CloseIcon />
                 </div>

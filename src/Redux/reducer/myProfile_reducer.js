@@ -13,7 +13,13 @@ export const MyProfile_reducer = (state = store, action) => {
             if (action.payload.status) temp.update = true
             break;
         case 'getCities':
-            if (action.payload.status) temp.cities = action.payload.data.city
+            if (action.payload.status) {
+                let city = []
+                action.payload.data.city.forEach(element => {
+                    city.push({ label: element.name, value: `${element.id}^${element.name}` })
+                })
+                temp.cities = city
+            }
             break;
         case 'getProducts':
             if (action.payload.status) temp.categories = action.payload.data.city

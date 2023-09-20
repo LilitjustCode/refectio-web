@@ -6,6 +6,7 @@ import { EditPhone } from '../popup/editPhone'
 import { EditPassword } from '../popup/editPassword'
 import { useDispatch, useSelector } from 'react-redux'
 import { MyProfileSkeleton } from '../skeletons/myProfile'
+import { MultiSelect } from 'react-multi-select-component'
 import { GetCategories, GetCities, MyProfile, UpdateAbout, UpdateCities, UpdateCode, UpdateCountry, UpdateName, UpdatePhone, UpdateSite, UpdateSuccessful, UpdateTelegram } from '../../Redux/action/myProfile_action'
 
 export const ProfileFields = () => {
@@ -17,7 +18,9 @@ export const ProfileFields = () => {
     const [openPassword, setOpenPassword] = useState(false)
     const [openPhone, setOpenPhone] = useState(false)
     const [file, setFile] = useState()
-    const [cityId, setCityId] = useState([])
+    // const [cityId, setCityId] = useState([])
+    const [selected, setSelected] = useState([])
+    const [myCities, setMyCities] = useState([])
     const [edit, setEdit] = useState({
         country: false,
         code: false,
@@ -54,8 +57,9 @@ export const ProfileFields = () => {
             setFile(`${process.env.REACT_APP_IMAGE}${user?.logo}`)
             const city = []
             user?.city_of_sales_manufacturer?.forEach(elm => {
-                city.push(elm?.city_name)
+                city.push({ label: elm?.city_name, value: `${elm?.city_id}^${elm?.city_name}` })
             })
+            setSelected(city)
             setUserDetails({
                 country: user?.made_in,
                 code: user?.individual_number,
@@ -86,6 +90,7 @@ export const ProfileFields = () => {
                 categories: false
             })
             dispatch(UpdateSuccessful())
+            dispatch(MyProfile())
         }
     }, [updateSuccess, dispatch])
 
@@ -109,19 +114,27 @@ export const ProfileFields = () => {
         }
     }
 
-    function handleCityChange(event) {
-        var options = event.target.options;
-        let current = []
-        var value = []
-        for (var i = 0, l = options.length; i < l; i++) {
-            if (options[i].selected) {
-                value.push(`${options[i].getAttribute('data-id')}^${options[i].value}`)
-                current.push(options[i].value)
-            }
-        }
-        setCityId(value)
-        setUserDetails({ ...userDetails, cities: current })
-    }
+    // function handleCityChange(event) {
+    //     let options = event.target.options;
+    //     let current = []
+    //     let value = []
+    //     for (let i = 0, l = options.length; i < l; i++) {
+    //         if (options[i].selected) {
+    //             value.push(`${options[i].getAttribute('data-id')}^${options[i].value}`)
+    //             current.push(options[i].value)
+    //         }
+    //     }
+    //     setCityId(value)
+    //     setUserDetails({ ...userDetails, cities: current })
+    // }
+
+    useEffect(() => {
+        let cities = []
+        selected?.forEach(element => {
+            cities.push(element.value)
+        })
+        setMyCities(cities)
+    }, [selected])
 
     return (<>
         {openPassword &&
@@ -173,7 +186,7 @@ export const ProfileFields = () => {
                         <input
                             disabled={!edit.code}
                             value={userDetails?.code ? userDetails?.code : ''}
-                            style={edit.code ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
+                            style={edit.code ? { border: '3px solid #bebebe', fontFamily: 'monospace' } : { border: '1px solid #bebebe', fontFamily: 'monospace' }}
                             onChange={(e) => setUserDetails({ ...userDetails, code: e.target.value })}
                         />
                     </div>
@@ -187,7 +200,25 @@ export const ProfileFields = () => {
                                 <EditIcon />
                             </div>
                         </div>
-                        <select
+                        <MultiSelect
+                            options={cities}
+                            value={selected}
+                            onChange={setSelected}
+                            labelledBy="Select"
+                            disabled={!edit.cities}
+                            overrideStrings={{
+                                allItemsAreSelected: 'Все города выбраны.',
+                                clearSearch: 'Очистить поиск',
+                                clearSelected: 'Очистить выбранное',
+                                noOptions: 'Нет выбора',
+                                search: 'Поиск',
+                                selectAll: 'Выбрать все',
+                                selectAllFiltered: 'Выбрать все (отфильтровано)',
+                                selectSomeItems: 'Выбирать...',
+                            }}
+                        />
+
+                        {/* <select
                             value={userDetails?.cities}
                             onChange={handleCityChange}
                             disabled={!edit.cities}
@@ -199,10 +230,10 @@ export const ProfileFields = () => {
                                     {e?.name ? e?.name : ''}
                                 </option>
                             ))}
-                        </select>
+                        </select> */}
                     </div>
                     {edit?.cities && <div>
-                        <button className='profileEditButton' onClick={() => dispatch(UpdateCities(cityId))}>Обновить</button>
+                        <button className='profileEditButton' onClick={() => dispatch(UpdateCities(myCities))}>Обновить</button>
                     </div>}
                     <div className='eachProfileField'> {/* Доп. информация */}
                         <div className='profileFieldName'>

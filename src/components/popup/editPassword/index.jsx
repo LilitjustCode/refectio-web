@@ -69,7 +69,7 @@ export const EditPassword = ({ open, setOpen }) => {
 
     return (
         <div className={open ? 'activePopup' : 'inactive'}>
-            <div className='pop' style={{ width: '670px' }}>
+            <div className='pop'>
                 <div className='close' onClick={close}>
                     <CloseIcon />
                 </div>

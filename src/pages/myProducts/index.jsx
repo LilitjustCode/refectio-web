@@ -78,7 +78,7 @@ export const MyProducts = () => {
                     },
                     {
                         title: 'Каталог',
-                        path: '/myProducts'
+                        path: '/my-products'
                     }
                 ]}
             />

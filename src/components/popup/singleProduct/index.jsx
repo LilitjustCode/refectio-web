@@ -6,11 +6,11 @@ import styles from 'react-responsive-carousel/lib/styles/carousel.min.css'
 export const SingleProduct = ({ open, setOpen, product }) => {
     return (
         <div className={open ? 'activePopup' : 'inactive'}>
-            <div className='pop' style={window.matchMedia("(max-width: 1240px)").matches ? { width: '670px' } : { width: '970px' }}>
+            <div className='pop'>
                 <div className='close' onClick={() => setOpen(false)}>
                     <CloseIcon />
                 </div>
-                <div className='eachSingleProdDetails'>
+                {/* <div className='eachSingleProdDetails'> */}
                     <Carousel
                         style={styles}
                         showThumbs={false}
@@ -21,8 +21,8 @@ export const SingleProduct = ({ open, setOpen, product }) => {
                             <img alt='' key={i} src={`${process.env.REACT_APP_IMAGE}${e.image}`} className='carouselImages' style={{ objectFit: 'contain' }} />
                         ))}
                     </Carousel>
-                </div>
-                <div className='eachSingleProdDetails'>
+                {/* </div> */}
+                {/* <div className='eachSingleProdDetails'>
                     <div className='eachManuProduct'>
                         <div className='eachManuProdDetails'>
                             <p>{product?.name}</p>
@@ -35,7 +35,7 @@ export const SingleProduct = ({ open, setOpen, product }) => {
                             {product?.about && <span className='about' dangerouslySetInnerHTML={{ __html: `Доп. информация: ${product?.about}` }} />}
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     )

@@ -95,7 +95,7 @@ export const AddNewProduct = () => {
             fetch(`${process.env.REACT_APP_HOSTNAME}/createnewproductProizvoditel`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    if (result.status) window.location = '/myProducts'
+                    if (result.status) window.location = '/my-products'
                 })
                 .catch(error => console.log('error', error));
         }
@@ -105,7 +105,7 @@ export const AddNewProduct = () => {
         <div className='newProductPage'>
             <PageNavigation
                 backButton={true}
-                onClick={() => window.location = '/myProducts'}
+                onClick={() => window.location = '/my-products'}
                 title={'Добавление продукции'}
                 navigation={false}
                 search={false}

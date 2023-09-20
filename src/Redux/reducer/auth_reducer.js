@@ -14,6 +14,8 @@ export const Auth_reducer = (state = store, action) => {
             } else {
                 if (action.payload?.message?.message?.includes('user does not exist')) {
                     temp.loginError = 'Неправильный номер телефона или пароль'
+                } else if(action.payload?.message?.message?.includes('wrong password')) {
+                    temp.loginError = 'Неправильный номер телефона или пароль'
                 }
             }
             break;

@@ -136,7 +136,7 @@ export const EditProduct = () => {
                 .then(response => response.json())
                 .then(result => {
                     if (result.status) {
-                        window.location = '/myProducts'
+                        window.location = '/my-products'
                     }
                 })
                 .catch(error => console.log('error', error))
@@ -147,7 +147,7 @@ export const EditProduct = () => {
         <div className='newProductPage'>
             <PageNavigation
                 backButton={true}
-                onClick={() => window.location = '/myProducts'}
+                onClick={() => window.location = '/my-products'}
                 title={'Редактирование продукта'}
                 navigation={false}
                 search={false}
