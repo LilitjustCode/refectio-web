@@ -102,7 +102,7 @@ export const MyProducts = () => {
                                 {e?.name}
                             </button>
                         ))}
-                        <button className='eachProductCategory' onClick={() => dispatch(AllMyProducts())}><RemoveIcon /></button>
+                        <button className='eachProductCategory' onClick={() => dispatch(AllMyProducts())}><RemoveIcon />Сбросить фильтр</button>
                     </div>
                     <div className='myProducts'>
                         {products.length > 0

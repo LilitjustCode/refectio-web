@@ -189,7 +189,7 @@ export const SingleManufacturer = () => {
                                             {e?.name}
                                         </button>
                                     ))}
-                                    <button className='eachProductCategory' onClick={() => dispatch(GetSingleManufacturer(userId))}><RemoveIcon /></button>
+                                    <button className='eachProductCategory' onClick={() => dispatch(GetSingleManufacturer(userId))}><RemoveIcon />Сбросить фильтр</button>
                                 </div>
                             }
 
