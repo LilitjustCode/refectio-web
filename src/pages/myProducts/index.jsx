@@ -2,11 +2,11 @@ import './style.css'
 import { useEffect, useState } from 'react'
 import { RemoveIcon } from '../../components/svg'
 import { useDispatch, useSelector } from 'react-redux'
+import { EachProduct } from '../../components/eachProduct'
 import { PageNavigation } from '../../components/pageNavigation'
+import { SingleProduct } from '../../components/popup/singleProduct'
 import { MyProductsSkeleton } from '../../components/skeletons/myProducts'
 import { AllMyProducts, DeleteProduct, FilterCategories } from '../../Redux/action/product_action'
-import { EachProduct } from '../../components/eachProduct'
-import { SingleProduct } from '../../components/popup/singleProduct'
 
 export const MyProducts = () => {
     const dispatch = useDispatch()
@@ -35,7 +35,7 @@ export const MyProducts = () => {
         if (myCategories) {
             myCategories.forEach(element => {
                 if (element.selected) {
-                    dispatch(FilterCategories(element.name, localStorage.getItem('userId')))
+                    dispatch(FilterCategories(element.name))
                 }
             })
         }

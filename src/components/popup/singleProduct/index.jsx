@@ -18,7 +18,7 @@ export const SingleProduct = ({ open, setOpen, product }) => {
                         showIndicators={product?.product_image?.length !== 1}
                     >
                         {product?.product_image?.length > 0 && product?.product_image?.map((e, i) => (
-                            <img alt='' key={i} src={`${process.env.REACT_APP_IMAGE}${e.image}`} className='carouselImages' style={{ objectFit: 'contain' }} />
+                            <img alt='' key={i} src={`${process.env.REACT_APP_IMAGE}${e.image}`} className='carouselImages' />
                         ))}
                     </Carousel>
                 {/* </div> */}

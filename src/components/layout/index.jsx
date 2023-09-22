@@ -1,9 +1,18 @@
 import './style.css'
+import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import { Instagram, Mail, Telegram } from '../svg'
+import { useSelector, useDispatch } from 'react-redux'
+import { MyProfile } from '../../Redux/action/myProfile_action'
 
 export const Layout = () => {
+    const dispatch = useDispatch()
     const token = localStorage.getItem('token')
+    const user = useSelector(st => st.MyProfile_reducer.user)
+
+    useEffect(() => {
+        dispatch(MyProfile())
+    }, [dispatch])
 
     return (
         <div className='mainLayout'>
@@ -16,11 +25,11 @@ export const Layout = () => {
             <div className='topLayoutBlockBottom' />
             <div className='middleLayout'>
                 <div className='middleLayoutBlock'>
-                    <p>Все производители</p>
+                    <p/>
                     {token
                         ? <div className='layoutUser'>
                             <h2 onClick={() => window.location = '/profile'}>Мой профиль</h2>
-                            <img alt='' src={require('../../assets/avatar.png')} />
+                            <img alt='' src={`${process.env.REACT_APP_IMAGE}${user?.logo}`} />
                         </div>
                         : <span onClick={() => window.location = '/auth/login'}>Вход/Регистрация</span>
                     }

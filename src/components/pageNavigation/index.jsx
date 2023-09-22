@@ -14,8 +14,8 @@ export const PageNavigation = ({ title, backButton, navigation, search, onClick,
     return (
         <div className='pageTitle' style={navigation ? { justifyContent: 'flex-start' } : {}}>
             {title &&
-                <div className='pageNavTitle'>
-                    <div className='backBtn' onClick={onClick}>
+                <div className='pageNavTitle' onClick={onClick}>
+                    <div className='backBtn'>
                         {backButton && <BackButton />}
                     </div>
                     <h1>{title}</h1>

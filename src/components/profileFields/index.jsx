@@ -7,7 +7,7 @@ import { EditPassword } from '../popup/editPassword'
 import { useDispatch, useSelector } from 'react-redux'
 import { MyProfileSkeleton } from '../skeletons/myProfile'
 import { MultiSelect } from 'react-multi-select-component'
-import { GetCategories, GetCities, MyProfile, UpdateAbout, UpdateCities, UpdateCode, UpdateCountry, UpdateName, UpdatePhone, UpdateSite, UpdateSuccessful, UpdateTelegram } from '../../Redux/action/myProfile_action'
+import { GetCategories, GetCities, UpdateAbout, UpdateCities, UpdateCode, UpdateCountry, UpdateName, UpdatePhone, UpdateSite, UpdateSuccessful, UpdateTelegram } from '../../Redux/action/myProfile_action'
 
 export const ProfileFields = () => {
     const dispatch = useDispatch()
@@ -47,7 +47,6 @@ export const ProfileFields = () => {
     })
 
     useEffect(() => {
-        dispatch(MyProfile())
         dispatch(GetCities())
         dispatch(GetCategories())
     }, [dispatch])
@@ -90,7 +89,6 @@ export const ProfileFields = () => {
                 categories: false
             })
             dispatch(UpdateSuccessful())
-            dispatch(MyProfile())
         }
     }, [updateSuccess, dispatch])
 
@@ -186,7 +184,7 @@ export const ProfileFields = () => {
                         <input
                             disabled={!edit.code}
                             value={userDetails?.code ? userDetails?.code : ''}
-                            style={edit.code ? { border: '3px solid #bebebe', fontFamily: 'monospace' } : { border: '1px solid #bebebe', fontFamily: 'monospace' }}
+                            style={edit.code ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
                             onChange={(e) => setUserDetails({ ...userDetails, code: e.target.value })}
                         />
                     </div>

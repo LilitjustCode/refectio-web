@@ -31,7 +31,7 @@ export const EachManufacturer = ({ manufacturer }) => {
             }
             <div className='eachManufacturer'>
                 <div className='eachManuTop'>
-                    <img alt='' src={`${process.env.REACT_APP_IMAGE}${manufacturer.logo}`} />
+                    <img alt='' src={`${process.env.REACT_APP_IMAGE}${manufacturer.logo}`} onClick={() => window.location = `/manufacturer/${manufacturer?.id}`} />
                     <div className='eachManuTopTitle'>
                         <h2 onClick={() => window.location = `/manufacturer/${manufacturer?.id}`}>{manufacturer?.company_name}</h2>
                         <span>{manufacturer?.made_in}</span>
@@ -48,7 +48,7 @@ export const EachManufacturer = ({ manufacturer }) => {
 
                 <div className='eachManuProds'>
                     {manufacturer?.user_product_limit1?.length && manufacturer?.user_product_limit1?.map((e, i) => (
-                        <EachProduct onClick={() => handleClick(e)} product={e} key={i} width={'345px'}/>
+                        <EachProduct onClick={() => handleClick(e)} product={e} key={i} width={'345px'} height={'220px'}/>
                     ))}
                 </div>
             </div>

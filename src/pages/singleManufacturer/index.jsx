@@ -5,10 +5,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { EachProduct } from '../../components/eachProduct'
 import { PageNavigation } from '../../components/pageNavigation'
 import { SingleProduct } from '../../components/popup/singleProduct'
-import { FilterCategories } from '../../Redux/action/product_action'
-import { GetSingleManufacturer } from '../../Redux/action/manufacturer_ation'
 import { ManufacturerDescription } from '../../components/popup/manufacturerDescription'
 import { SingleManufacturerSkeleton } from '../../components/skeletons/singleManufacturer'
+import { FilterCategories, GetSingleManufacturer } from '../../Redux/action/manufacturer_ation'
 import { CheckboxChecked, CheckboxNotChecked, CubicIcon, DocumentIcon, InfoIcon, InternetIcon, RemoveIcon, ReviewIcon, TelegramIcon, VerificationIcon, WhatsappIcon } from '../../components/svg'
 
 export const SingleManufacturer = () => {
@@ -58,7 +57,7 @@ export const SingleManufacturer = () => {
                 }
             })
         }
-    }, [myCategories, dispatch])
+    }, [myCategories, manufacturer?.id, dispatch])
 
     // import fileDownload from 'js-file-download'
     // function download(url, filename) {
@@ -120,7 +119,7 @@ export const SingleManufacturer = () => {
                     <div className='singleManuBlock'>
                         <div className='singleManuDetails'>
                             <div className='singleManuDetailsLeft'>
-                                <img alt='' src={`${process.env.REACT_APP_IMAGE}${manufacturer?.logo}`} />
+                                <img alt='' src={`${process.env.REACT_APP_IMAGE}${manufacturer?.logo}`} onClick={() => dispatch(GetSingleManufacturer(userId))}/>
                                 <div className='singleManuDetailsLeftRight'>
                                     <h1>{manufacturer?.company_name}</h1>
                                     <span>{manufacturer?.made_in}</span>
@@ -189,7 +188,7 @@ export const SingleManufacturer = () => {
                                             {e?.name}
                                         </button>
                                     ))}
-                                    <button className='eachProductCategory' onClick={() => dispatch(GetSingleManufacturer(userId))}><RemoveIcon />Сбросить фильтр</button>
+                                    {/* <button className='eachProductCategory'><RemoveIcon />Сбросить фильтр</button> */}
                                 </div>
                             }
 
