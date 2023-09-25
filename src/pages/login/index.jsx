@@ -34,7 +34,7 @@ export const Login = () => {
             <div className='loginBlock'>
                 <div className='loginTitle'>
                     <h1>Вход</h1>
-                    <span>Регистрация</span>
+                    {/* <span>Регистрация</span> */}
                 </div>
                 <div className='loginInputs'>
                     <label>Номер телефона</label>
@@ -43,7 +43,7 @@ export const Login = () => {
                         maskChar="_"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        style={(errors.phoneError || loginError) ? { border: '1px solid red' } : {}}
+                        style={(errors.phoneError || loginError) ? { border: '1px solid red', fontFamily: 'sans-serif' } : {}}
                         onKeyDown={(e) => e.key === 'Enter' && login()}
                     />
                     {errors.phoneError && <span className='loginError'>{errors.phoneError}</span>}

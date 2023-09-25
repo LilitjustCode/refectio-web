@@ -1,8 +1,14 @@
+import { useEffect } from 'react'
 import { CloseIcon } from '../../svg'
 
 export const ManufacturerDescription = ({ open, setOpen, description }) => {
-    
+
+    useEffect(() => {
+        document.querySelector('.mainLayout').style.position = 'fixed'
+    }, [])
+
     function close() {
+        document.querySelector('.mainLayout').style.position = 'relative'
         setOpen(false)
     }
 

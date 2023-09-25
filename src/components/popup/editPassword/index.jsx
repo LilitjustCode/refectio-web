@@ -22,6 +22,10 @@ export const EditPassword = ({ open, setOpen }) => {
     })
 
     useEffect(() => {
+        document.querySelector('.mainLayout').style.position = 'fixed'
+    }, [])
+
+    useEffect(() => {
         if (update) {
             dispatch(UpdateSuccessful())
             close()
@@ -63,13 +67,14 @@ export const EditPassword = ({ open, setOpen }) => {
     }
 
     function close() {
+        document.querySelector('.mainLayout').style.position = 'relative'
         dispatch(ClearPasswordErrors())
         setOpen(false)
     }
 
     return (
         <div className={open ? 'activePopup' : 'inactive'}>
-            <div className='pop'>
+            <div className='pop' style={{ width: '560px' }}>
                 <div className='close' onClick={close}>
                     <CloseIcon />
                 </div>

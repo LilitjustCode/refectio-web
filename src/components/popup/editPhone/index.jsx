@@ -15,13 +15,17 @@ export const EditPhone = ({ open, setOpen }) => {
     const [error, setError] = useState('')
     const [openCodePage, setOpenCodePage] = useState(false)
     const [code, setCode] = useState('')
+    const [counter, setCounter] = useState(0)
 
-    const [counter, setCounter] = useState(0);
+    useEffect(() => {
+        document.querySelector('.mainLayout').style.position = 'fixed'
+    }, [])
+
     useEffect(() => {
         if (counter > 0) {
             setTimeout(() => setCounter(counter - 1), 1000)
         }
-    }, [counter]);
+    }, [counter])
 
     useEffect(() => {
         if (phoneToken) {
@@ -81,6 +85,7 @@ export const EditPhone = ({ open, setOpen }) => {
         setPhoneNumber('')
         setError('')
         setOpen(false)
+        document.querySelector('.mainLayout').style.position = 'relative'
     }
 
     function savePhone() {

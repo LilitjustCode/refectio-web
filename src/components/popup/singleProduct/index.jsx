@@ -1,26 +1,37 @@
 import './style.css'
+import { useEffect } from 'react'
 import { CloseIcon } from '../../svg'
 import { Carousel } from 'react-responsive-carousel'
 import styles from 'react-responsive-carousel/lib/styles/carousel.min.css'
 
 export const SingleProduct = ({ open, setOpen, product }) => {
+
+    useEffect(() => {
+        document.querySelector('.mainLayout').style.position = 'fixed'
+    }, [])
+
+    function close() {
+        document.querySelector('.mainLayout').style.position = 'relative'
+        setOpen(false)
+    }
+
     return (
         <div className={open ? 'activePopup' : 'inactive'}>
             <div className='pop'>
-                <div className='close' onClick={() => setOpen(false)}>
+                <div className='close' onClick={close}>
                     <CloseIcon />
                 </div>
                 {/* <div className='eachSingleProdDetails'> */}
-                    <Carousel
-                        style={styles}
-                        showThumbs={false}
-                        showStatus={false}
-                        showIndicators={product?.product_image?.length !== 1}
-                    >
-                        {product?.product_image?.length > 0 && product?.product_image?.map((e, i) => (
-                            <img alt='' key={i} src={`${process.env.REACT_APP_IMAGE}${e.image}`} className='carouselImages' />
-                        ))}
-                    </Carousel>
+                <Carousel
+                    style={styles}
+                    showThumbs={false}
+                    showStatus={false}
+                    showIndicators={product?.product_image?.length !== 1}
+                >
+                    {product?.product_image?.length > 0 && product?.product_image?.map((e, i) => (
+                        <img alt='' key={i} src={`${process.env.REACT_APP_IMAGE}${e.image}`} className='carouselImages' />
+                    ))}
+                </Carousel>
                 {/* </div> */}
                 {/* <div className='eachSingleProdDetails'>
                     <div className='eachManuProduct'>
