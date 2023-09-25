@@ -1,6 +1,5 @@
 import './style.css'
 import { useEffect, useState } from 'react'
-import { RemoveIcon } from '../../components/svg'
 import { useDispatch, useSelector } from 'react-redux'
 import { EachProduct } from '../../components/eachProduct'
 import { PageNavigation } from '../../components/pageNavigation'
@@ -11,11 +10,12 @@ import { AllMyProducts, DeleteProduct, FilterCategories } from '../../Redux/acti
 export const MyProducts = () => {
     const dispatch = useDispatch()
     const products = useSelector(st => st.Product_reducer.myProducts)
+    const filteredProducts = useSelector(st => st.Product_reducer.filteredProducts)
     const categories = useSelector(st => st.Product_reducer.myCategories)
-    const update = useSelector(st => st.Product_reducer.update)
     const [myCategories, setMyCategories] = useState([])
     const [openSingleProductPopup, setOpenSingleProductPopup] = useState(false)
     const [selectedProduct, setSelectedProduct] = useState(null)
+    const [productsToShow, setProductsToShow] = useState(products)
 
     useEffect(() => {
         dispatch(AllMyProducts())
@@ -32,25 +32,23 @@ export const MyProducts = () => {
     }, [categories])
 
     useEffect(() => {
-        if (myCategories) {
-            myCategories.forEach(element => {
-                if (element.selected) {
-                    dispatch(FilterCategories(element.name))
-                }
+        if (myCategories?.every(e => e.selected === false)) {
+            setProductsToShow(products)
+        } else {
+            myCategories?.forEach(element => {
+                element?.selected && dispatch(FilterCategories(element?.name))
             })
+            setProductsToShow(filteredProducts)
         }
-    }, [myCategories, dispatch])
+    }, [myCategories, filteredProducts, products, dispatch])
 
-    useEffect(() => {
-        update && dispatch(AllMyProducts())
-    }, [update, dispatch])
-
-    const toggleCategorySelection = (categoryId) => {
-        const updatedCategories = myCategories.map(category => {
-            if (category.id === categoryId) return { ...category, selected: true }
-            else return { ...category, selected: false }
-        })
-        setMyCategories(updatedCategories)
+    const toggleCategorySelection = categoryId => {
+        setMyCategories(prevCategories =>
+            prevCategories?.map(category => ({
+                ...category,
+                selected: category?.id === categoryId ? !category?.selected : false,
+            }))
+        )
     }
 
     function deleteProduct(id) {
@@ -89,7 +87,7 @@ export const MyProducts = () => {
                     product={selectedProduct}
                 />
             }
-            {products.length && categories
+            {(products.length || filteredProducts.length) && categories
                 ? <div className='myProductsBlock'>
                     <div className='myProductCategories'>
                         {myCategories?.map((e, i) => (
@@ -102,13 +100,12 @@ export const MyProducts = () => {
                                 {e?.name}
                             </button>
                         ))}
-                        <button className='eachProductCategory' onClick={() => dispatch(AllMyProducts())}><RemoveIcon />Сбросить фильтр</button>
                     </div>
                     <div className='myProducts'>
-                        {products.length > 0
-                            ? products?.map((e, i) => (
+                        {productsToShow.length > 0
+                            ? productsToShow?.map((e, i) => (
                                 <div key={i} className='eachProduct'>
-                                    <EachProduct product={e} onClick={() => handleClick(e)} width={'100%'} divWidth={'100%'}/>
+                                    <EachProduct product={e} onClick={() => handleClick(e)} width={'100%'} divWidth={'100%'} />
                                     <div className='eachProductButtons'>
                                         <button onClick={() => window.location = `/edit/${e?.id}`}>Редактировать</button>
                                         <button onClick={() => deleteProduct(e?.id)}>Удалить</button>

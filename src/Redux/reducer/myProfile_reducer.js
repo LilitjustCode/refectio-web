@@ -6,6 +6,8 @@ export const MyProfile_reducer = (state = store, action) => {
         case 'myProfile':
             if (action.payload.status) temp.user = action.payload.data[0]
             break;
+        case 'myProfileError':
+            break;
         case 'updateSuccessful':
             temp.update = false
             break;

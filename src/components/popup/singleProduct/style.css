@@ -57,16 +57,19 @@
 
 .carousel .control-arrow,
 .carousel.carousel-slider .control-arrow {
-  background: rgb(255, 255, 255) !important;
   height: 50px !important;
   top: 43% !important;
   border-radius: 3px !important;
+}
+
+.carousel.carousel-slider .control-arrow:hover{
+  background: rgb(255, 255, 255) !important;
 }
 
 .control-next.control-arrow:before {
   border-left: 8px solid #2d9efb !important;
 }
 
-.carousel .control-prev.control-arrow:before {
+.control-prev.control-arrow:before {
   border-right: 8px solid #2d9efb !important;
 }

@@ -5,6 +5,7 @@ export default {
     singleManufacturerCategories: [],
     singleManufacturerCities: [],
     singleManufacturerProducts: [],
+    singleManufacturerFilteredProducts: [],
     search: [],
     pagination: {}
 }

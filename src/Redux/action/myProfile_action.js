@@ -1,6 +1,6 @@
 import { FetchGet, FetchPost } from "./fetch"
 
-export const MyProfile = () => { return FetchGet('/AuthUserProfile', 'myProfile') }
+export const MyProfile = () => { return FetchGet('/AuthUserProfile', 'myProfile', 'myProfileError') }
 export const GetCities = () => { return FetchGet('/getCityApi', 'getCities') }
 export const GetCategories = () => { return FetchGet('/GetProductCategory', 'getProducts') }
 export const UpdateSuccessful = () => { return { type: 'updateSuccessful' } }

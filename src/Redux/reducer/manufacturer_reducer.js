@@ -32,7 +32,7 @@ export const Manufacturer_reducer = (state = store, action) => {
             break;
         case 'filterManuCategories':
             if (action.payload.status) {
-                temp.singleManufacturerProducts = action.payload.data.products
+                temp.singleManufacturerFilteredProducts = action.payload.data.products
             }
             break;
         default:

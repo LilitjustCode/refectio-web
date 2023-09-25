@@ -36,6 +36,14 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+input {
+  font-family: revert;
+}
+
+textarea {
+  font-family: revert;
+}
+
 ol {
   list-style-position: inside;
 }

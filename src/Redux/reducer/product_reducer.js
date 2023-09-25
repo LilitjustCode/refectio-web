@@ -19,7 +19,7 @@ export const Product_reducer = (state = store, action) => {
             break;
         case 'filterCategories':
             if(action.payload.status) {
-                temp.myProducts = action.payload.data.products
+                temp.filteredProducts = action.payload.data.products
             }
             break;
         default:

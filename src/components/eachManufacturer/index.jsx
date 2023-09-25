@@ -7,6 +7,10 @@ export const EachManufacturer = ({ manufacturer }) => {
     const [openSingleProductPopup, setOpenSingleProductPopup] = useState(false)
     const [selectedProduct, setSelectedProduct] = useState(null)
     const [categories, setCategories] = useState([])
+    let pathname = ''
+    manufacturer?.company_name?.split(' ').forEach(element => {
+        pathname += element
+    })
 
     useEffect(() => {
         if (manufacturer) {
@@ -31,9 +35,9 @@ export const EachManufacturer = ({ manufacturer }) => {
             }
             <div className='eachManufacturer'>
                 <div className='eachManuTop'>
-                    <img alt='' src={`${process.env.REACT_APP_IMAGE}${manufacturer.logo}`} onClick={() => window.location = `/manufacturer/${manufacturer?.id}`} />
+                    <img alt='' src={`${process.env.REACT_APP_IMAGE}${manufacturer.logo}`} onClick={() => window.location = `/${pathname}/${manufacturer?.id}`} />
                     <div className='eachManuTopTitle'>
-                        <h2 onClick={() => window.location = `/manufacturer/${manufacturer?.id}`}>{manufacturer?.company_name}</h2>
+                        <h2 onClick={() => window.location = `/${pathname}/${manufacturer?.id}`}>{manufacturer?.company_name}</h2>
                         <span>{manufacturer?.made_in}</span>
                     </div>
                 </div>
@@ -48,7 +52,7 @@ export const EachManufacturer = ({ manufacturer }) => {
 
                 <div className='eachManuProds'>
                     {manufacturer?.user_product_limit1?.length && manufacturer?.user_product_limit1?.map((e, i) => (
-                        <EachProduct onClick={() => handleClick(e)} product={e} key={i} width={'345px'} height={'220px'}/>
+                        <EachProduct onClick={() => handleClick(e)} product={e} key={i} width={'345px'} height={'220px'} />
                     ))}
                 </div>
             </div>

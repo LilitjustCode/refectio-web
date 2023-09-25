@@ -16,12 +16,14 @@ export const SingleManufacturer = () => {
     const categories = useSelector(st => st.Manufacturer_reducer.singleManufacturerCategories)
     const cities = useSelector(st => st.Manufacturer_reducer.singleManufacturerCities)
     const products = useSelector(st => st.Manufacturer_reducer.singleManufacturerProducts)
+    const filteredProducts = useSelector(st => st.Manufacturer_reducer.singleManufacturerFilteredProducts)
     const [openSingleProductPopup, setOpenSingleProductPopup] = useState(false)
     const [userId] = useState(window.location.pathname.split('/')[2])
     const [selectedProduct, setSelectedProduct] = useState(null)
     const [checked, setChecked] = useState(false)
     const [openDescription, setOpenDescription] = useState(false)
     const [myCategories, setMyCategories] = useState([])
+    const [productsToShow, setProductsToShow] = useState(products)
 
     useEffect(() => {
         dispatch(GetSingleManufacturer(userId))
@@ -50,30 +52,23 @@ export const SingleManufacturer = () => {
     }, [categories])
 
     useEffect(() => {
-        if (myCategories) {
-            myCategories.forEach(element => {
-                if (element.selected) {
-                    dispatch(FilterCategories(element.name, manufacturer?.id))
-                }
+        if (myCategories?.every(e => e.selected === false)) {
+            setProductsToShow(products)
+        } else {
+            myCategories?.forEach(element => {
+                element?.selected && dispatch(FilterCategories(element?.name, manufacturer?.id))
             })
+            setProductsToShow(filteredProducts)
         }
-    }, [myCategories, manufacturer?.id, dispatch])
+    }, [myCategories, filteredProducts, products, manufacturer, dispatch])
 
-    // import fileDownload from 'js-file-download'
-    // function download(url, filename) {
-    //     axios.get(url, {
-    //         responseType: 'blob',
-    //     }).then(res => {
-    //         fileDownload(res.data, filename);
-    //     });
-    // }
-
-    const toggleCategorySelection = (categoryId) => {
-        const updatedCategories = myCategories.map(category => {
-            if (category.id === categoryId) return { ...category, selected: true }
-            else return { ...category, selected: false }
-        })
-        setMyCategories(updatedCategories)
+    const toggleCategorySelection = categoryId => {
+        setMyCategories(prevCategories =>
+            prevCategories?.map(category => ({
+                ...category,
+                selected: category?.id === categoryId ? !category?.selected : false,
+            }))
+        )
     }
 
     function handleClick(e) {
@@ -119,7 +114,7 @@ export const SingleManufacturer = () => {
                     <div className='singleManuBlock'>
                         <div className='singleManuDetails'>
                             <div className='singleManuDetailsLeft'>
-                                <img alt='' src={`${process.env.REACT_APP_IMAGE}${manufacturer?.logo}`} onClick={() => dispatch(GetSingleManufacturer(userId))}/>
+                                <img alt='' src={`${process.env.REACT_APP_IMAGE}${manufacturer?.logo}`} />
                                 <div className='singleManuDetailsLeftRight'>
                                     <h1>{manufacturer?.company_name}</h1>
                                     <span>{manufacturer?.made_in}</span>
@@ -188,10 +183,8 @@ export const SingleManufacturer = () => {
                                             {e?.name}
                                         </button>
                                     ))}
-                                    {/* <button className='eachProductCategory'><RemoveIcon />Сбросить фильтр</button> */}
                                 </div>
                             }
-
                             <div className='singleManuFilter'>
                                 <select>
                                     {cities.length > 0 && cities?.map((e, i) => (
@@ -203,8 +196,8 @@ export const SingleManufacturer = () => {
                         {/* </div> */}
                         {/* <div className='singleManuBlock'> */}
                         <div className='singleManuProducts'>
-                            {products.length > 0
-                                ? products.map((e, i) => (
+                            {productsToShow?.length > 0
+                                ? productsToShow?.map((e, i) => (
                                     <EachProduct onClick={() => handleClick(e)} product={e} key={i} />
                                 ))
                                 : <span>Нет товаров</span>
