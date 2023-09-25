@@ -150,7 +150,7 @@ export const SingleManufacturer = () => {
                             <div className='singleManuDetailsRight'>
                                 <div className='singleManuDetailsRightCheckbox'>
                                     <span>Шоурум</span>
-                                    <div onClick={() => setChecked(!checked)} className='cursor'>
+                                    <div>
                                         {checked ? <CheckboxChecked /> : <CheckboxNotChecked />}
                                     </div>
                                 </div>

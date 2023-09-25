@@ -147,6 +147,7 @@ export const EditProductFields = ({ details, setDetails, errors, setErrors, cate
                         onChange={(e) => setDetails({ ...details, name: e.target.value })}
                         placeholder='Имя продукции'
                         style={errors.name ? { border: '1px solid red' } : {}}
+                        maxLength={52}
                     />
                 </div>
                 {showFrame && <div className='eachProfileField'>
