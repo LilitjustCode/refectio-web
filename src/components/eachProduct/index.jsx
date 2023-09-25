@@ -23,7 +23,7 @@ export const EachProduct = ({ product, onClick, width, height, divWidth }) => {
                     {product?.tabletop && <span>Столешница: {product?.tabletop}</span>}
                     {product?.length && <span>Длина: {product?.length} м.</span>}
                     {product?.height && <span>Высота: {product?.height} м.</span>}
-                    {product?.price && <span>Цена: {product?.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} руб.</span>}
+                    {product?.price && <span>Цена: <span style={{fontFamily: 'sans-serif'}}>{product?.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span> руб.</span>}
                 </div>
                 {(product?.about !== 'null' && product?.about != null) && <button onClick={() => setOpenInfo(true)}>Подробнее</button>}
             </div>
