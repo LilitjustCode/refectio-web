@@ -7,9 +7,9 @@ export const EachManufacturer = ({ manufacturer }) => {
     const [openSingleProductPopup, setOpenSingleProductPopup] = useState(false)
     const [selectedProduct, setSelectedProduct] = useState(null)
     const [categories, setCategories] = useState([])
-    let pathname = ''
+    let companyName = ''
     manufacturer?.company_name?.split(' ').forEach(element => {
-        pathname += element
+        companyName += element
     })
 
     useEffect(() => {
@@ -35,9 +35,9 @@ export const EachManufacturer = ({ manufacturer }) => {
             }
             <div className='eachManufacturer'>
                 <div className='eachManuTop'>
-                    <img alt='' src={`${process.env.REACT_APP_IMAGE}${manufacturer.logo}`} onClick={() => window.location = `/${pathname}/${manufacturer?.id}`} />
+                    <img alt='' src={`${process.env.REACT_APP_IMAGE}${manufacturer.logo}`} onClick={() => window.location = `/${companyName}`} />
                     <div className='eachManuTopTitle'>
-                        <h2 onClick={() => window.location = `/${pathname}/${manufacturer?.id}`}>{manufacturer?.company_name}</h2>
+                        <h2 onClick={() => window.location = `/${companyName}`}>{manufacturer?.company_name}</h2>
                         <span>{manufacturer?.made_in}</span>
                     </div>
                 </div>

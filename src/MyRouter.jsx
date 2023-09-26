@@ -28,7 +28,7 @@ export const MyRouter = () => {
                     <Route path='/profile' element={<PrivateRoute auth={auth}><MyProfile /></PrivateRoute>} />
                     <Route path='/my-products' element={<PrivateRoute auth={auth}><MyProducts /></PrivateRoute>} />
                     <Route path='/addNewProduct' element={<PrivateRoute auth={auth}><AddNewProduct /></PrivateRoute>} />
-                    <Route path='/:companyName/:id' element={<PrivateRoute auth={auth}><SingleManufacturer /></PrivateRoute>} />
+                    <Route path='/:companyName' element={<PrivateRoute auth={auth}><SingleManufacturer /></PrivateRoute>} />
                     <Route path='/edit/:id' element={<PrivateRoute auth={auth}><EditProduct /></PrivateRoute>} />
                 </Route>
             </Routes>

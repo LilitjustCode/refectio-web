@@ -12,7 +12,14 @@ export const MyProfile_reducer = (state = store, action) => {
             temp.update = false
             break;
         case 'updateSuccess':
-            if (action.payload.status) temp.update = true
+            if (action.payload.status) {
+                temp.update = true
+                temp.nameError = ''
+            }
+            else if(action.payload.message.includes('This Company Name Exist')) {
+                console.log(action.payload);
+                temp.nameError = 'Производитель с таким именем уже существует.'
+            }
             break;
         case 'getCities':
             if (action.payload.status) {

@@ -8,4 +8,5 @@ export default {
     phoneError: '',
     codeError: '',
     phoneToken: false,
+    nameError: ''
 }

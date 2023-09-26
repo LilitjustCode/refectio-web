@@ -41,9 +41,9 @@ export const Layout = () => {
             <div className='bottomLayout'>
                 <div className='bottomLayoutBlock'>
                     <div className='socialMedias'>
-                        <div><Instagram /></div>
-                        <div><Telegram /></div>
-                        <div><Mail /></div>
+                        <div onClick={() => window.open('https://instagram.com/refectio_app', '_blank')}><Instagram /></div>
+                        <div onClick={() => window.open('https://t.me/refectio', '_blank')}><Telegram /></div>
+                        <div onClick={() => window.open('mailto:romanov@weta.ru')}><Mail /></div>
                     </div>
                     <span>Refectio © 2023. <br />Все права защищены.</span>
                 </div>

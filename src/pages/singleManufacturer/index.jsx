@@ -18,7 +18,7 @@ export const SingleManufacturer = () => {
     const products = useSelector(st => st.Manufacturer_reducer.singleManufacturerProducts)
     const filteredProducts = useSelector(st => st.Manufacturer_reducer.singleManufacturerFilteredProducts)
     const [openSingleProductPopup, setOpenSingleProductPopup] = useState(false)
-    const [userId] = useState(window.location.pathname.split('/')[2])
+    const [companyName] = useState(window.location.pathname.split('/')[1])
     const [selectedProduct, setSelectedProduct] = useState(null)
     const [checked, setChecked] = useState(false)
     const [openDescription, setOpenDescription] = useState(false)
@@ -26,8 +26,8 @@ export const SingleManufacturer = () => {
     const [productsToShow, setProductsToShow] = useState(products)
 
     useEffect(() => {
-        dispatch(GetSingleManufacturer(userId))
-    }, [userId, dispatch])
+        dispatch(GetSingleManufacturer(companyName))
+    }, [companyName, dispatch])
 
     useEffect(() => {
         if (manufacturer) {
@@ -114,7 +114,7 @@ export const SingleManufacturer = () => {
                     <div className='singleManuBlock'>
                         <div className='singleManuDetails'>
                             <div className='singleManuDetailsLeft'>
-                                <img alt='' src={`${process.env.REACT_APP_IMAGE}${manufacturer?.logo}`} />
+                                <img alt='' className='cursor' src={`${process.env.REACT_APP_IMAGE}${manufacturer?.logo}`} onClick={() => dispatch(GetSingleManufacturer(companyName))} />
                                 <div className='singleManuDetailsLeftRight'>
                                     <h1>{manufacturer?.company_name}</h1>
                                     <span>{manufacturer?.made_in}</span>

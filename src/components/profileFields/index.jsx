@@ -13,6 +13,7 @@ export const ProfileFields = () => {
     const dispatch = useDispatch()
     const updateSuccess = useSelector(st => st.MyProfile_reducer.update)
     const cities = useSelector(st => st.MyProfile_reducer.cities)
+    const nameError = useSelector(st => st.MyProfile_reducer.nameError)
     // const categories = useSelector(st => st.MyProfile_reducer.categories)
     const user = useSelector(st => st.MyProfile_reducer.user)
     const [openPassword, setOpenPassword] = useState(false)
@@ -167,12 +168,12 @@ export const ProfileFields = () => {
                         <input
                             disabled={!edit.country}
                             value={userDetails?.country ? userDetails?.country : ''}
-                            style={edit.country ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
+                            style={!userDetails?.country?.length ? { border: '1px solid red' } : edit.country ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
                             onChange={(e) => setUserDetails({ ...userDetails, country: e.target.value })}
                         />
                     </div>
                     {edit?.country && <div>
-                        <button className='profileEditButton' onClick={() => dispatch(UpdateCountry(userDetails?.country))}>Обновить</button>
+                        <button className='profileEditButton' onClick={() => userDetails?.country.length > 0 && dispatch(UpdateCountry(userDetails?.country))}>Обновить</button>
                     </div>}
                     <div className='eachProfileField'> {/* ИНН */}
                         <div className='profileFieldName'>
@@ -184,12 +185,12 @@ export const ProfileFields = () => {
                         <input
                             disabled={!edit.code}
                             value={userDetails?.code ? userDetails?.code : ''}
-                            style={edit.code ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
+                            style={!userDetails?.code?.length ? { border: '1px solid red' } : edit.code ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
                             onChange={(e) => setUserDetails({ ...userDetails, code: e.target.value })}
                         />
                     </div>
                     {edit?.code && <div>
-                        <button className='profileEditButton' onClick={() => dispatch(UpdateCode(userDetails?.code))}>Обновить</button>
+                        <button className='profileEditButton' onClick={() => userDetails?.code?.length > 0 && dispatch(UpdateCode(userDetails?.code))}>Обновить</button>
                     </div>}
                     <div className='eachProfileField'> {/* Города */}
                         <div className='profileFieldName'>
@@ -260,12 +261,13 @@ export const ProfileFields = () => {
                         <input
                             disabled={!edit.name}
                             value={userDetails?.name ? userDetails?.name : ''}
-                            style={edit.name ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
+                            style={(nameError.length || !userDetails?.name?.length) ? { border: '1px solid red' } : edit.name ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
                             onChange={(e) => setUserDetails({ ...userDetails, name: e.target.value })}
                         />
+                        {nameError && <span style={{ color: 'red' }}>{nameError}</span>}
                     </div>
                     {edit?.name && <div>
-                        <button className='profileEditButton' onClick={() => dispatch(UpdateName(userDetails?.name))}>Обновить</button>
+                        <button className='profileEditButton' onClick={() => userDetails?.name?.length > 0 && dispatch(UpdateName(userDetails?.name))}>Обновить</button>
                     </div>}
                     <div className='eachProfileField'> {/* Телеграм Канал */}
                         <div className='profileFieldName'>
@@ -277,12 +279,12 @@ export const ProfileFields = () => {
                         <input
                             disabled={!edit.telegram}
                             value={userDetails?.telegram ? userDetails?.telegram : ''}
-                            style={edit.telegram ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
+                            style={!userDetails?.telegram?.length ? { border: '1px solid red' } : edit.telegram ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
                             onChange={(e) => setUserDetails({ ...userDetails, telegram: e.target.value })}
                         />
                     </div>
                     {edit?.telegram && <div>
-                        <button className='profileEditButton' onClick={() => dispatch(UpdateTelegram(userDetails?.telegram))}>Обновить</button>
+                        <button className='profileEditButton' onClick={() => userDetails?.telegram?.length > 0 && dispatch(UpdateTelegram(userDetails?.telegram))}>Обновить</button>
                     </div>}
                     <div className='eachProfileField'> {/* Сайт */}
                         <div className='profileFieldName'>
@@ -294,12 +296,12 @@ export const ProfileFields = () => {
                         <input
                             disabled={!edit.site}
                             value={userDetails?.site ? userDetails?.site : ''}
-                            style={edit.site ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
+                            style={!userDetails?.site?.length ? { border: '1px solid red' } : edit.site ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
                             onChange={(e) => setUserDetails({ ...userDetails, site: e.target.value })}
                         />
                     </div>
                     {edit?.site && <div>
-                        <button className='profileEditButton' onClick={() => dispatch(UpdateSite(userDetails?.site))}>Обновить</button>
+                        <button className='profileEditButton' onClick={() => userDetails?.site?.length > 0 && dispatch(UpdateSite(userDetails?.site))}>Обновить</button>
                     </div>}
                     <div className='eachProfileField'> {/* Номер телефона */}
                         <div className='profileFieldName'>
