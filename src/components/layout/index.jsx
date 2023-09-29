@@ -11,8 +11,10 @@ export const Layout = () => {
     const user = useSelector(st => st.MyProfile_reducer.user)
 
     useEffect(() => {
-        dispatch(MyProfile())
-    }, [dispatch])
+        if (token) {
+            dispatch(MyProfile())
+        }
+    }, [token, dispatch])
 
     return (
         <div className='mainLayout'>
@@ -25,7 +27,7 @@ export const Layout = () => {
             <div className='topLayoutBlockBottom' />
             <div className='middleLayout'>
                 <div className='middleLayoutBlock'>
-                    <p/>
+                    <p />
                     {token
                         ? <div className='layoutUser'>
                             <h2 onClick={() => window.location = '/profile'}>Мой профиль</h2>

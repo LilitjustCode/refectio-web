@@ -62,7 +62,7 @@ export const EditProduct = () => {
                 tabletop: product?.tabletop ? product?.tabletop : '',
             })
             setProductPhotos(product?.product_image)
-            const category = categories.filter(elm => +elm.id === +product?.parent_category_id)[0]
+            const category = categories?.filter(elm => +elm.id === +product?.parent_category_id)[0]
             setSelectedCategory(category)
             if (product?.category_id) {
                 setCategoryHasSubcategory(true)
@@ -91,13 +91,13 @@ export const EditProduct = () => {
         }
     }
     function update() {
-        if (!details.name.length) {
+        if (!details?.name?.length) {
             setErrors({ ...errors, name: ' ' })
         } else if (!selectedCategory) {
             setErrors({ ...errors, name: '', category: ' ' })
         } else if (selectedCategory && categoryHasSubcategory && !selectedSubcategory) {
             setErrors({ ...errors, name: '', category: '', subcategory: ' ' })
-        } else if (!files.length && !productPhotos.length && !newPhotos.length) {
+        } else if (!files?.length && !productPhotos?.length && !newPhotos?.length) {
             setErrors({ ...errors, name: '', category: '', subcategory: '', photo: 'Обязательное поле' })
         } else {
             setErrors({ ...errors, name: '', category: '', subcategory: '', photo: '' })
@@ -120,10 +120,10 @@ export const EditProduct = () => {
             formdata.append("price", details?.price)
             formdata.append("tabletop", details?.tabletop)
             formdata.append("about", details?.description)
-            deletedPhotos.length && deletedPhotos.forEach(elm => {
+            deletedPhotos?.length && deletedPhotos?.forEach(elm => {
                 formdata.append("Deletephoto[]", elm)
             })
-            files.length && files.forEach(elm => {
+            files?.length && files?.forEach(elm => {
                 formdata.append("photo[]", elm)
             })
             const requestOptions = {

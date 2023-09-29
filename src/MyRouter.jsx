@@ -12,7 +12,7 @@ export const MyRouter = () => {
     const auth = localStorage.getItem('token')
 
     const PrivateRoute = ({ auth, children }) => {
-        return auth ? children : window.location = '/auth/login'
+        return auth ? children : window.location = '/'
     }
 
     const AlreadyLoggedIn = ({ auth, children }) => {
@@ -24,11 +24,11 @@ export const MyRouter = () => {
             <Routes>
                 <Route path='/' element={<Layout />}>
                     <Route path='/auth/login' element={<AlreadyLoggedIn auth={auth}><Login /></AlreadyLoggedIn>} />
-                    <Route path='/' element={<PrivateRoute auth={auth}><AllManufacturers /></PrivateRoute>} />
+                    <Route path='/' element={<AllManufacturers />} />
                     <Route path='/profile' element={<PrivateRoute auth={auth}><MyProfile /></PrivateRoute>} />
                     <Route path='/my-products' element={<PrivateRoute auth={auth}><MyProducts /></PrivateRoute>} />
                     <Route path='/addNewProduct' element={<PrivateRoute auth={auth}><AddNewProduct /></PrivateRoute>} />
-                    <Route path='/:companyName' element={<PrivateRoute auth={auth}><SingleManufacturer /></PrivateRoute>} />
+                    <Route path='/:companyName' element={<SingleManufacturer />} />
                     <Route path='/edit/:id' element={<PrivateRoute auth={auth}><EditProduct /></PrivateRoute>} />
                 </Route>
             </Routes>

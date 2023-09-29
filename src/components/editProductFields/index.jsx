@@ -5,7 +5,7 @@ export const EditProductFields = ({ details, setDetails, errors, setErrors, cate
     function handleCategoryChange(event) {
         const category = categories.filter(elm => +elm.id === +event.target.value)[0]
         setSelectedCategory(category)
-        if (category.childrens.length > 0) {
+        if (category?.childrens?.length > 0) {
             setCategoryHasSubcategory(true)
         } else {
             setCategoryHasSubcategory(false)

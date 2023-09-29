@@ -15,7 +15,7 @@ export const EachManufacturer = ({ manufacturer }) => {
     useEffect(() => {
         if (manufacturer) {
             const userCategories = manufacturer?.parent_category?.filter(e => e.parent_category_name)
-            userCategories.length && setCategories(userCategories)
+            userCategories?.length && setCategories(userCategories)
         }
     }, [manufacturer])
 
@@ -42,7 +42,7 @@ export const EachManufacturer = ({ manufacturer }) => {
                     </div>
                 </div>
 
-                {categories.length > 0 && <div className='eachManuCats'>
+                {categories?.length > 0 && <div className='eachManuCats'>
                     {categories?.map((e, i) => (
                         <div className='eachManuCategory' key={i}>
                             {e.parent_category_name && <span>{e?.parent_category_name}</span>}
@@ -51,7 +51,7 @@ export const EachManufacturer = ({ manufacturer }) => {
                 </div>}
 
                 <div className='eachManuProds'>
-                    {manufacturer?.user_product_limit1?.length && manufacturer?.user_product_limit1?.map((e, i) => (
+                    {manufacturer?.user_product_limit1?.length > 0 && manufacturer?.user_product_limit1?.map((e, i) => (
                         <EachProduct onClick={() => handleClick(e)} product={e} key={i} width={'345px'} height={'220px'} />
                     ))}
                 </div>
