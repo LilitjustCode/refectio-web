@@ -1,0 +1,14 @@
+.phoneCodeRegister {
+  color: #333;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.rmsc .dropdown-container {
+    border-radius: 8px !important;
+    border: 1px solid #bebebe !important;
+    outline: none !important;
+    padding: 5px !important;
+}

@@ -34,7 +34,7 @@ export const Login = () => {
             <div className='loginBlock'>
                 <div className='loginTitle'>
                     <h1>Вход</h1>
-                    {/* <span>Регистрация</span> */}
+                    <span onClick={() => window.location = '/auth/register'}>Регистрация</span>
                 </div>
                 <div className='loginInputs'>
                     <label>Номер телефона</label>
@@ -72,7 +72,7 @@ export const Login = () => {
                     <button onClick={login}>Войти</button>
                 </div>
                 <div className='loginNoAccount'>
-                    <p>Нет аккаунта?<span> Зарегистрироваться</span></p>
+                    <p>Нет аккаунта?<span onClick={() => window.location = '/auth/register'}> Зарегистрироваться</span></p>
                 </div>
             </div>
         </div>
