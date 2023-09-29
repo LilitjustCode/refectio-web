@@ -17,7 +17,7 @@ export const SingleProduct = ({ open, setOpen, product }) => {
 
     return (
         <div className={open ? 'activePopup' : 'inactive'}>
-            <div className='pop'>
+            <div className='pop' style={{ height: '100vh' }}>
                 <div className='close' onClick={close}>
                     <CloseIcon />
                 </div>
