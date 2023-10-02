@@ -27,10 +27,10 @@ export const MyRouter = () => {
                     <Route path='/auth/login' element={<AlreadyLoggedIn auth={auth}><Login /></AlreadyLoggedIn>} />
                     <Route path='/auth/register' element={<AlreadyLoggedIn auth={auth}><Register /></AlreadyLoggedIn>} />
                     <Route path='/' element={<AllManufacturers />} />
+                    <Route path='/:companyName' element={<SingleManufacturer />} />
                     <Route path='/profile' element={<PrivateRoute auth={auth}><MyProfile /></PrivateRoute>} />
                     <Route path='/my-products' element={<PrivateRoute auth={auth}><MyProducts /></PrivateRoute>} />
                     <Route path='/addNewProduct' element={<PrivateRoute auth={auth}><AddNewProduct /></PrivateRoute>} />
-                    <Route path='/:companyName' element={<SingleManufacturer />} />
                     <Route path='/edit/:id' element={<PrivateRoute auth={auth}><EditProduct /></PrivateRoute>} />
                 </Route>
             </Routes>

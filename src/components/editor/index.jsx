@@ -7,7 +7,7 @@ import { Editor, EditorState, getDefaultKeyBinding, RichUtils, ContentState, con
 class RichTextEditor extends React.Component {
     constructor(props) {
         super(props);
-        const overview = props?.userDetails?.description || '';
+        const overview = props?.userDetails?.description
         const contentDataState = ContentState.createFromBlockArray(convertFromHTML(overview));
         const editorDataState = EditorState.createWithContent(contentDataState);
 

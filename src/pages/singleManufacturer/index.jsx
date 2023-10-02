@@ -109,7 +109,7 @@ export const SingleManufacturer = () => {
                 searchText={''}
                 setSearchText={''}
             />
-            {Object.keys(manufacturer) && categories.length && cities.length
+            {Object.keys(manufacturer)
                 ? <>
                     <div className='singleManuBlock'>
                         <div className='singleManuDetails'>
@@ -185,13 +185,15 @@ export const SingleManufacturer = () => {
                                     ))}
                                 </div>
                             }
-                            <div className='singleManuFilter'>
-                                <select>
-                                    {cities.length > 0 && cities?.map((e, i) => (
-                                        <option key={i}>{e?.city_name}</option>
-                                    ))}
-                                </select>
-                            </div>
+                            {cities?.length > 0 &&
+                                <div className='singleManuFilter'>
+                                    <select>
+                                        {cities.length > 0 && cities?.map((e, i) => (
+                                            <option key={i}>{e?.city_name}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            }
                         </div>
                         {/* </div> */}
                         {/* <div className='singleManuBlock'> */}

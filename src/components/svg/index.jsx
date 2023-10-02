@@ -368,3 +368,12 @@ export const RemoveIcon = () => {
         </svg>
     )
 }
+
+export const RegisterCheckbox = () => {
+    return (
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="28" height="28" rx="4" fill="#2D9EFB" />
+            <path d="M7 15L11.4118 20L22 7" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+    )
+}

@@ -1,4 +1,6 @@
 /* eslint-disable */
 export default {
-    loginError: ''
+    loginError: '',
+    countries: [],
+    codeError: '',
 }

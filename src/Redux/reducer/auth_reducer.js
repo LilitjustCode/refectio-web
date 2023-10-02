@@ -4,6 +4,7 @@ export const Auth_reducer = (state = store, action) => {
     let temp = { ...state }
     switch (action.type) {
         case 'login':
+            console.log(action.payload);
             if (action.payload.status) {
                 if (action.payload?.message?.message?.includes('login succsesfuli')) {
                     localStorage.setItem('token', action.payload?.message?.token)
@@ -14,9 +15,32 @@ export const Auth_reducer = (state = store, action) => {
             } else {
                 if (action.payload?.message?.message?.includes('user does not exist')) {
                     temp.loginError = 'Неправильный номер телефона или пароль'
-                } else if(action.payload?.message?.message?.includes('wrong password')) {
+                } else if (action.payload?.message?.message?.includes('wrong password')) {
                     temp.loginError = 'Неправильный номер телефона или пароль'
+                } else if (action.payload?.message?.includes('verification error')) {
+                    temp.loginError = 'Verification error'
                 }
+            }
+            break;
+        case 'getAllCountries':
+            if (action.payload.status) {
+                temp.countries = action.payload.data
+            }
+            break;
+        case 'sendCall':
+            console.log(action.payload)
+            if (action.payload.status) {
+
+            }
+            break;
+        case 'verifyCode':
+            console.log(action.payload)
+            if (action.payload.status) {
+                temp.codeError = ''
+            } else if (action.payload.message[0].includes('wrong verification code')) {
+                temp.codeError = 'Неверный код'
+            } else if(action.payload.message[0].includes('1 minute ago')) {
+                temp.codeError = 'Повторите попытку через 1 минуту.'
             }
             break;
         case 'logout':
