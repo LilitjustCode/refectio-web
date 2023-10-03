@@ -174,7 +174,7 @@ export const Register = () => {
             <div className='loginBlock' style={{ maxHeight: '500px', overflow: 'auto' }}>
                 <div className='loginTitle'>
                     <h1>Регистрация</h1>
-                    <span onClick={() => window.location = '/auth/register'}>Вход</span>
+                    <span onClick={() => window.location = '/auth/login'}>Вход</span>
                 </div>
                 <div className='loginInputs'>
                     <label>Название</label>

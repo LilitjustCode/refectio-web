@@ -9,10 +9,11 @@
 
 .timer > span {
   color: #333;
-  font-size: 16px;
+  font-size: 15px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+  text-decoration: underline;
 }
 
 .timer > p {
