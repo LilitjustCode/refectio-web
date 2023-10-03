@@ -7,6 +7,9 @@ export const Product_reducer = (state = store, action) => {
             if (action.payload.status) {
                 temp.myProducts = action.payload.data.products
                 temp.myCategories = action.payload.data.user_category_for_product
+            } else if (action.payload.data.message.includes('no product')) {
+                temp.myProducts = []
+                temp.myCategories = []
             }
             break;
         case 'deleteProduct':
@@ -18,7 +21,7 @@ export const Product_reducer = (state = store, action) => {
             }
             break;
         case 'filterCategories':
-            if(action.payload.status) {
+            if (action.payload.status) {
                 temp.filteredProducts = action.payload.data.products
             }
             break;

@@ -81,6 +81,8 @@
   outline: none;
   padding: 16.5px;
   padding-right: 40px;
+  font-weight: 500;
+  font-size: 15px;
 }
 
 .eachProductPhoto {

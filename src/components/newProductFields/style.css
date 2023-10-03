@@ -17,9 +17,8 @@
   border-radius: 8px;
   border: 1px solid #bebebe;
   background: #fff;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 15px;
-  font-family: monospace;
 }
 
 .eachProfileField > select {
@@ -28,6 +27,8 @@
   border-radius: 8px;
   border: 1px solid #bebebe;
   background: #fff;
+  font-weight: 500;
+  font-size: 15px;
 }
 
 .eachProfileField > textarea {
@@ -38,6 +39,8 @@
   resize: none;
   border: 1px solid #bebebe;
   background: #fff;
+  font-weight: 500;
+  font-size: 15px;
 }
 
 .profileFieldName {

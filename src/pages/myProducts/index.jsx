@@ -11,6 +11,7 @@ export const MyProducts = () => {
     const dispatch = useDispatch()
     const products = useSelector(st => st.Product_reducer.myProducts)
     const filteredProducts = useSelector(st => st.Product_reducer.filteredProducts)
+    const update = useSelector(st => st.Product_reducer.update)
     const categories = useSelector(st => st.Product_reducer.myCategories)
     const [myCategories, setMyCategories] = useState([])
     const [openSingleProductPopup, setOpenSingleProductPopup] = useState(false)
@@ -19,7 +20,7 @@ export const MyProducts = () => {
 
     useEffect(() => {
         dispatch(AllMyProducts())
-    }, [dispatch])
+    }, [update, dispatch])
 
     useEffect(() => {
         if (categories) {
@@ -119,7 +120,14 @@ export const MyProducts = () => {
                         <button onClick={() => window.location = '/addNewProduct'}>Добавить</button>
                     </div>
                 </div>
-                : <MyProductsSkeleton />
+                : !products?.length && !categories?.length
+                    ? <div className='myProducts' style={{ minHeight: 'calc(100vh - 462px)' }}>
+                        <span>Нет товаров</span>
+                        <div className='myProductsButton'>
+                            <button onClick={() => window.location = '/addNewProduct'}>Добавить</button>
+                        </div>
+                    </div>
+                    : <MyProductsSkeleton />
             }
         </div>
     )

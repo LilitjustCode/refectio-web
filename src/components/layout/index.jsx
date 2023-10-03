@@ -29,8 +29,8 @@ export const Layout = () => {
                 <div className='middleLayoutBlock'>
                     <p />
                     {token
-                        ? <div className='layoutUser'>
-                            <h2 onClick={() => window.location = '/profile'}>Мой профиль</h2>
+                        ? <div className='layoutUser' onClick={() => window.location = '/profile'}>
+                            <h2>Мой профиль</h2>
                             <img alt='' src={`${process.env.REACT_APP_IMAGE}${user?.logo}`} />
                         </div>
                         : <span onClick={() => window.location = '/auth/login'}>Вход/Регистрация</span>

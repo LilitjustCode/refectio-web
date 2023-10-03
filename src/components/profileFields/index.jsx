@@ -113,20 +113,6 @@ export const ProfileFields = () => {
         }
     }
 
-    // function handleCityChange(event) {
-    //     let options = event.target.options;
-    //     let current = []
-    //     let value = []
-    //     for (let i = 0, l = options.length; i < l; i++) {
-    //         if (options[i].selected) {
-    //             value.push(`${options[i].getAttribute('data-id')}^${options[i].value}`)
-    //             current.push(options[i].value)
-    //         }
-    //     }
-    //     setCityId(value)
-    //     setUserDetails({ ...userDetails, cities: current })
-    // }
-
     useEffect(() => {
         let cities = []
         selected?.forEach(element => {
@@ -173,7 +159,7 @@ export const ProfileFields = () => {
                         />
                     </div>
                     {edit?.country && <div>
-                        <button className='profileEditButton' onClick={() => userDetails?.country.length > 0 && dispatch(UpdateCountry(userDetails?.country))}>Обновить</button>
+                        <button className='profileEditButton' onClick={() => userDetails?.country.length > 0 ? dispatch(UpdateCountry(userDetails?.country)) : setEdit({ ...edit, country: false })}>Обновить</button>
                     </div>}
                     <div className='eachProfileField'> {/* ИНН */}
                         <div className='profileFieldName'>
@@ -185,12 +171,12 @@ export const ProfileFields = () => {
                         <input
                             disabled={!edit.code}
                             value={userDetails?.code ? userDetails?.code : ''}
-                            style={!userDetails?.code?.length ? { border: '1px solid red' } : edit.code ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
+                            style={edit.code ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
                             onChange={(e) => setUserDetails({ ...userDetails, code: e.target.value })}
                         />
                     </div>
                     {edit?.code && <div>
-                        <button className='profileEditButton' onClick={() => userDetails?.code?.length > 0 && dispatch(UpdateCode(userDetails?.code))}>Обновить</button>
+                        <button className='profileEditButton' onClick={() => userDetails?.code?.length > 0 ? dispatch(UpdateCode(userDetails?.code)) : setEdit({ ...edit, code: false })}>Обновить</button>
                     </div>}
                     <div className='eachProfileField'> {/* Города */}
                         <div className='profileFieldName'>
@@ -216,20 +202,6 @@ export const ProfileFields = () => {
                                 selectSomeItems: 'Выбирать...',
                             }}
                         />
-
-                        {/* <select
-                            value={userDetails?.cities}
-                            onChange={handleCityChange}
-                            disabled={!edit.cities}
-                            style={edit.cities ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
-                            multiple
-                        >
-                            {cities?.map((e, i) => (
-                                <option key={i} data-id={e?.id}>
-                                    {e?.name ? e?.name : ''}
-                                </option>
-                            ))}
-                        </select> */}
                     </div>
                     {edit?.cities && <div>
                         <button className='profileEditButton' onClick={() => dispatch(UpdateCities(myCities))}>Обновить</button>
@@ -279,12 +251,12 @@ export const ProfileFields = () => {
                         <input
                             disabled={!edit.telegram}
                             value={userDetails?.telegram ? userDetails?.telegram : ''}
-                            style={!userDetails?.telegram?.length ? { border: '1px solid red' } : edit.telegram ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
+                            style={edit.telegram ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
                             onChange={(e) => setUserDetails({ ...userDetails, telegram: e.target.value })}
                         />
                     </div>
                     {edit?.telegram && <div>
-                        <button className='profileEditButton' onClick={() => userDetails?.telegram?.length > 0 && dispatch(UpdateTelegram(userDetails?.telegram))}>Обновить</button>
+                        <button className='profileEditButton' onClick={() => userDetails?.telegram?.length > 0 ? dispatch(UpdateTelegram(userDetails?.telegram)) : setEdit({ ...edit, telegram: false })}>Обновить</button>
                     </div>}
                     <div className='eachProfileField'> {/* Сайт */}
                         <div className='profileFieldName'>
@@ -296,12 +268,12 @@ export const ProfileFields = () => {
                         <input
                             disabled={!edit.site}
                             value={userDetails?.site ? userDetails?.site : ''}
-                            style={!userDetails?.site?.length ? { border: '1px solid red' } : edit.site ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
+                            style={edit.site ? { border: '3px solid #bebebe' } : { border: '1px solid #bebebe' }}
                             onChange={(e) => setUserDetails({ ...userDetails, site: e.target.value })}
                         />
                     </div>
                     {edit?.site && <div>
-                        <button className='profileEditButton' onClick={() => userDetails?.site?.length > 0 && dispatch(UpdateSite(userDetails?.site))}>Обновить</button>
+                        <button className='profileEditButton' onClick={() => userDetails?.site?.length > 0 ? dispatch(UpdateSite(userDetails?.site)) : setEdit({ ...edit, site: false })}>Обновить</button>
                     </div>}
                     <div className='eachProfileField'> {/* Номер телефона */}
                         <div className='profileFieldName'>
@@ -330,27 +302,6 @@ export const ProfileFields = () => {
                             value={''}
                         />
                     </div>
-                    {/* <div className='eachProfileField'>
-                    <div className='profileFieldName'>
-                        <span>Категории ({userDetails?.categories?.length})</span>
-                        <div className='cursor'>
-                            <EditIcon />
-                        </div>
-                    </div>
-                    <select
-                        disabled
-                        multiple
-                    >
-                        {categories?.map((e, i) => (
-                            <option
-                                key={i}
-                            // value={e?.name ? e?.name : ''}
-                            >
-                                {e?.name ? e?.name : ''}
-                            </option>
-                        ))}
-                    </select>
-                </div> */}
                 </div>
             </div>
             : <div className='myProfileBlock'>

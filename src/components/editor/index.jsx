@@ -7,7 +7,7 @@ import { Editor, EditorState, getDefaultKeyBinding, RichUtils, ContentState, con
 class RichTextEditor extends React.Component {
     constructor(props) {
         super(props);
-        const overview = props?.userDetails?.description
+        const overview = props?.userDetails?.description || ''
         const contentDataState = ContentState.createFromBlockArray(convertFromHTML(overview));
         const editorDataState = EditorState.createWithContent(contentDataState);
 
@@ -193,9 +193,9 @@ const BlockStyleControls = (props) => {
 };
 
 var INLINE_STYLES = [
-    { label: 'Bold', style: 'BOLD' },
-    { label: 'Italic', style: 'ITALIC' },
-    { label: 'Underline', style: 'UNDERLINE' },
+    { label: 'Жирный', style: 'BOLD' },
+    { label: 'Курсив', style: 'ITALIC' },
+    { label: 'Подчёркнутый', style: 'UNDERLINE' },
     // { label: 'Monospace', style: 'CODE' },
 ];
 

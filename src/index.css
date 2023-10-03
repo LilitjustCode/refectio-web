@@ -1,8 +1,13 @@
 body {
   margin: 0;
-  font-family: "Raleway";
+  font-family: "Raleway", "Regular";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+  font-family: "Regular";
+  src: url("./open-sans.regular.ttf");
 }
 
 code {
@@ -18,7 +23,7 @@ code {
 
 input::placeholder,
 textarea::placeholder {
-  color: #757575;
+  color: #7575758a;
   font-size: 19px;
   font-style: normal;
   font-weight: 400;
@@ -37,11 +42,11 @@ input[type="number"] {
 }
 
 input {
-  font-family: revert;
+  font-family: "Regular";
 }
 
 textarea {
-  font-family: revert;
+  font-family: "Regular";
 }
 
 ol {

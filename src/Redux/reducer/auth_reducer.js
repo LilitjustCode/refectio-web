@@ -28,18 +28,21 @@ export const Auth_reducer = (state = store, action) => {
             }
             break;
         case 'sendCall':
-            console.log(action.payload)
             if (action.payload.status) {
-
+                temp.codeError = ''
+            } else if (action.payload.data[0].includes('1 minute ago')) {
+                temp.codeError = 'Повторите попытку через 1 минуту.'
             }
             break;
         case 'verifyCode':
-            console.log(action.payload)
             if (action.payload.status) {
                 temp.codeError = ''
-            } else if (action.payload.message[0].includes('wrong verification code')) {
+                localStorage.setItem('token', action.payload?.message?.token)
+                localStorage.setItem('userId', action.payload?.message?.user[0]?.id)
+                window.location = '/'
+            } else if (action.payload?.message[0]?.includes('wrong verification code')) {
                 temp.codeError = 'Неверный код'
-            } else if(action.payload.message[0].includes('1 minute ago')) {
+            } else if (action.payload?.message[0]?.includes('1 minute ago')) {
                 temp.codeError = 'Повторите попытку через 1 минуту.'
             }
             break;

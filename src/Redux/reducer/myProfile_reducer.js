@@ -16,8 +16,7 @@ export const MyProfile_reducer = (state = store, action) => {
                 temp.update = true
                 temp.nameError = ''
             }
-            else if(action.payload.message.includes('This Company Name Exist')) {
-                console.log(action.payload);
+            else if (action.payload.message.includes('This Company Name Exist')) {
                 temp.nameError = 'Производитель с таким именем уже существует.'
             }
             break;

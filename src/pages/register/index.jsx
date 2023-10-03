@@ -20,6 +20,7 @@ export const Register = () => {
     const [file, setFile] = useState(null)
     const [openCode, setOpenCode] = useState(false)
     const [token, setToken] = useState(null)
+    const [description, setDescription] = useState({ description: '' })
     const [errors, setErrors] = useState({
         name: '',
         phone: '',
@@ -44,7 +45,6 @@ export const Register = () => {
         password: '',
         password_confirmation: '',
         checkbox: false,
-        description: ''
     })
 
     useEffect(() => {
@@ -105,8 +105,8 @@ export const Register = () => {
             formdata.append("role_id", '3')
             formdata.append("made_in", details?.country)
             if (selectedCities?.length) {
-                selectedCities.forEach(element => {
-                    const id = element.value.split('^')[0]
+                selectedCities?.forEach(element => {
+                    const id = element?.value?.split('^')[0]
                     formdata.append("sales_city_web[]", id)
                 })
             }
@@ -115,7 +115,7 @@ export const Register = () => {
             formdata.append("show_room", details?.showroom)
             formdata.append("job_with_designer", details?.designer)
             formdata.append("dmodel", details?.models)
-            formdata.append("about_us", details?.description)
+            formdata.append("about_us", description?.description)
             formdata.append("logo", file)
 
             fetch(`${process.env.REACT_APP_HOSTNAME}/RegisterManufacturerUser`, {
@@ -131,7 +131,32 @@ export const Register = () => {
                         setOpenCode(true)
                         setToken(result?.data?.token)
                     } else if (result?.message?.includes('user@ chi ancel hamari verifykacia')) {
-
+                        setOpenCode(true)
+                        setToken(result?.token)
+                    } else if (result?.data?.company_name[0].includes('The company name has already been taken.')) {
+                        setErrors({
+                            ...errors,
+                            name: 'Производитель с таким именем уже существует',
+                            phone: '',
+                            whatsapp: '',
+                            country: '',
+                            password: '',
+                            password_confirmation: '',
+                            logo: '',
+                            checkbox: '',
+                        })
+                    } else if (result?.message[0]?.includes('phone arledy exist')) {
+                        setErrors({
+                            ...errors,
+                            name: '',
+                            phone: 'Номер телефона уже зарегистрирован',
+                            whatsapp: '',
+                            country: '',
+                            password: '',
+                            password_confirmation: '',
+                            logo: '',
+                            checkbox: '',
+                        })
                     }
                 })
                 .catch(error => console.log('error', error))
@@ -259,10 +284,10 @@ export const Register = () => {
                         <option value={'Нет'}>Нет</option>
                     </select>
                 </div>
-                {/* <div className='loginInputs'>
+                <div className='loginInputs'>
                     <label>О вас</label>
-                    <RichTextEditor userDetails={details} setUserDetails={setDetails} />
-                </div> */}
+                    <RichTextEditor userDetails={description} setUserDetails={setDescription} />
+                </div>
                 <div className='loginInputs'>
                     <label>Пароль</label>
                     <div className='loginPaswordInput'>

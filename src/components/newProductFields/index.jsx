@@ -216,21 +216,19 @@ export const NewProductFields = ({ details, setDetails, errors, categories, sele
                         ))}
                     </select>
                 </div>
-                {selectedCategory?.childrens?.length > 0 &&
-                    <div className='eachProfileField'>
-                        <div className='profileFieldName'>
-                            <span>Подкатегория</span>
-                        </div>
-                        <select onChange={handleSubcategoryChange} style={errors.subcategory ? { border: '1px solid red' } : {}}>
-                            <option value=''></option>
-                            {selectedCategory?.childrens?.map(subcategory => (
-                                <option key={subcategory?.id} value={subcategory?.id}>
-                                    {subcategory?.name}
-                                </option>
-                            ))}
-                        </select>
+                {selectedCategory?.childrens?.length > 0 && <div className='eachProfileField'>
+                    <div className='profileFieldName'>
+                        <span>Подкатегория</span>
                     </div>
-                }
+                    <select onChange={handleSubcategoryChange} style={errors.subcategory ? { border: '1px solid red' } : {}}>
+                        <option value=''></option>
+                        {selectedCategory?.childrens?.map(subcategory => (
+                            <option key={subcategory?.id} value={subcategory?.id}>
+                                {subcategory?.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>}
                 {showTabletop && <div className='eachProfileField'>
                     <div className='profileFieldName'>
                         <span>Столешница</span>

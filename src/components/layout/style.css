@@ -115,6 +115,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  cursor: pointer;
 }
 
 .layoutUser > h2 {
@@ -124,7 +125,6 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  cursor: pointer;
 }
 
 .layoutUser > img {
