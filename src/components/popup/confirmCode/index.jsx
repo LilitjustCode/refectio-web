@@ -1,7 +1,7 @@
 import { CloseIcon } from '../../svg'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { SendCall, VerifyCode } from '../../../Redux/action/auth_action'
+import { ResetError, SendCall, VerifyCode } from '../../../Redux/action/auth_action'
 
 export const ConfirmCode = ({ open, setOpen, token }) => {
     const dispatch = useDispatch()
@@ -36,6 +36,8 @@ export const ConfirmCode = ({ open, setOpen, token }) => {
 
     function close() {
         document.querySelector('.mainLayout').style.position = 'relative'
+        setCodeError('')
+        dispatch(ResetError())
         setOpen(false)
     }
 

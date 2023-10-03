@@ -126,7 +126,6 @@ export const Register = () => {
             })
                 .then(response => response.json())
                 .then(result => {
-                    console.log(result)
                     if (result.status) {
                         setOpenCode(true)
                         setToken(result?.data?.token)
@@ -183,6 +182,7 @@ export const Register = () => {
                         value={details?.name}
                         onChange={(e) => setDetails({ ...details, name: e.target.value })}
                         style={errors?.name ? { border: '1px solid red' } : {}}
+                        maxLength={52}
                     />
                     {errors?.name?.length > 0 && <span className='errorMessage'>{errors?.name}</span>}
                 </div>

@@ -4,7 +4,6 @@ export const Auth_reducer = (state = store, action) => {
     let temp = { ...state }
     switch (action.type) {
         case 'login':
-            console.log(action.payload);
             if (action.payload.status) {
                 if (action.payload?.message?.message?.includes('login succsesfuli')) {
                     localStorage.setItem('token', action.payload?.message?.token)
@@ -28,11 +27,16 @@ export const Auth_reducer = (state = store, action) => {
             }
             break;
         case 'sendCall':
+            if (action.payload.message === 'Green Error Pleace send code 10 minute ago') {
+                temp.codeError = 'Повторите попытку через 10 минут.'
+            }
             if (action.payload.status) {
                 temp.codeError = ''
             } else if (action.payload.data[0].includes('1 minute ago')) {
                 temp.codeError = 'Повторите попытку через 1 минуту.'
             }
+            break;
+        case 'sendCallError':
             break;
         case 'verifyCode':
             if (action.payload.status) {
@@ -45,6 +49,9 @@ export const Auth_reducer = (state = store, action) => {
             } else if (action.payload?.message[0]?.includes('1 minute ago')) {
                 temp.codeError = 'Повторите попытку через 1 минуту.'
             }
+            break;
+        case 'resetError':
+            temp.codeError = ''
             break;
         case 'logout':
             localStorage.clear()
