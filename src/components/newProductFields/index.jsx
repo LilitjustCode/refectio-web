@@ -1,8 +1,9 @@
 import './style.css'
 import { RublIcon } from '../svg'
+import RichTextEditor from '../editor'
 import { useEffect, useState } from 'react'
 
-export const NewProductFields = ({ details, setDetails, errors, categories, selectedCategory, setSelectedCategory, selectedSubcategory, setSelectedSubcategory, setCategoryHasSubcategory }) => {
+export const NewProductFields = ({ details, setDetails, errors, categories, selectedCategory, setSelectedCategory, selectedSubcategory, setSelectedSubcategory, setCategoryHasSubcategory, description, setDescription }) => {
     function handleCategoryChange(event) {
         const category = categories.filter(elm => elm.id == event.target.value)[0]
         setSelectedCategory(category)
@@ -181,11 +182,7 @@ export const NewProductFields = ({ details, setDetails, errors, categories, sele
                     <div className='profileFieldName'>
                         <span>Доп. информация</span>
                     </div>
-                    <textarea
-                        value={details?.description}
-                        onChange={(e) => setDetails({ ...details, description: e.target.value })}
-                        placeholder='Текст информации'
-                    />
+                    <RichTextEditor userDetails={description} setUserDetails={setDescription} />
                 </div>
                 <div className='eachProfileField'>
                     <div className='profileFieldName'>
@@ -215,6 +212,7 @@ export const NewProductFields = ({ details, setDetails, errors, categories, sele
                             </option>
                         ))}
                     </select>
+                    {errors.category && <span className='errorMessage'>{errors.category}</span>}
                 </div>
                 {selectedCategory?.childrens?.length > 0 && <div className='eachProfileField'>
                     <div className='profileFieldName'>

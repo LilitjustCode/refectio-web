@@ -1,7 +1,8 @@
 import { RublIcon } from '../svg'
+import RichTextEditor from '../editor'
 import { useEffect, useState } from 'react'
 
-export const EditProductFields = ({ details, setDetails, errors, setErrors, categories, selectedCategory, setSelectedCategory, selectedSubcategory, setSelectedSubcategory, setCategoryHasSubcategory }) => {
+export const EditProductFields = ({ details, setDetails, errors, setErrors, categories, selectedCategory, setSelectedCategory, selectedSubcategory, setSelectedSubcategory, setCategoryHasSubcategory, description, setDescription }) => {
     function handleCategoryChange(event) {
         const category = categories.filter(elm => +elm.id === +event.target.value)[0]
         setSelectedCategory(category)
@@ -186,11 +187,7 @@ export const EditProductFields = ({ details, setDetails, errors, setErrors, cate
                     <div className='profileFieldName'>
                         <span>Доп. информация</span>
                     </div>
-                    <textarea
-                        value={details?.description}
-                        onChange={(e) => setDetails({ ...details, description: e.target.value })}
-                        placeholder='Текст информации'
-                    />
+                    <RichTextEditor userDetails={description} setUserDetails={setDescription} />
                 </div>
                 <div className='eachProfileField'>
                     <div className='profileFieldName'>

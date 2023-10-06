@@ -16,14 +16,17 @@ export const EditPhone = ({ open, setOpen }) => {
     const [openCodePage, setOpenCodePage] = useState(false)
     const [code, setCode] = useState('')
     const [counter, setCounter] = useState(0)
+    const scrollPosition = window.scrollY || window.pageYOffset
 
     useEffect(() => {
         document.querySelector('.mainLayout').style.position = 'fixed'
+        document.querySelector('.mainLayout').style.top = -scrollPosition
     }, [])
 
     useEffect(() => {
         if (counter > 0) {
             setTimeout(() => setCounter(counter - 1), 1000)
+            window.scrollTo(0, scrollPosition)
         }
     }, [counter])
 

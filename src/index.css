@@ -57,3 +57,11 @@ ol {
   max-height: 150px !important;
   overflow-y: auto !important;
 }
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - 348px);
+}

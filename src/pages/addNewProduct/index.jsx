@@ -31,6 +31,7 @@ export const AddNewProduct = () => {
     const [selectedCategory, setSelectedCategory] = useState()
     const [selectedSubcategory, setSelectedSubcategory] = useState()
     const [categoryHasSubcategory, setCategoryHasSubcategory] = useState(false)
+    const [description, setDescription] = useState('')
 
     useEffect(() => {
         dispatch(GetCategories())
@@ -77,6 +78,11 @@ export const AddNewProduct = () => {
             formdata.append("height", details.height)
             formdata.append("price", details.price)
             formdata.append("tabletop", details.tabletop)
+            if (description?.description) {
+                formdata.append("about", description?.description)
+            } else {
+                formdata.append("about", description)
+            }
             files.forEach(elm => {
                 formdata.append("photo[]", elm)
             })
@@ -96,6 +102,9 @@ export const AddNewProduct = () => {
                 .then(response => response.json())
                 .then(result => {
                     if (result.status) window.location = '/my-products'
+                    else if (result.data.message === 'you already have 3 products under this category') {
+                        setErrors({ ...errors, category: 'Превышен лимит добавления товаров в данной категории' })
+                    }
                 })
                 .catch(error => console.log('error', error));
         }
@@ -123,6 +132,8 @@ export const AddNewProduct = () => {
                     selectedSubcategory={selectedSubcategory}
                     setSelectedSubcategory={setSelectedSubcategory}
                     setCategoryHasSubcategory={setCategoryHasSubcategory}
+                    description={description}
+                    setDescription={setDescription}
                 />
                 <div className='newProductPhotoBlock'>
                     <label>Фотографии продукта</label>

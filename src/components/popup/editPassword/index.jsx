@@ -20,9 +20,11 @@ export const EditPassword = ({ open, setOpen }) => {
         confirmPasswordError: '',
         validation: ''
     })
+    const scrollPosition = window.scrollY || window.pageYOffset
 
     useEffect(() => {
         document.querySelector('.mainLayout').style.position = 'fixed'
+        document.querySelector('.mainLayout').style.top = -scrollPosition
     }, [])
 
     useEffect(() => {
@@ -68,6 +70,7 @@ export const EditPassword = ({ open, setOpen }) => {
 
     function close() {
         document.querySelector('.mainLayout').style.position = 'relative'
+        window.scrollTo(0, scrollPosition)
         dispatch(ClearPasswordErrors())
         setOpen(false)
     }

@@ -4,7 +4,7 @@ import ReactInputMask from 'react-input-mask'
 import RichTextEditor from '../../components/editor'
 import { useDispatch, useSelector } from 'react-redux'
 import { MultiSelect } from 'react-multi-select-component'
-import { OpenedEye, ClosedEye, RegisterCheckbox } from '../../components/svg'
+import { OpenedEye, ClosedEye, RegisterCheckbox, Asterisk } from '../../components/svg'
 import { GetCities } from '../../Redux/action/myProfile_action'
 import { GetAllCountries } from '../../Redux/action/auth_action'
 import { ConfirmCode } from '../../components/popup/confirmCode'
@@ -177,7 +177,7 @@ export const Register = () => {
                     <span onClick={() => window.location = '/auth/login'}>Вход</span>
                 </div>
                 <div className='loginInputs'>
-                    <label>Название</label>
+                    <label>Название <Asterisk /></label>
                     <input
                         value={details?.name}
                         onChange={(e) => setDetails({ ...details, name: e.target.value })}
@@ -197,7 +197,7 @@ export const Register = () => {
                     />
                 </div>
                 <div className='loginInputs'>
-                    <label>Номер телефона</label>
+                    <label>Номер телефона <Asterisk /></label>
                     <ReactInputMask
                         mask="+7 (999) 999-99-99"
                         maskChar="_"
@@ -209,7 +209,7 @@ export const Register = () => {
                     {errors?.phone?.length > 0 && <span className='errorMessage'>{errors?.phone}</span>}
                 </div>
                 <div className='loginInputs'>
-                    <label>Номер Whatsapp-для запроса стоимости</label>
+                    <label>Номер Whatsapp-для запроса стоимости <Asterisk /></label>
                     <ReactInputMask
                         mask="+7 (999) 999-99-99"
                         maskChar="_"
@@ -220,7 +220,7 @@ export const Register = () => {
                     {errors?.whatsapp?.length > 0 && <span className='errorMessage'>{errors?.whatsapp}</span>}
                 </div>
                 <div className='eachProfileField loginInputs'>
-                    <label>Страна производства</label>
+                    <label>Страна производства <Asterisk /></label>
                     <select className='selectCountry' value={details?.country} onChange={(e) => setDetails({ ...details, country: e.target.value })} style={errors?.country ? { border: '1px solid red' } : {}}>
                         {countries?.map(country => (
                             <option key={country?.nicename} value={country?.nicename}>
@@ -289,7 +289,7 @@ export const Register = () => {
                     <RichTextEditor userDetails={description} setUserDetails={setDescription} />
                 </div>
                 <div className='loginInputs'>
-                    <label>Пароль</label>
+                    <label>Пароль <Asterisk /></label>
                     <div className='loginPaswordInput'>
                         <input
                             type={showPassword ? 'text' : 'password'}
@@ -304,7 +304,7 @@ export const Register = () => {
                     {errors?.password?.length > 0 && <span className='errorMessage'>{errors?.password}</span>}
                 </div>
                 <div className='loginInputs'>
-                    <label>Подтвердите пароль</label>
+                    <label>Подтвердите пароль <Asterisk /></label>
                     <div className='loginPaswordInput'>
                         <input
                             type={show_password_confirmation ? 'text' : 'password'}
@@ -319,7 +319,7 @@ export const Register = () => {
                     {errors?.password_confirmation?.length > 0 && <span className='errorMessage'>{errors?.password_confirmation}</span>}
                 </div>
                 <div className='loginInputs'>
-                    <label>Загрузитье аватар/логотип</label>
+                    <label>Загрузитье аватар/логотип <Asterisk /></label>
                     <div id='avatar' />
                     <button>
                         Загрузить

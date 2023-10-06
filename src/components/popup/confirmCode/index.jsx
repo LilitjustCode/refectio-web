@@ -9,9 +9,11 @@ export const ConfirmCode = ({ open, setOpen, token }) => {
     const [codeError, setCodeError] = useState('')
     const codeErrorBack = useSelector(st => st.Auth_reducer.codeError)
     const [counter, setCounter] = useState(0)
+    const scrollPosition = window.scrollY || window.pageYOffset
 
     useEffect(() => {
         document.querySelector('.mainLayout').style.position = 'fixed'
+        document.querySelector('.mainLayout').style.top = -scrollPosition
         sendCall()
     }, [token])
 
@@ -36,6 +38,7 @@ export const ConfirmCode = ({ open, setOpen, token }) => {
 
     function close() {
         document.querySelector('.mainLayout').style.position = 'relative'
+        window.scrollTo(0, scrollPosition)
         setCodeError('')
         dispatch(ResetError())
         setOpen(false)

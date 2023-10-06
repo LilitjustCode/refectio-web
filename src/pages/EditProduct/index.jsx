@@ -1,3 +1,4 @@
+import { ClipLoader } from 'react-spinners'
 import { useEffect, useState } from 'react'
 import { CloseIconBlue } from '../../components/svg'
 import { useDispatch, useSelector } from 'react-redux'
@@ -26,7 +27,6 @@ export const EditProduct = () => {
         length: '',
         height: '',
         price: '',
-        description: '',
         tabletop: '',
     })
     const [errors, setErrors] = useState({
@@ -35,6 +35,8 @@ export const EditProduct = () => {
         subcategory: '',
         photo: ''
     })
+    const [description, setDescription] = useState('')
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         dispatch(GetCategories())
@@ -58,9 +60,9 @@ export const EditProduct = () => {
                 length: product?.length ? product?.length : '',
                 height: product?.height ? product?.height : '',
                 price: product?.price ? product?.price : '',
-                description: product?.about ? product?.about : '',
                 tabletop: product?.tabletop ? product?.tabletop : '',
             })
+            setDescription(product?.about)
             setProductPhotos(product?.product_image)
             const category = categories?.filter(elm => +elm.id === +product?.parent_category_id)[0]
             setSelectedCategory(category)
@@ -72,6 +74,10 @@ export const EditProduct = () => {
             }
         }
     }, [product, categories])
+
+    setTimeout(() => {
+        setLoading(false)
+    }, 1000)
 
     function uploadSingleFile(e) {
         let ImagesArray = Object.entries(e.target.files).map(e => URL.createObjectURL(e[1]))
@@ -119,7 +125,7 @@ export const EditProduct = () => {
             formdata.append("height", details?.height)
             formdata.append("price", details?.price)
             formdata.append("tabletop", details?.tabletop)
-            formdata.append("about", details?.description)
+            formdata.append("about", description?.description)
             deletedPhotos?.length && deletedPhotos?.forEach(elm => {
                 formdata.append("Deletephoto[]", elm)
             })
@@ -143,63 +149,75 @@ export const EditProduct = () => {
         }
     }
 
-    return (
-        <div className='newProductPage'>
-            <PageNavigation
-                backButton={true}
-                onClick={() => window.location = '/my-products'}
-                title={'Редактирование продукта'}
-                navigation={false}
-                search={false}
-                searchText={''}
-                setSearchText={''}
-            />
-            <div className='newProductBlock'>
-                <EditProductFields
-                    details={details}
-                    setDetails={setDetails}
-                    errors={errors}
-                    setErrors={setErrors}
-                    categories={categories}
-                    selectedCategory={selectedCategory}
-                    setSelectedCategory={setSelectedCategory}
-                    selectedSubcategory={selectedSubcategory}
-                    setSelectedSubcategory={setSelectedSubcategory}
-                    setCategoryHasSubcategory={setCategoryHasSubcategory}
+    if (loading) {
+        return (
+            <div className='loading'>
+                <ClipLoader color="#2d9efb" />
+            </div>
+        )
+    } else {
+        return (
+            <div className='newProductPage'>
+                <PageNavigation
+                    backButton={true}
+                    onClick={() => window.location = '/my-products'}
+                    title={'Редактирование продукта'}
+                    navigation={false}
+                    search={false}
+                    searchText={''}
+                    setSearchText={''}
                 />
-                <div className='newProductPhotoBlock'>
-                    <label>Фотографии продукта</label>
-                    <button>
-                        Загрузить
-                        <input type='file' id='fileInput' onChange={uploadSingleFile} multiple />
-                    </button>
-                    <div className='newProductPhotos'>
-                        {productPhotos?.length > 0
-                            && productPhotos?.map((e, i) => (
+                <div className='newProductBlock'>
+                    <EditProductFields
+                        details={details}
+                        setDetails={setDetails}
+                        errors={errors}
+                        setErrors={setErrors}
+                        categories={categories}
+                        selectedCategory={selectedCategory}
+                        setSelectedCategory={setSelectedCategory}
+                        selectedSubcategory={selectedSubcategory}
+                        setSelectedSubcategory={setSelectedSubcategory}
+                        setCategoryHasSubcategory={setCategoryHasSubcategory}
+                        description={description}
+                        setDescription={setDescription}
+                    />
+                    <div className='newProductPhotoBlock'>
+                        <label>Фотографии продукта</label>
+                        <button>
+                            Загрузить
+                            <input type='file' id='fileInput' onChange={uploadSingleFile} multiple />
+                        </button>
+                        <div className='newProductPhotos'>
+                            {productPhotos?.length > 0
+                                && productPhotos?.map((e, i) => (
+                                    <div className='eachProductPhoto' key={i}>
+                                        <img alt='' src={`${process.env.REACT_APP_IMAGE}${e?.image}`} />
+                                        <div className='deletePhoto' onClick={() => deleteFile(e, i)}>
+                                            <CloseIconBlue />
+                                        </div>
+                                    </div>
+                                ))
+                                // : <EditProductSkeleton />
+                            }
+                            {newPhotos?.length > 0 && newPhotos?.map((e, i) => (
                                 <div className='eachProductPhoto' key={i}>
-                                    <img alt='' src={`${process.env.REACT_APP_IMAGE}${e?.image}`} />
+                                    <img alt='' src={e} />
                                     <div className='deletePhoto' onClick={() => deleteFile(e, i)}>
                                         <CloseIconBlue />
                                     </div>
                                 </div>
-                            ))
-                            // : <EditProductSkeleton />
-                        }
-                        {newPhotos?.length > 0 && newPhotos?.map((e, i) => (
-                            <div className='eachProductPhoto' key={i}>
-                                <img alt='' src={e} />
-                                <div className='deletePhoto' onClick={() => deleteFile(e, i)}>
-                                    <CloseIconBlue />
-                                </div>
-                            </div>
-                        ))}
-                        {errors.photo && <span style={{ color: 'red' }}>{errors.photo}</span>}
+                            ))}
+                            {errors.photo && <span style={{ color: 'red' }}>{errors.photo}</span>}
+                        </div>
+                    </div>
+                    <div className='addProductButton'>
+                        <button onClick={update}>Сохранить</button>
                     </div>
                 </div>
-                <div className='addProductButton'>
-                    <button onClick={update}>Сохранить</button>
-                </div>
             </div>
-        </div>
-    )
+        )
+    }
+
+
 }

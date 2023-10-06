@@ -1,13 +1,13 @@
 import './style.css'
-import '../../../node_modules/draft-js/dist/Draft.css'
 import React from "react"
 import { stateToHTML } from 'draft-js-export-html'
+import '../../../node_modules/draft-js/dist/Draft.css'
 import { Editor, EditorState, getDefaultKeyBinding, RichUtils, ContentState, convertFromHTML } from 'draft-js'
 
 class RichTextEditor extends React.Component {
     constructor(props) {
         super(props);
-        const overview = props?.userDetails?.description || ''
+        const overview = props?.userDetails?.description ? props?.userDetails?.description : props?.userDetails ? props?.userDetails : ''
         const contentDataState = ContentState.createFromBlockArray(convertFromHTML(overview));
         const editorDataState = EditorState.createWithContent(contentDataState);
 
