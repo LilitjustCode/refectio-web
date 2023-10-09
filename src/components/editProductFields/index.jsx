@@ -22,6 +22,7 @@ export const EditProductFields = ({ details, setDetails, errors, setErrors, cate
     const [showTabletop, setShowTabletop] = useState(false)
     const [showLength, setShowLength] = useState(false)
     const [showHeight, setShowHeight] = useState(false)
+    const [showProfile, setShowProfile] = useState(false)
 
     useEffect(() => {
         if (selectedSubcategory) {
@@ -132,6 +133,21 @@ export const EditProductFields = ({ details, setDetails, errors, setErrors, cate
             } else {
                 setShowHeight(false)
                 setDetails({ ...details, height: '' })
+            }
+
+            if (selectedSubcategory.id === 37
+                || selectedSubcategory.id === 58
+                || selectedSubcategory.id === 66
+                || selectedSubcategory.id === 94
+                || selectedSubcategory.id === 95
+                || selectedSubcategory.id === 96
+                || selectedSubcategory.id === 97
+                || selectedSubcategory.id === 98
+            ) {
+                setShowProfile(true)
+            } else {
+                setShowProfile(false)
+                setDetails({ ...details, profile: '' })
             }
         }
     }, [selectedSubcategory])
@@ -251,6 +267,16 @@ export const EditProductFields = ({ details, setDetails, errors, setErrors, cate
                         value={details?.facades}
                         onChange={(e) => setDetails({ ...details, facades: e.target.value })}
                         placeholder='Фасады'
+                    />
+                </div>}
+                {showProfile && <div className='eachProfileField'>
+                    <div className='profileFieldName'>
+                        <span>Профиль</span>
+                    </div>
+                    <input
+                        value={details?.profile}
+                        onChange={(e) => setDetails({ ...details, profile: e.target.value })}
+                        placeholder='Профиль'
                     />
                 </div>}
             </div>

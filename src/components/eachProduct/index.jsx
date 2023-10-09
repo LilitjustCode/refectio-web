@@ -24,6 +24,7 @@ export const EachProduct = ({ product, onClick, width, height, divWidth }) => {
                     {product?.length && <span>Длина:<span style={{ fontFamily: 'sans-serif' }}>{product?.length}</span> м.</span>}
                     {product?.height && <span>Высота: <span style={{ fontFamily: 'sans-serif' }}>{product?.height}</span> м.</span>}
                     {product?.price && <span>Цена: <span style={{ fontFamily: 'sans-serif' }}>{product?.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span> руб.</span>}
+                    {product?.profile && <span>Профиль: <span style={{ fontFamily: 'sans-serif' }}>{product?.profile}</span></span>}
                 </div>
                 {(product?.about !== 'null' && product?.about != null) && <button onClick={() => setOpenInfo(true)}>Подробнее</button>}
             </div>

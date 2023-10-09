@@ -19,6 +19,7 @@ export const AddNewProduct = () => {
         price: '',
         description: '',
         tabletop: '',
+        profile: '',
     })
     const [errors, setErrors] = useState({
         name: '',
@@ -78,6 +79,7 @@ export const AddNewProduct = () => {
             formdata.append("height", details.height)
             formdata.append("price", details.price)
             formdata.append("tabletop", details.tabletop)
+            formdata.append("profile", details.profile)
             if (description?.description) {
                 formdata.append("about", description?.description)
             } else {

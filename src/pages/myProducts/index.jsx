@@ -17,7 +17,7 @@ export const MyProducts = () => {
     const [openSingleProductPopup, setOpenSingleProductPopup] = useState(false)
     const [selectedProduct, setSelectedProduct] = useState(null)
     const [productsToShow, setProductsToShow] = useState(products)
-
+console.log(products);
     useEffect(() => {
         dispatch(AllMyProducts())
     }, [update, dispatch])

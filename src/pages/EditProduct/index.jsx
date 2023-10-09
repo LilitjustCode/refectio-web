@@ -28,6 +28,7 @@ export const EditProduct = () => {
         height: '',
         price: '',
         tabletop: '',
+        profile: '',
     })
     const [errors, setErrors] = useState({
         name: '',
@@ -61,6 +62,7 @@ export const EditProduct = () => {
                 height: product?.height ? product?.height : '',
                 price: product?.price ? product?.price : '',
                 tabletop: product?.tabletop ? product?.tabletop : '',
+                profile: product?.profile ? product?.profile : ''
             })
             setDescription(product?.about)
             setProductPhotos(product?.product_image)
@@ -96,6 +98,7 @@ export const EditProduct = () => {
             setFiles(files.filter((item, index) => index !== i))
         }
     }
+
     function update() {
         if (!details?.name?.length) {
             setErrors({ ...errors, name: ' ' })
@@ -125,6 +128,7 @@ export const EditProduct = () => {
             formdata.append("height", details?.height)
             formdata.append("price", details?.price)
             formdata.append("tabletop", details?.tabletop)
+            formdata.append("profile", details.profile)
             formdata.append("about", description?.description)
             deletedPhotos?.length && deletedPhotos?.forEach(elm => {
                 formdata.append("Deletephoto[]", elm)
