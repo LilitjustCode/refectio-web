@@ -99,6 +99,7 @@ class RichTextEditor extends React.Component {
                 />
                 <div className={className} onClick={this.focus}>
                     <Editor
+                        readOnly={this.props.disable}
                         blockStyleFn={getBlockStyle}
                         customStyleMap={styleMap}
                         editorState={editorState}

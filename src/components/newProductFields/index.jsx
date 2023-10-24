@@ -3,7 +3,7 @@ import { RublIcon } from '../svg'
 import RichTextEditor from '../editor'
 import { useEffect, useState } from 'react'
 
-export const NewProductFields = ({ details, setDetails, errors, categories, selectedCategory, setSelectedCategory, selectedSubcategory, setSelectedSubcategory, setCategoryHasSubcategory, description, setDescription }) => {
+export const NewProductFields = ({ disable, details, setDetails, errors, categories, selectedCategory, setSelectedCategory, selectedSubcategory, setSelectedSubcategory, setCategoryHasSubcategory, description, setDescription }) => {
     function handleCategoryChange(event) {
         const category = categories.filter(elm => elm.id == event.target.value)[0]
         setSelectedCategory(category)
@@ -21,6 +21,7 @@ export const NewProductFields = ({ details, setDetails, errors, categories, sele
 
     useEffect(() => {
         if (selectedSubcategory) {
+            console.log(selectedSubcategory)
             if (selectedSubcategory?.id === 28
                 || selectedSubcategory?.id === 30
                 || selectedSubcategory?.id === 31
@@ -74,9 +75,11 @@ export const NewProductFields = ({ details, setDetails, errors, categories, sele
                 || selectedSubcategory?.id === 40
                 || selectedSubcategory?.id === 50
             ) {
+                setShowFrame(true)
                 setShowTabletop(true)
             } else {
                 setShowTabletop(false)
+                setShowFrame(false)
                 setDetails({ ...details, tabletop: '' })
             }
 
@@ -125,7 +128,10 @@ export const NewProductFields = ({ details, setDetails, errors, categories, sele
                 || selectedSubcategory?.id === 98
             ) {
                 setShowHeight(true)
+                setShowFrame(true)
+
             } else {
+                // setShowFrame(false)
                 setShowHeight(false)
                 setDetails({ ...details, height: '' })
             }
@@ -140,6 +146,8 @@ export const NewProductFields = ({ details, setDetails, errors, categories, sele
                 || selectedSubcategory.id === 98
             ) {
                 setShowProfile(true)
+                setShowFrame(true)
+                setShowHeight(true)
             } else {
                 setShowProfile(false)
                 setDetails({ ...details, profile: '' })
@@ -147,14 +155,17 @@ export const NewProductFields = ({ details, setDetails, errors, categories, sele
         }
     }, [selectedSubcategory])
 
+    console.log(showFrame)
+
     return (
-        <div className='myProfileBlock'>
+        <div className='myProfileBlocks'>
             <div className='addProductEachBlock'>
                 <div className='eachProfileField'>
                     <div className='profileFieldName'>
                         <span>Имя продукции</span>
                     </div>
                     <input
+                        disabled={disable}
                         value={details.name}
                         onChange={(e) => setDetails({ ...details, name: e.target.value })}
                         placeholder='Имя продукции'
@@ -167,6 +178,7 @@ export const NewProductFields = ({ details, setDetails, errors, categories, sele
                         <span>Корпус</span>
                     </div>
                     <input
+                        disabled={disable}
                         value={details.frame}
                         onChange={(e) => setDetails({ ...details, frame: e.target.value })}
                         placeholder='Корпус'
@@ -177,6 +189,7 @@ export const NewProductFields = ({ details, setDetails, errors, categories, sele
                         <span>Длина</span>
                     </div>
                     <input
+                        disabled={disable}
                         type='number'
                         value={details.length}
                         onChange={(e) => setDetails({ ...details, length: e.target.value })}
@@ -188,6 +201,7 @@ export const NewProductFields = ({ details, setDetails, errors, categories, sele
                         <span>Высота</span>
                     </div>
                     <input
+                        disabled={disable}
                         type='number'
                         value={details.height}
                         onChange={(e) => setDetails({ ...details, height: e.target.value })}
@@ -198,7 +212,7 @@ export const NewProductFields = ({ details, setDetails, errors, categories, sele
                     <div className='profileFieldName'>
                         <span>Доп. информация</span>
                     </div>
-                    <RichTextEditor userDetails={description} setUserDetails={setDescription} />
+                    <RichTextEditor disable={disable} userDetails={description} setUserDetails={setDescription} />
                 </div>
                 <div className='eachProfileField'>
                     <div className='profileFieldName'>
@@ -206,6 +220,7 @@ export const NewProductFields = ({ details, setDetails, errors, categories, sele
                     </div>
                     <div className='addProductPrice'>
                         <input
+                            disabled={disable}
                             value={details.price}
                             type='number'
                             onChange={(e) => setDetails({ ...details, price: e.target.value })}

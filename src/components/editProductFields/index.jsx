@@ -1,6 +1,7 @@
 import { RublIcon } from '../svg'
 import RichTextEditor from '../editor'
 import { useEffect, useState } from 'react'
+import './style.css'
 
 export const EditProductFields = ({ details, setDetails, errors, setErrors, categories, selectedCategory, setSelectedCategory, selectedSubcategory, setSelectedSubcategory, setCategoryHasSubcategory, description, setDescription }) => {
     function handleCategoryChange(event) {
@@ -26,6 +27,7 @@ export const EditProductFields = ({ details, setDetails, errors, setErrors, cate
 
     useEffect(() => {
         if (selectedSubcategory) {
+            console.log(selectedSubcategory, 'selectedSubcategory')
             if (selectedSubcategory?.id === 28
                 || selectedSubcategory?.id === 30
                 || selectedSubcategory?.id === 31
@@ -46,7 +48,6 @@ export const EditProductFields = ({ details, setDetails, errors, setErrors, cate
                 setShowFacades(false)
                 setDetails({ ...details, facades: '' })
             }
-
             if (
                 selectedSubcategory?.id === 28
                 || selectedSubcategory?.id === 30
@@ -80,6 +81,7 @@ export const EditProductFields = ({ details, setDetails, errors, setErrors, cate
                 || selectedSubcategory?.id === 50
             ) {
                 setShowTabletop(true)
+                setShowFrame(true)
             } else {
                 setShowTabletop(false)
                 setDetails({ ...details, tabletop: '' })
@@ -151,9 +153,9 @@ export const EditProductFields = ({ details, setDetails, errors, setErrors, cate
             }
         }
     }, [selectedSubcategory])
-
+    console.log(showFrame)
     return (
-        <div className='myProfileBlock'>
+        <div className='myProfileBlockk'>
             <div className='addProductEachBlock'>
                 <div className='eachProfileField'>
                     <div className='profileFieldName'>

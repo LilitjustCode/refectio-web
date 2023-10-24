@@ -1,17 +1,33 @@
 .myProfileBlock {
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   gap: 30px;
 }
 
 .profileMiddleBlocks {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 25px;
+  width: 100%;
+  align-items: flex-end;
+}
+
+.profileMiddleBlocksw {
+  flex-direction: column;
+  display: flex;
+  gap: 25px;
+}
+
+.eachItem {
   width: 48%;
 }
+
+.buttonWrapper {
+  /* height: 20px; */
+}
+
 
 .profileNameBlock {
   display: flex;
@@ -19,7 +35,7 @@
   gap: 20px;
 }
 
-.profileNameBlock > img {
+.profileNameBlock>img {
   width: 130px;
   height: 130px;
   border-radius: 10px;

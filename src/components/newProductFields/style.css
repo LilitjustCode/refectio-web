@@ -11,7 +11,15 @@
   gap: 10px;
 }
 
-.eachProfileField > input {
+.myProfileBlocks {
+  width: 100%;
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.eachProfileField>input {
   padding: 15px;
   outline: none;
   border-radius: 8px;
@@ -21,7 +29,7 @@
   font-size: 15px;
 }
 
-.eachProfileField > select {
+.eachProfileField>select {
   padding: 15px;
   outline: none;
   border-radius: 8px;
@@ -31,7 +39,7 @@
   font-size: 15px;
 }
 
-.eachProfileField > textarea {
+.eachProfileField>textarea {
   height: 117px;
   padding: 15px;
   outline: none;
@@ -49,7 +57,7 @@
   justify-content: space-between;
 }
 
-.profileFieldName > span {
+.profileFieldName>span {
   color: #333;
   font-size: 20px;
   font-style: normal;

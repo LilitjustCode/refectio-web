@@ -44,7 +44,6 @@ export const EditPhone = ({ open, setOpen }) => {
             fetch(`${process.env.REACT_APP_HOSTNAME}/updateCodeIntestTable`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    console.log(result);
                     if (result.status) {
                         setError('')
                         setOpenCodePage(true)

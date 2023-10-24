@@ -34,6 +34,8 @@ export const AddNewProduct = () => {
     const [categoryHasSubcategory, setCategoryHasSubcategory] = useState(false)
     const [description, setDescription] = useState('')
 
+    const [disable, setDisable] = useState(false)
+
     useEffect(() => {
         dispatch(GetCategories())
     }, [dispatch])
@@ -41,6 +43,21 @@ export const AddNewProduct = () => {
     useEffect(() => {
         photos && setErrors({ ...errors, photo: '' })
     }, [photos])
+
+    useEffect(() => {
+        if (categoryHasSubcategory) {
+            if (Object.keys(selectedCategory)?.length)
+
+                if (!selectedSubcategory) {
+                    setDisable(true)
+                }
+                else {
+                    setDisable(false)
+                }
+        }
+    }, [selectedSubcategory, selectedCategory])
+
+    console.log(disable)
 
     function uploadSingleFile(e) {
         let ImagesArray = Object.entries(e.target.files).map(e => URL.createObjectURL(e[1]))
@@ -55,7 +72,10 @@ export const AddNewProduct = () => {
     }
 
     useEffect(() => {
-        errors && window.scrollTo({ top: 0, behavior: 'smooth' })
+        console.log(errors)
+        if (errors.name || errors.category || errors.subcategory || errors.photo) {
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+        }
     }, [errors])
 
     function create() {
@@ -125,6 +145,7 @@ export const AddNewProduct = () => {
             />
             <div className='newProductBlock'>
                 <NewProductFields
+                    disable={disable}
                     details={details}
                     setDetails={setDetails}
                     errors={errors}
@@ -156,7 +177,7 @@ export const AddNewProduct = () => {
                     </div>
                 </div>
                 <div className='addProductButton'>
-                    <button onClick={create}>Добавить</button>
+                    <button disabled={disable} onClick={create}>Добавить</button>
                 </div>
             </div>
         </div>
