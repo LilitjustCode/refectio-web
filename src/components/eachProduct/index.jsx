@@ -2,9 +2,8 @@ import './style.css'
 import { useState } from 'react'
 import { MoreInfo } from '../popup/moreInfo'
 
-export const EachProduct = ({ product, onClick, width, height, divWidth }) => {
+export const EachProduct = ({ product, onClick, width, height, divWidth, minHeight = 140 }) => {
     const [openInfo, setOpenInfo] = useState(false)
-    console.log(product, 'product')
     return (
         <div className='eachManuProduct' style={{ width: divWidth }}>
             {openInfo &&
@@ -15,7 +14,7 @@ export const EachProduct = ({ product, onClick, width, height, divWidth }) => {
                 />
             }
             <img alt='' className='cursor' onClick={onClick} src={`${process.env.REACT_APP_IMAGE}${product?.product_image[0]?.image}`} style={{ width, height }} />
-            <div className='moreInfo'>
+            <div className='moreInfo' style={{ minHeight: minHeight }}>
                 <div className='eachManuProdDetails'>
                     <p>{product?.title ? product?.title : product?.name}</p>
                     {product?.facades && <span>Фасады: {product?.facades}</span>}

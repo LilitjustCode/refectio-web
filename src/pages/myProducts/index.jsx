@@ -17,7 +17,6 @@ export const MyProducts = () => {
     const [openSingleProductPopup, setOpenSingleProductPopup] = useState(false)
     const [selectedProduct, setSelectedProduct] = useState(null)
     const [productsToShow, setProductsToShow] = useState(products)
-console.log(products);
     useEffect(() => {
         dispatch(AllMyProducts())
     }, [update, dispatch])
@@ -104,15 +103,53 @@ console.log(products);
                     </div>
                     <div className='myProducts'>
                         {productsToShow.length > 0
-                            ? productsToShow?.map((e, i) => (
-                                <div key={i} className='eachProduct'>
-                                    <EachProduct product={e} onClick={() => handleClick(e)} width={'100%'} divWidth={'100%'} />
+                            ? productsToShow?.map((e, i) => {
+                                let count = 0
+                                let count1 = 0
+                                let productCount1 = false
+                                let productCount2 = false
+                                Object.values(productsToShow[i]).map((elm, i) => {
+                                    if (!elm) {
+                                        count = count + 1
+                                    }
+                                    if (count > 7) {
+                                        productCount1 = true
+                                    }
+                                    else {
+                                        productCount1 = false
+                                    }
+                                })
+
+                                if (i != 0) {
+                                    Object.values(productsToShow[i - 1]).map((elm, i) => {
+                                        if (!elm) {
+                                            count1 = count1 + 1
+                                        }
+                                        if (count1 > 7) {
+                                            productCount2 = true
+                                        }
+                                        else {
+                                            productCount2 = false
+                                        }
+                                    })
+                                }
+
+
+                                let minHeight = 0
+                                if (productCount1 && productCount2) {
+                                    minHeight = 60
+                                }
+                                else {
+                                    minHeight = 140
+                                }
+                                return <div key={i} className='eachProduct'>
+                                    <EachProduct minHeight={minHeight} product={e} onClick={() => handleClick(e)} width={'100%'} divWidth={'100%'} />
                                     <div className='eachProductButtons'>
                                         <button onClick={() => window.location = `/edit/${e?.id}`}>Редактировать</button>
                                         <button onClick={() => deleteProduct(e?.id)}>Удалить</button>
                                     </div>
                                 </div>
-                            ))
+                            })
                             : <span>Нет товаров</span>
                         }
                     </div>

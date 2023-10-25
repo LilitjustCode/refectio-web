@@ -7,6 +7,7 @@ export const EachManufacturer = ({ manufacturer }) => {
     const [openSingleProductPopup, setOpenSingleProductPopup] = useState(false)
     const [selectedProduct, setSelectedProduct] = useState(null)
     const [categories, setCategories] = useState([])
+
     let companyName = ''
     manufacturer?.company_name?.split(' ').forEach(element => {
         companyName += element
@@ -51,9 +52,10 @@ export const EachManufacturer = ({ manufacturer }) => {
                 </div>}
 
                 <div className='eachManuProds'>
-                    {manufacturer?.user_product_limit1?.length > 0 && manufacturer?.user_product_limit1?.map((e, i) => (
-                        <EachProduct onClick={() => handleClick(e)} product={e} key={i} width={'345px'} height={'220px'} />
-                    ))}
+                    {manufacturer?.user_product_limit1?.length > 0 && manufacturer?.user_product_limit1?.map((e, i) => {
+
+                        return <EachProduct minHeight={minHeight} onClick={() => handleClick(e)} product={e} key={i} width={'345px'} height={'220px'} />
+                    })}
                 </div>
             </div>
         </>
