@@ -27,7 +27,6 @@ export const EditProductFields = ({ details, setDetails, errors, setErrors, cate
 
     useEffect(() => {
         if (selectedSubcategory) {
-            console.log(selectedSubcategory, 'selectedSubcategory')
             if (selectedSubcategory?.id === 28
                 || selectedSubcategory?.id === 30
                 || selectedSubcategory?.id === 31
@@ -153,7 +152,6 @@ export const EditProductFields = ({ details, setDetails, errors, setErrors, cate
             }
         }
     }, [selectedSubcategory])
-    console.log(showFrame)
     return (
         <div className='myProfileBlockk'>
             <div className='addProductEachBlock'>

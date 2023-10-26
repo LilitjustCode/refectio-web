@@ -21,7 +21,6 @@ export const NewProductFields = ({ disable, details, setDetails, errors, categor
 
     useEffect(() => {
         if (selectedSubcategory) {
-            console.log(selectedSubcategory)
             if (selectedSubcategory?.id === 28
                 || selectedSubcategory?.id === 30
                 || selectedSubcategory?.id === 31
@@ -155,7 +154,6 @@ export const NewProductFields = ({ disable, details, setDetails, errors, categor
         }
     }, [selectedSubcategory])
 
-    console.log(showFrame)
 
     return (
         <div className='myProfileBlocks'>

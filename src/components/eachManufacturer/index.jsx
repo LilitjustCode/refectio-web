@@ -53,8 +53,7 @@ export const EachManufacturer = ({ manufacturer }) => {
 
                 <div className='eachManuProds'>
                     {manufacturer?.user_product_limit1?.length > 0 && manufacturer?.user_product_limit1?.map((e, i) => {
-
-                        return <EachProduct minHeight={minHeight} onClick={() => handleClick(e)} product={e} key={i} width={'345px'} height={'220px'} />
+                        return <EachProduct onClick={() => handleClick(e)} product={e} key={i} width={'345px'} height={'220px'} />
                     })}
                 </div>
             </div>

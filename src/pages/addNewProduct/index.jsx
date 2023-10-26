@@ -57,7 +57,6 @@ export const AddNewProduct = () => {
         }
     }, [selectedSubcategory, selectedCategory])
 
-    console.log(disable)
 
     function uploadSingleFile(e) {
         let ImagesArray = Object.entries(e.target.files).map(e => URL.createObjectURL(e[1]))
@@ -72,7 +71,6 @@ export const AddNewProduct = () => {
     }
 
     useEffect(() => {
-        console.log(errors)
         if (errors.name || errors.category || errors.subcategory || errors.photo) {
             window.scrollTo({ top: 0, behavior: 'smooth' })
         }

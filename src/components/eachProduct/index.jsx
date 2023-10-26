@@ -4,6 +4,8 @@ import { MoreInfo } from '../popup/moreInfo'
 
 export const EachProduct = ({ product, onClick, width, height, divWidth, minHeight = 140 }) => {
     const [openInfo, setOpenInfo] = useState(false)
+
+
     return (
         <div className='eachManuProduct' style={{ width: divWidth }}>
             {openInfo &&
@@ -25,7 +27,7 @@ export const EachProduct = ({ product, onClick, width, height, divWidth, minHeig
                     {product?.price && <span>Цена: <span style={{ fontFamily: 'sans-serif' }}>{product?.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span> руб.</span>}
                     {product?.profile && <span>Профиль: <span style={{ fontFamily: 'sans-serif' }}>{product?.profile}</span></span>}
                 </div>
-                {(product?.about !== 'null' && product?.about != null && product?.about != "undefined") && <button onClick={() => setOpenInfo(true)}>Подробнее</button>}
+                {(product?.about !== 'null' && product?.about != null && product?.about != "undefined" && product?.about != "<p><br></p>") && <button onClick={() => setOpenInfo(true)}>Подробнее</button>}
             </div>
         </div>
     )

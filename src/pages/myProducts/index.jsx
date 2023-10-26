@@ -133,7 +133,21 @@ export const MyProducts = () => {
                                         }
                                     })
                                 }
-
+                                if (i != productsToShow.length - 1) {
+                                    if (i % 2 == 0) {
+                                        Object.values(productsToShow[i + 1]).map((elm, i) => {
+                                            if (!elm) {
+                                                count1 = count1 + 1
+                                            }
+                                            if (count1 > 7) {
+                                                productCount2 = true
+                                            }
+                                            else {
+                                                productCount2 = false
+                                            }
+                                        })
+                                    }
+                                }
 
                                 let minHeight = 0
                                 if (productCount1 && productCount2) {
@@ -142,6 +156,23 @@ export const MyProducts = () => {
                                 else {
                                     minHeight = 140
                                 }
+                                if (i === productsToShow.length - 1) {
+                                    if (productsToShow.length % 2 == 1) {
+                                        Object.values(productsToShow[i]).map((elm, i) => {
+                                            if (!elm) {
+                                                count1 = count1 + 1
+                                            }
+                                            if (count1 > 7) {
+                                                minHeight = 60
+                                            }
+                                            else {
+                                                minHeight = 140
+                                            }
+                                        })
+
+                                    }
+                                }
+
                                 return <div key={i} className='eachProduct'>
                                     <EachProduct minHeight={minHeight} product={e} onClick={() => handleClick(e)} width={'100%'} divWidth={'100%'} />
                                     <div className='eachProductButtons'>
