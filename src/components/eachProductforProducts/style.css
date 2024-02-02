@@ -119,3 +119,7 @@
     height: 300px;
   }
 }
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
