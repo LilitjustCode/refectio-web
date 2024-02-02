@@ -78,3 +78,9 @@
     padding: 0 20px;
   }
 }
+
+@media screen and (max-width: 550px) {
+  .pageNavTitle > h1 {
+    font-size: 24px;
+  }
+}

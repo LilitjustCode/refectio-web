@@ -33,3 +33,9 @@
     padding: 0 20px;
   }
 }
+
+@media screen and (max-width: 550px) {
+  .allManufacturersPage {
+    padding: 0 10px;
+  }
+}

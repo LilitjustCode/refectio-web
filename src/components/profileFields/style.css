@@ -24,9 +24,7 @@
   width: 48%;
 }
 
-.buttonWrapper {
-  /* height: 20px; */
-}
+
 
 
 .profileNameBlock {
@@ -39,6 +37,7 @@
   width: 130px;
   height: 130px;
   border-radius: 10px;
+  object-fit: cover;
 }
 
 .profileEditButton {

@@ -1,0 +1,138 @@
+.carousel-full {
+  width: 65vw;
+  height: 93%;
+  margin: 0 auto;
+  display: flex;
+  position: absolute;
+  overflow: hidden;
+  transform: translateX(calc(100vw - 81.5vw));
+  z-index: 9999;
+}
+
+.inner-full {
+  display: flex;
+  height: 100%;
+  white-space: nowrap;
+  transition: transform 0.5s;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.carousel-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+  z-index: 9999;
+  position: relative;
+}
+
+.carousel-imgs {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* final stage */
+
+.carousel-buttons-full {
+  pointer-events: none;
+
+  position: absolute;
+  z-index: 999;
+
+  width: 98%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.button-arrow-right {
+  pointer-events: all;
+  width: 32px;
+  height: 49px;
+  border: none;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.234);
+  transition: 0.3s;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+}
+
+.button-arrow-right:hover {
+  transition: 0.3s;
+  background-color: white;
+}
+.button-arrow-right-icon:hover {
+  transition: 0.3s;
+  fill: #2d9efb;
+}
+.button-arrow-left-icon:hover {
+  transition: 0.3s;
+  fill: #2d9efb;
+}
+
+.button-arrow-left {
+  pointer-events: all;
+  width: 32px;
+  height: 49px;
+  border: none;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.234);
+  transition: 0.3s;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+}
+.button-arrow-left:hover {
+  background-color: white;
+}
+.indicators {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  transform: translateY(-55px);
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.indicator-buttons {
+  border: none;
+  margin: 0px 5px;
+  cursor: pointer;
+}
+
+.indicators > button {
+  background: none;
+}
+
+.carousel-background-box {
+  height: 100vh;
+  z-index: 1;
+}
+.carousel-background {
+  /* width: 100%; */
+  /* height: 100%; */
+  object-fit: contain;
+}
+
+.item-full-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 65vw;
+  height: 100vh;
+}

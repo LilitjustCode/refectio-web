@@ -39,6 +39,13 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  fill:gray;
+}
+
+.eachProductCategory:hover {
+  background-color: #b5d8fe;
+  color: white;
+  fill: white !important;
 }
 
 .myProductsButton {
@@ -135,10 +142,18 @@
     padding: 20px;
     margin: 20px;
   }
-  .eachProduct {
+  /* .eachProduct {
     width: 320px;
-  }
+  } */
   .eachProduct > img {
     height: 260px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .myProductCategories {
+    overflow: auto;
+    white-space: nowrap;
+    flex-wrap: nowrap;
   }
 }

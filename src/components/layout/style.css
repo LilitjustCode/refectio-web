@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  z-index:333;
 }
 
 .topLayout {
@@ -149,5 +150,18 @@
   }
   .bottomLayoutBlock {
     padding: 0 20px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .topLayout {
+    height: 220px;
+  }
+  .topLayoutBlock {
+    padding: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0;
+    gap: 20px;
   }
 }
