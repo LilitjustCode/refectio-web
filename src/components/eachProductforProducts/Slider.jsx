@@ -1,6 +1,6 @@
 import "./styles/slider.css";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CarouselItemBackground from "./CarouselItemBackground";
 import { CarouselItem } from "./SliderItem";
 import ArrowLeft from "./customComponents/ArrowLeft";
@@ -12,17 +12,6 @@ export const Slider = ({ item, onClick, onClickStar }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [fullScreen, setFullScreen] = useState(false);
   const scrollPosition = window.scrollY || window.pageYOffset;
-  const items = [
-    {
-      icon: "https://admin.refectio.ru/storage/app/uploads/1682852952photo.jpg",
-    },
-    {
-      icon: "https://admin.refectio.ru/storage/app/uploads/1682852955photo.jpg",
-    },
-    {
-      icon: "https://admin.refectio.ru/storage/app/uploads/1682853048photo.jpg",
-    },
-  ];
 
   const updateIndex = (newIndex) => {
     if (newIndex < 0) {
@@ -35,6 +24,7 @@ export const Slider = ({ item, onClick, onClickStar }) => {
   };
 
   const handleNext = () => {
+    console.log("next");
     setActiveIndex(
       (prevSlide) => (prevSlide + 1) % item?.product_image?.length
     );
@@ -96,9 +86,18 @@ export const Slider = ({ item, onClick, onClickStar }) => {
               })}
           </div>
           {fullScreen && (
-            <div className={"carousel-buttons-full"}>
+            <div
+              className={"carousel-buttons-full"}
+              style={{
+                display: item?.product_image?.length === 1 ? "none" : "",
+              }}
+            >
               <button
                 className="button-arrow-left"
+                style={{
+                  opacity: activeIndex === 0 && 0,
+                  pointerEvents: activeIndex === 0 && "none",
+                }}
                 onClick={() => {
                   handlePrev();
                 }}
@@ -107,7 +106,12 @@ export const Slider = ({ item, onClick, onClickStar }) => {
               </button>
 
               <button
-                className="button-arrow-right"
+                className={"button-arrow-right"}
+                style={{
+                  opacity: activeIndex === item?.product_image?.length - 1 && 0,
+                  pointerEvents:
+                    activeIndex === item?.product_image?.length - 1 && "none",
+                }}
                 onClick={() => {
                   handleNext();
                 }}
@@ -152,9 +156,18 @@ export const Slider = ({ item, onClick, onClickStar }) => {
 
         {!fullScreen && (
           <>
-            <div className={"carousel-buttons"}>
+            <div
+              className={"carousel-buttons"}
+              style={{
+                display: item?.product_image?.length === 1 ? "none" : "",
+              }}
+            >
               <button
                 className="button-arrow-left"
+                style={{
+                  opacity: activeIndex === 0 && 0,
+                  pointerEvents: activeIndex === 0 && "none",
+                }}
                 onClick={() => {
                   handlePrev();
                 }}
@@ -164,6 +177,11 @@ export const Slider = ({ item, onClick, onClickStar }) => {
 
               <button
                 className="button-arrow-right"
+                style={{
+                  opacity: activeIndex === item?.product_image?.length - 1 && 0,
+                  pointerEvents:
+                    activeIndex === item?.product_image?.length - 1 && "none",
+                }}
                 onClick={() => {
                   handleNext();
                 }}
