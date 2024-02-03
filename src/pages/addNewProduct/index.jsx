@@ -46,14 +46,23 @@ export const AddNewProduct = () => {
   }, [photos]);
 
   useEffect(() => {
-    if (selectedCategory?.childrens.length > 0) {
-      console.log(true);
-      if (!selectedSubcategory.name) {
-        setDisable(true);
-      } else {
-        console.log(1);
-        setDisable(false);
-      }
+    console.log(selectedCategory, "selected");
+    // if (selectedCategory?.childrens.length > 0) {
+    //   console.log(true);
+    //   if (!selectedSubcategory.name) {
+    //     setDisable(false);
+    //   } else {
+    //     console.log(1);
+    //     setDisable(false);
+    //   }
+    // }
+    if (
+      selectedCategory?.childrens?.length > 0 &&
+      !selectedSubcategory.name
+    ) {
+      setDisable(true);
+    } else {
+      setDisable(false);
     }
   }, [selectedSubcategory, selectedCategory]);
 
@@ -93,7 +102,7 @@ export const AddNewProduct = () => {
       categoryHasSubcategory &&
       !selectedSubcategory.name
     ) {
-      setDisable(true);
+      // setDisable(true);
       setErrors({ ...errors, name: "", category: "", subcategory: " " });
     } else if (!files.length) {
       setDisable(true);
@@ -189,6 +198,7 @@ export const AddNewProduct = () => {
       <div className="newProductBlock">
         <NewProductFields
           disable={disable}
+          setDisable={setDisable}
           details={details}
           setDetails={setDetails}
           errors={errors}

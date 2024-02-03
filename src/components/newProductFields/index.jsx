@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 export const NewProductFields = ({
   disable,
+  setDisable,
   details,
   setDetails,
   errors,
@@ -20,14 +21,20 @@ export const NewProductFields = ({
   function handleCategoryChange(event) {
     setSelectedCategory([]);
     setSelectedSubcategory([]);
+    setCategoryHasSubcategory(false);
+
     // console.log(selectedSubcategory, "kkkk");
     const category = categories.filter(
       (elm) => elm.id == event.target.value
     )[0];
+    console.log(category, "category");
     setSelectedCategory(category);
+    
     category.childrens.length > 0
-      ? setCategoryHasSubcategory(true)
-      : setCategoryHasSubcategory(false);
+      ?( setCategoryHasSubcategory(true))
+      : (setCategoryHasSubcategory(false))
+
+      
   }
   function handleSubcategoryChange(event) {
     setSelectedSubcategory(

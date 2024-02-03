@@ -57,7 +57,7 @@ export const SingleManufacturer = () => {
   const [productsToShow, setProductsToShow] = useState(products);
   const [popup, setPopup] = useState(false);
   const [whatsappOpen, setWhatsappOpen] = useState(false);
-
+ 
   useEffect(() => {
     dispatch(GetSingleManufacturer(companyName));
   }, [companyName, dispatch]);

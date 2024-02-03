@@ -114,14 +114,14 @@ export const EditProduct = () => {
   }
 
   function update() {
- setStatus(true);
+    setStatus(true);
     if (!details?.name?.length) {
       setStatus(false);
       setErrors({ ...errors, name: " " });
     } else if (!selectedCategory) {
-      setStatus(false)
+      setStatus(false);
       setErrors({ ...errors, name: "", category: " " });
-    } 
+    }
     // else if (
     //   selectedCategory &&
     //   categoryHasSubcategory &&
@@ -130,7 +130,7 @@ export const EditProduct = () => {
     //   setStatus(false);
     //   setErrors({ ...errors, name: "", category: "", subcategory: " " });
     // }
-     else if (!files?.length && !productPhotos?.length && !newPhotos?.length) {
+    else if (!files?.length && !productPhotos?.length && !newPhotos?.length) {
       setStatus(false);
       setErrors({
         ...errors,
@@ -196,7 +196,7 @@ export const EditProduct = () => {
         .then((result) => {
           console.log(result, "update");
           if (result.status) {
-             setStatus(true);
+            setStatus(true);
             window.location = "/my-products";
           }
         })
