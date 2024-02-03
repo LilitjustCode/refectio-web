@@ -190,7 +190,13 @@ export const Slider = ({ item, onClick, onClickStar }) => {
               </button>
             </div>
             {!fullScreen && (
-              <div className={"indicators"}>
+              <div
+                className={"indicators"}
+                style={{
+                  opacity: item?.product_image?.length === 1 && 0,
+                  pointerEvents: item?.product_image?.length === 1 && "none",
+                }}
+              >
                 {item?.product_image?.length > 0 &&
                   item?.product_image?.map((e, index) => {
                     return (
