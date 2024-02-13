@@ -148,6 +148,7 @@ export const EditProduct = () => {
         subcategory: "",
         photo: "",
       });
+      setStatus(true);
       const token = localStorage.getItem("token");
       const myHeaders = new Headers();
       myHeaders.append("Authorization", `Bearer ${token}`);
@@ -195,8 +196,8 @@ export const EditProduct = () => {
         .then((response) => response.json())
         .then((result) => {
           console.log(result, "update");
+          setStatus(true);
           if (result.status) {
-            setStatus(true);
             window.location = "/my-products";
           }
         })

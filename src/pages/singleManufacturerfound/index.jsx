@@ -150,15 +150,14 @@ export const SingleManufacturerFound = () => {
         window.location = `mychat://id/${manufacturer?.id}`;
         setTimeout(function () {
           window.location = `/${companyName}`;
-        }, 0);
+        }, 1000);
       } else {
-        // window.location = `mychat://id/${manufacturer?.id}`;
       }
       if (isAndroid && manufacturer?.id) {
         window.location = `mychat://id/${manufacturer?.id}`;
         setTimeout(function () {
           window.location = `/${companyName}`;
-        }, 0);
+        }, 1000);
       }
     };
 

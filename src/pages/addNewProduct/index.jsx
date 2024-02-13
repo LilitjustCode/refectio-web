@@ -56,10 +56,7 @@ export const AddNewProduct = () => {
     //     setDisable(false);
     //   }
     // }
-    if (
-      selectedCategory?.childrens?.length > 0 &&
-      !selectedSubcategory.name
-    ) {
+    if (selectedCategory?.childrens?.length > 0 && !selectedSubcategory.name) {
       setDisable(true);
     } else {
       setDisable(false);
@@ -85,6 +82,7 @@ export const AddNewProduct = () => {
   useEffect(() => {
     if (errors.name || errors.category || errors.subcategory || errors.photo) {
       window.scrollTo({ bottom: 100, behavior: "smooth" });
+      setDisable(false);
     }
   }, [errors]);
 
