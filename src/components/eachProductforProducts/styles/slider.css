@@ -215,7 +215,12 @@
 .star-box {
   width: 30px;
   height: 30px;
-  float: right;
-  margin-top: 12.5%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-top: 10%;
   margin-right: 2%;
+}
+.unitItem {
+  margin-top: 5%;
 }

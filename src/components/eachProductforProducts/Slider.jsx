@@ -149,6 +149,9 @@ export const Slider = ({ item, onClick, onClickStar }) => {
                   setActiveIndex={setActiveIndex}
                   setFullScreen={setFullScreen}
                   onClickStar={onClickStar}
+                  className={
+                    item?.product_image?.length === 1 ? "unitItem" : ""
+                  }
                 />
               );
             })}
