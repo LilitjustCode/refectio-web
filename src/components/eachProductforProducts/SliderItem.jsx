@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 export const CarouselItem = ({
   item,
@@ -8,6 +8,7 @@ export const CarouselItem = ({
   setActiveIndex,
   setFullScreen,
   onClickStar,
+  className,
 }) => {
   // console.log(item, "mm");
   return (
@@ -17,7 +18,9 @@ export const CarouselItem = ({
     >
       <div
         style={{
-          background: `url(https://admin.refectio.ru/storage/app/uploads/${item.image.replace("(", "%28").replace(")", "%29")}`,
+          background: `url(https://admin.refectio.ru/storage/app/uploads/${item.image
+            .replace("(", "%28")
+            .replace(")", "%29")}`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
@@ -30,7 +33,7 @@ export const CarouselItem = ({
       >
         {!fullScreen && (
           <div
-            className="star-box"
+            className={`star-box ${className}`}
             onClick={(e) => {
               console.log(item.id, "id. slide");
               e.stopPropagation();
