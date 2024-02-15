@@ -401,15 +401,7 @@ export const SingleManufacturerFound = () => {
                       <div
                         className="eachSingleManuDetailsRightIcon"
                         onClick={() => {
-                          if (windowWidth < 550) {
-                            console.log("pop");
-                            setWhatsappOpen(true);
-                          } else {
-                            window.open(
-                              `https://wa.me/${manufacturer?.watsap_phone}`,
-                              "_blank"
-                            );
-                          }
+                          setWhatsappOpen(true);
                         }}
                       >
                         <WhatsappIcon />
