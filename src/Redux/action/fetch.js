@@ -11,12 +11,13 @@ export const FetchPost = (api, data, success, error) => {
       body: JSON.stringify(data),
     })
       .then((response) => response.json())
-      .then((res) =>
+      .then((res) => {
+        console.log(res, "res");
         dispatch({
           type: success,
           payload: res,
-        })
-      )
+        });
+      })
       .catch((err) => {
         dispatch({
           type: error,
@@ -29,6 +30,7 @@ export const FetchPost = (api, data, success, error) => {
 export const FetchPostToken = (api, data, myToken, success, error) => {
   return (dispatch) => {
     const myHeaders = new Headers();
+
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${myToken}`);
     fetch(`${process.env.REACT_APP_HOSTNAME}${api}`, {

@@ -5,7 +5,10 @@
   justify-content: space-between;
   gap: 30px;
 }
-
+.wp_and_pass {
+  display: inline;
+  width: 48%;
+}
 .profileMiddleBlocks {
   display: flex;
   justify-content: space-between;
@@ -24,16 +27,13 @@
   width: 48%;
 }
 
-
-
-
 .profileNameBlock {
   display: flex;
   align-items: flex-end;
   gap: 20px;
 }
 
-.profileNameBlock>img {
+.profileNameBlock > img {
   width: 130px;
   height: 130px;
   border-radius: 10px;
@@ -61,8 +61,9 @@
   border-radius: 8px;
   border: 1px solid #bebebe;
   background: #fff;
-  max-height: 110px;
+  max-height: 380px;
   overflow-y: auto;
+  height: 400px;
 }
 
 .clear-selected-button {

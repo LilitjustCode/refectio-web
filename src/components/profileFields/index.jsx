@@ -7,6 +7,7 @@ import { EditPassword } from "../popup/editPassword";
 import { useDispatch, useSelector } from "react-redux";
 import { MyProfileSkeleton } from "../skeletons/myProfile";
 import { MultiSelect } from "react-multi-select-component";
+import { EditWhatsApp } from "../popup/editWhatsApp";
 import {
   GetCategories,
   GetCities,
@@ -29,6 +30,7 @@ export const ProfileFields = () => {
   // const categories = useSelector(st => st.MyProfile_reducer.categories)
   const user = useSelector((st) => st.MyProfile_reducer.user);
   const [openPassword, setOpenPassword] = useState(false);
+  const [openwhatsapp, setOpenWhatsApp] = useState(false);
   const [openPhone, setOpenPhone] = useState(false);
   const [file, setFile] = useState();
   // const [cityId, setCityId] = useState([])
@@ -57,13 +59,14 @@ export const ProfileFields = () => {
     phone: "",
     password: "",
     categories: "",
+    whatsAppPhone: "",
   });
 
   useEffect(() => {
     dispatch(GetCities());
     dispatch(GetCategories());
   }, [dispatch]);
-
+  console.log(user, "uset");
   useEffect(() => {
     if (user) {
       setFile(`${process.env.REACT_APP_IMAGE}${user?.logo}`);
@@ -86,6 +89,7 @@ export const ProfileFields = () => {
         phone: user?.phone,
         password: "",
         categories: user?.user_category_product,
+        whatsAppPhone: user?.watsap_phone,
       });
     }
   }, [user, openPhone]);
@@ -143,6 +147,9 @@ export const ProfileFields = () => {
 
   return (
     <>
+      {openwhatsapp && (
+        <EditWhatsApp open={openwhatsapp} setOpen={setOpenWhatsApp} />
+      )}
       {openPassword && (
         <EditPassword open={openPassword} setOpen={setOpenPassword} />
       )}
@@ -352,7 +359,11 @@ export const ProfileFields = () => {
                 </div>
                 <input
                   disabled={!edit.site}
-                  value={userDetails?.site ? userDetails?.site : ""}
+                  value={
+                    userDetails?.site && userDetails?.site != "null"
+                      ? userDetails?.site
+                      : ""
+                  }
                   style={
                     edit.site
                       ? { border: "3px solid #bebebe" }
@@ -379,79 +390,123 @@ export const ProfileFields = () => {
               )}
             </div>
           </div>
+
           <div className="profileMiddleBlocks">
-            <div className="eachItem">
-              <div className="eachProfileField">
-                {" "}
-                {/* Города */}
-                <div className="profileFieldName">
-                  <span>
-                    Города (продажи продукции)({userDetails?.cities?.length})
-                  </span>
-                  <div
-                    className="cursor"
-                    onClick={() => setEdit({ ...edit, cities: true })}
-                  >
-                    <EditIcon />
+            <div className="wp_and_pass">
+              <div style={{ marginBottom: "20px" }} className="eachWpItem">
+                <div className="eachProfileField">
+                  {" "}
+                  {/* Города */}
+                  <div className="profileFieldName">
+                    <span>
+                      Города (продажи продукции)({userDetails?.cities?.length})
+                    </span>
+                    <div
+                      className="cursor"
+                      onClick={() => setEdit({ ...edit, cities: true })}
+                    >
+                      <EditIcon />
+                    </div>
                   </div>
+                  <MultiSelect
+                    options={cities}
+                    value={selected}
+                    onChange={setSelected}
+                    labelledBy="Select"
+                    disabled={!edit.cities}
+                    overrideStrings={{
+                      allItemsAreSelected: "Все города выбраны.",
+                      clearSearch: "Очистить поиск",
+                      clearSelected: "Очистить выбранное",
+                      noOptions: "Нет выбора",
+                      search: "Поиск",
+                      selectAll: "Выбрать все",
+                      selectAllFiltered: "Выбрать все (отфильтровано)",
+                      selectSomeItems: "Выбирать...",
+                    }}
+                  />
                 </div>
-                <MultiSelect
-                  options={cities}
-                  value={selected}
-                  onChange={setSelected}
-                  labelledBy="Select"
-                  disabled={!edit.cities}
-                  overrideStrings={{
-                    allItemsAreSelected: "Все города выбраны.",
-                    clearSearch: "Очистить поиск",
-                    clearSelected: "Очистить выбранное",
-                    noOptions: "Нет выбора",
-                    search: "Поиск",
-                    selectAll: "Выбрать все",
-                    selectAllFiltered: "Выбрать все (отфильтровано)",
-                    selectSomeItems: "Выбирать...",
-                  }}
-                />
-              </div>
-              {edit?.cities && (
-                <div>
-                  <button
-                    className="profileEditButton"
-                    onClick={() => dispatch(UpdateCities(myCities))}
-                  >
-                    Обновить
-                  </button>
-                </div>
-              )}
-            </div>
-            <div className="eachItem">
-              <div className="eachProfileField">
-                {" "}
-                {/* Номер телефона */}
-                <div className="profileFieldName">
-                  <span>Номер телефона</span>
-                  <div className="cursor" onClick={() => setOpenPhone(true)}>
-                    <EditIcon />
+                {edit?.cities && (
+                  <div>
+                    <button
+                      className="profileEditButton"
+                      onClick={() => dispatch(UpdateCities(myCities))}
+                    >
+                      Обновить
+                    </button>
                   </div>
-                </div>
-                <input
-                  disabled
-                  value={userDetails?.phone ? userDetails?.phone : ""}
-                />
+                )}
               </div>
-              {edit?.phone && (
-                <div>
-                  <button
-                    className="profileEditButton"
-                    onClick={() => dispatch(UpdatePhone(userDetails?.phone))}
-                  >
-                    Обновить
-                  </button>
+              <div className="eachWpItem">
+                <div
+                  style={{ marginBottom: "20px" }}
+                  className="eachProfileField"
+                >
+                  {" "}
+                  {/* Номер телефона */}
+                  <div className="profileFieldName">
+                    <span>Номер телефона</span>
+                    <div className="cursor" onClick={() => setOpenPhone(true)}>
+                      <EditIcon />
+                    </div>
+                  </div>
+                  <input
+                    disabled
+                    value={userDetails?.phone ? userDetails?.phone : ""}
+                  />
                 </div>
-              )}
+                {edit?.phone && (
+                  <div>
+                    <button
+                      className="profileEditButton"
+                      onClick={() => dispatch(UpdatePhone(userDetails?.phone))}
+                    >
+                      Обновить
+                    </button>
+                  </div>
+                )}
+              </div>
+              <div className="eachWpItem">
+                <div className="eachProfileField">
+                  {" "}
+                  {/* Пароль */}
+                  <div className="profileFieldName">
+                    <span>Номер WhatsApp</span>
+                    <div
+                      className="cursor"
+                      onClick={() => setOpenWhatsApp(true)}
+                    >
+                      <EditIcon />
+                    </div>
+                  </div>
+                  <input
+                    disabled
+                    value={
+                      userDetails?.whatsAppPhone
+                        ? userDetails?.whatsAppPhone
+                        : ""
+                    }
+                  />
+                </div>
+              </div>
+              <br />
+              <div className="eachWpItem">
+                <div className="eachProfileField">
+                  {" "}
+                  {/* Пароль */}
+                  <div className="profileFieldName">
+                    <span>Пароль</span>
+                    <div
+                      className="cursor"
+                      onClick={() => setOpenPassword(true)}
+                    >
+                      <EditIcon />
+                    </div>
+                  </div>
+                  <input disabled value={""} />
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="profileMiddleBlocks">
             <div className="eachItem">
               <div className="eachProfileField">
                 {" "}
@@ -500,19 +555,6 @@ export const ProfileFields = () => {
               {/* {edit?.cities && <div>
                             <button className='profileEditButton' onClick={() => dispatch(UpdateCities(myCities))}>Обновить</button>
                         </div>} */}
-            </div>
-            <div className="eachItem">
-              <div className="eachProfileField">
-                {" "}
-                {/* Пароль */}
-                <div className="profileFieldName">
-                  <span>Пароль</span>
-                  <div className="cursor" onClick={() => setOpenPassword(true)}>
-                    <EditIcon />
-                  </div>
-                </div>
-                <input disabled value={""} />
-              </div>
             </div>
           </div>
         </div>

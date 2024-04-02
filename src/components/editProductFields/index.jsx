@@ -255,7 +255,7 @@ export const EditProductFields = ({
     }
   }, [selectedSubcategory]);
 
-  // console.log(showMaterial, "matterial");
+  console.log(description, "matterial");
   return (
     <div className="myProfileBlockk">
       <div className="addProductEachBlock">

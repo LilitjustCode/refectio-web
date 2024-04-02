@@ -1,12 +1,13 @@
 /* eslint-disable */
 export default {
-    user: {},
-    update: false,
-    cities: [],
-    categories: [],
-    passwordError: '',
-    phoneError: '',
-    codeError: '',
-    phoneToken: false,
-    nameError: ''
-}
+  user: {},
+  update: false,
+  cities: [],
+  categories: [],
+  passwordError: "",
+  phoneError: "",
+  codeError: "",
+  phoneToken: false,
+  nameError: "",
+  wpupdate: false,
+};

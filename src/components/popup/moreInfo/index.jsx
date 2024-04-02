@@ -16,6 +16,8 @@ export const MoreInfo = ({ open, setOpen, product }) => {
     setOpen(false);
   }
 
+console.log(product, 'prod')
+
   return (
     <div className={open ? "activePopup" : "inactive"}>
       <div className="pop_more">

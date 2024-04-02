@@ -13,7 +13,7 @@ export const EachManufacturer = ({ manufacturer }) => {
   manufacturer?.company_name?.split(" ").forEach((element) => {
     companyName += element;
   });
-
+  console.log(manufacturer, "name");
   useEffect(() => {
     function handleResize() {
       setWindowWidth(window.innerWidth);
@@ -32,6 +32,7 @@ export const EachManufacturer = ({ manufacturer }) => {
   }, [manufacturer]);
 
   function handleClick(e) {
+    console.log(e, "element");
     setSelectedProduct(e);
     setOpenSingleProductPopup(true);
     console.log("click");
@@ -53,13 +54,13 @@ export const EachManufacturer = ({ manufacturer }) => {
             alt=""
             src={`${process.env.REACT_APP_IMAGE}${manufacturer.logo}`}
             onClick={() =>
-              (window.location = `/${companyName}/${manufacturer?.id}`)
+              (window.location = `/${companyName}/${manufacturer.id}`)
             }
           />
           <div className="eachManuTopTitle">
             <h2
               onClick={() =>
-                (window.location = `/${companyName}/${manufacturer?.id}`)
+                (window.location = `/${companyName}/${manufacturer.id}`)
               }
             >
               {manufacturer?.company_name}

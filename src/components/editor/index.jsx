@@ -15,6 +15,7 @@ class RichTextEditor extends React.Component {
   constructor(props) {
     super(props);
     console.log(props, "kokok");
+    this.onPaste = this.onPaste.bind(this);
     let overview = props?.userDetails?.description
       ? props?.userDetails?.description
       : props?.userDetails
@@ -94,8 +95,12 @@ class RichTextEditor extends React.Component {
   onEditorStateChange = (editorStateData) => {
     this.setState({ editorState: editorStateData });
   };
-
   _handleKeyCommand(command, editorState) {
+    if (command === "split-block") {
+      // Insert <p><br></p> when Enter key is pressed
+      this.onChange(RichUtils.insertSoftNewline(editorState));
+      return true;
+    }
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
       this.onChange(newState);
@@ -128,6 +133,39 @@ class RichTextEditor extends React.Component {
     );
   }
 
+  onPaste() {
+    setTimeout(() => {
+      const editorState = this.state.editorState;
+      const currentContent = editorState.getCurrentContent();
+      const selectionState = editorState.getSelection();
+
+      // Check if the selection is collapsed
+      if (!selectionState.isCollapsed()) {
+        // If selection is not collapsed, collapse it to the start
+        const newSelectionState = selectionState.merge({
+          anchorOffset: selectionState.getStartOffset(),
+          focusOffset: selectionState.getStartOffset(),
+        });
+        this.onChange(
+          EditorState.forceSelection(editorState, newSelectionState)
+        );
+      }
+
+      const contentState = this.state.editorState.getCurrentContent();
+      const blocks = contentState.getBlockMap();
+      let pastedText = "";
+
+      // Iterate over blocks to retrieve pasted text
+      blocks.forEach((block) => {
+        pastedText += block.getText() + "\n"; // Concatenate text from each block
+      });
+
+      // Process the pasted text as needed
+      console.log("Pasted Text:", pastedText);
+
+      // Now you can handle the pasted text as required
+    }, 0);
+  }
   render() {
     const { editorState } = this.state;
 
@@ -163,6 +201,7 @@ class RichTextEditor extends React.Component {
             placeholder="Доп. информация"
             ref="editor"
             spellCheck={true}
+            onPaste={this.onPaste}
           />
         </div>
       </div>

@@ -9,6 +9,7 @@ import { AddNewProduct } from "./pages/addNewProduct";
 import { AllManufacturers } from "./pages/allManufacturers";
 import { SingleManufacturer } from "./pages/singleManufacturer";
 import { SingleManufacturerFound } from "./pages/singleManufacturerfound";
+import { SecondRegister } from "./pages/secondreg";
 
 export const MyRouter = () => {
   const auth = localStorage.getItem("token");
@@ -41,11 +42,20 @@ export const MyRouter = () => {
               </AlreadyLoggedIn>
             }
           />
+          <Route
+            path="/lusya2525mm"
+            element={
+              <AlreadyLoggedIn auth={auth}>
+                <SecondRegister />
+              </AlreadyLoggedIn>
+            }
+          />
           <Route path="/" element={<AllManufacturers />} />
           <Route
             path="/:companyName/:id"
             element={<SingleManufacturerFound />}
           />
+
           <Route path="/:companyName" element={<SingleManufacturer />} />
           <Route
             path="/profile"
